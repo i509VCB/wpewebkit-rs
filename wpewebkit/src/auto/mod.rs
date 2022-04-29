@@ -36,6 +36,88 @@ mod geolocation_manager;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_26")))]
 pub use self::geolocation_manager::GeolocationManager;
 
+mod geolocation_permission_request;
+pub use self::geolocation_permission_request::GeolocationPermissionRequest;
+
+mod hit_test_result;
+pub use self::hit_test_result::HitTestResult;
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+mod input_method_context;
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+pub use self::input_method_context::InputMethodContext;
+
+#[cfg(any(feature = "v2_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
+mod install_missing_media_plugins_permission_request;
+#[cfg(any(feature = "v2_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
+pub use self::install_missing_media_plugins_permission_request::InstallMissingMediaPluginsPermissionRequest;
+
+mod navigation_policy_decision;
+pub use self::navigation_policy_decision::NavigationPolicyDecision;
+
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+mod notification;
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+pub use self::notification::Notification;
+
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+mod notification_permission_request;
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+pub use self::notification_permission_request::NotificationPermissionRequest;
+
+#[cfg(any(feature = "v2_18", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_18")))]
+mod option_menu;
+#[cfg(any(feature = "v2_18", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_18")))]
+pub use self::option_menu::OptionMenu;
+
+#[cfg_attr(feature = "v2_32", deprecated = "Since 2.32")]
+mod plugin;
+#[cfg_attr(feature = "v2_32", deprecated = "Since 2.32")]
+pub use self::plugin::Plugin;
+
+mod policy_decision;
+pub use self::policy_decision::PolicyDecision;
+
+mod security_manager;
+pub use self::security_manager::SecurityManager;
+
+mod uri_scheme_request;
+pub use self::uri_scheme_request::URISchemeRequest;
+
+#[cfg(any(feature = "v2_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
+mod user_content_manager;
+#[cfg(any(feature = "v2_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
+pub use self::user_content_manager::UserContentManager;
+
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+mod user_media_permission_request;
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+pub use self::user_media_permission_request::UserMediaPermissionRequest;
+
+mod web_resource;
+pub use self::web_resource::WebResource;
+
+#[cfg(any(feature = "v2_30", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+mod website_data_access_permission_request;
+#[cfg(any(feature = "v2_30", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+pub use self::website_data_access_permission_request::WebsiteDataAccessPermissionRequest;
+
 #[cfg(any(feature = "v2_24", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 mod color;
@@ -208,4 +290,33 @@ pub mod traits {
     #[cfg(any(feature = "v2_26", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_26")))]
     pub use super::geolocation_manager::GeolocationManagerExt;
+    pub use super::hit_test_result::HitTestResultExt;
+    #[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+    pub use super::input_method_context::InputMethodContextExt;
+    #[cfg(any(feature = "v2_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
+    pub use super::install_missing_media_plugins_permission_request::InstallMissingMediaPluginsPermissionRequestExt;
+    pub use super::navigation_policy_decision::NavigationPolicyDecisionExt;
+    #[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+    pub use super::notification::NotificationExt;
+    #[cfg(any(feature = "v2_18", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_18")))]
+    pub use super::option_menu::OptionMenuExt;
+    #[cfg_attr(feature = "v2_32", deprecated = "Since 2.32")]
+    pub use super::plugin::PluginExt;
+    pub use super::policy_decision::PolicyDecisionExt;
+    pub use super::security_manager::SecurityManagerExt;
+    pub use super::uri_scheme_request::URISchemeRequestExt;
+    #[cfg(any(feature = "v2_6", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
+    pub use super::user_content_manager::UserContentManagerExt;
+    #[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+    pub use super::user_media_permission_request::UserMediaPermissionRequestExt;
+    pub use super::web_resource::WebResourceExt;
+    #[cfg(any(feature = "v2_30", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+    pub use super::website_data_access_permission_request::WebsiteDataAccessPermissionRequestExt;
 }

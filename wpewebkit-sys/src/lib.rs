@@ -7,10 +7,6 @@
 #![allow(clippy::approx_constant, clippy::type_complexity, clippy::unreadable_literal, clippy::upper_case_acronyms)]
 #![cfg_attr(feature = "dox", feature(doc_cfg))]
 
-use gio_sys as gio;
-use glib_sys as glib;
-use gobject_sys as gobject;
-use soup_sys as soup;
 
 #[allow(unused_imports)]
 use libc::{c_int, c_char, c_uchar, c_float, c_uint, c_double,
@@ -20,7 +16,8 @@ use libc::{c_int, c_char, c_uchar, c_float, c_uint, c_double,
 #[allow(unused_imports)]
 use glib::{gboolean, gconstpointer, gpointer, GType};
 
-use wpe_sys::wpe_input_keyboard_event;
+#[allow(unused_imports)]
+use wpe_sys::*;
 
 // Enums
 pub type WebKitAuthenticationScheme = c_int;

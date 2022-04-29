@@ -1,7 +1,8 @@
 [workspace]
 members = [
     "soup3-sys",
+    "wpe-sys",
+    "wpejavascriptcore-sys",
     "wpewebkit",
     "wpewebkit-sys",
-    "wpe-sys",
 ]

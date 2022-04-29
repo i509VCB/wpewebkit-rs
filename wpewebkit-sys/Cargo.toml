@@ -68,22 +68,29 @@ name = "wpe_web_kit_sys"
 
 [dependencies]
 libc = "0.2"
-wpe-sys = { path = "../wpe-sys" }
 
-[dependencies.gio-sys]
+[dependencies.wpe-sys]
+path = "../wpe-sys"
+
+[dependencies.gio]
 package = "gio-sys"
 version = "0.15.10"
 
-[dependencies.glib-sys]
+[dependencies.glib]
 package = "glib-sys"
 version = "0.15.10"
 
-[dependencies.gobject-sys]
+[dependencies.gobject]
 package = "gobject-sys"
 version = "0.15.10"
 
-[dependencies.soup3-sys]
+[dependencies.soup]
+package = "soup3-sys"
 path = "../soup3-sys"
+
+[dependencies.wpe_java_script_core]
+package = "wpejavascriptcore-sys"
+path = "../wpejavascriptcore-sys"
 
 [build-dependencies]
 system-deps = "6"

@@ -1,5 +1,5 @@
 [options]
-library = "WPEWebKit"
+library = "WPEJavaScriptCore"
 version = "1.1"
 target_path = "."
 single_version_file = "."
@@ -11,9 +11,8 @@ girs_directories = [
 ]
 
 external_libraries = [
-    "Gio",
+#    "Gio",
     "GLib",
     "GObject",
-    "Soup",
-    "WPEJavaScriptCore",
+#    "Soup",
 ]

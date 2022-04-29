@@ -79,6 +79,23 @@ generate = [
     "WPEWebKit.FaviconDatabase",
     "WPEWebKit.FileChooserRequest",
     "WPEWebKit.GeolocationManager",
+    "WPEWebKit.GeolocationPermissionRequest",
+    "WPEWebKit.HitTestResult",
+    "WPEWebKit.InputMethodContext",
+    "WPEWebKit.InstallMissingMediaPluginsPermissionRequest",
+    "WPEWebKit.NavigationPolicyDecision",
+    "WPEWebKit.Notification",
+    "WPEWebKit.NotificationPermissionRequest",
+    "WPEWebKit.OptionMenu",
+    "WPEWebKit.Plugin",
+    "WPEWebKit.PolicyDecision",
+    # "WPEWebKit.ResponsePolicyDecision", # is_mime_type_supported
+    "WPEWebKit.SecurityManager",
+    "WPEWebKit.URISchemeRequest",
+    "WPEWebKit.UserContentManager",
+    "WPEWebKit.UserMediaPermissionRequest",
+    "WPEWebKit.WebResource",
+    "WPEWebKit.WebsiteDataAccessPermissionRequest",
 
     # TODO: Freestanding functions from ffi
 ]
@@ -89,6 +106,7 @@ manual = [
     "Gio.AsyncReadyCallback",
     "Gio.AsyncResult",
     "Gio.Cancellable",
+    "Gio.InputStream",
     "GLib.Bytes",
     "GLib.DateTime",
     "GLib.DestroyNotify",
