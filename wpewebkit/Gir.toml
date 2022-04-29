@@ -1,0 +1,117 @@
+external_libraries = [
+    "Gio",
+    "GLib",
+    "GObject",
+]
+
+[options]
+library = "WPEWebKit"
+version = "1.1"
+target_path = "."
+single_version_file = true
+min_cfg_version = "1.1"
+work_mode = "normal"
+generate_safety_asserts = true
+deprecate_by_min_version = true
+girs_directories = [
+    "../gir-files/",
+    "../",
+]
+
+generate = [
+    # Enums
+    "WPEWebKit.AuthenticationScheme",
+    "WPEWebKit.AutomationBrowsingContextPresentation",
+    "WPEWebKit.AutoplayPolicy",
+    "WPEWebKit.CacheModel",
+    "WPEWebKit.ContextMenuAction",
+    "WPEWebKit.CookieAcceptPolicy",
+    "WPEWebKit.CookiePersistentStorage",
+    "WPEWebKit.CredentialPersistence",
+    "WPEWebKit.InputPurpose",
+    "WPEWebKit.InsecureContentEvent",
+    "WPEWebKit.LoadEvent",
+    "WPEWebKit.MediaCaptureState",
+    "WPEWebKit.NavigationType",
+    "WPEWebKit.NetworkProxyMode",
+    "WPEWebKit.PolicyDecisionType",
+    # "WPEWebKit.ProcessModel", # webkit_process_model_get_type is missing from ffi?
+    "WPEWebKit.SaveMode",
+    "WPEWebKit.ScriptDialogType",
+    "WPEWebKit.TLSErrorsPolicy",
+    "WPEWebKit.UserContentInjectedFrames",
+    "WPEWebKit.UserScriptInjectionTime",
+    "WPEWebKit.UserStyleLevel",
+    "WPEWebKit.WebProcessTerminationReason",
+
+    # Bitfields
+    "WPEWebKit.EditorTypingAttributes",
+    "WPEWebKit.FindOptions",
+    "WPEWebKit.HitTestResultContext",
+    "WPEWebKit.InputHints",
+    "WPEWebKit.WebsiteDataTypes",
+
+    # Structures
+    # "WPEWebKit.ApplicationInfo", # Missing webkit_application_info_(un)ref
+    "WPEWebKit.GeolocationPosition",
+    "WPEWebKit.InputMethodUnderline",
+    "WPEWebKit.ITPFirstParty",
+    "WPEWebKit.ITPThirdParty",
+    "WPEWebKit.MimeInfo",
+    "WPEWebKit.NetworkProxySettings",
+    "WPEWebKit.OptionMenuItem",
+    "WPEWebKit.Rectangle",
+    # "WPEWebKit.ScriptDialog", # Missing webkit_script_dialog_(un)ref
+    "WPEWebKit.SecurityOrigin",
+    "WPEWebKit.UserScript",
+    "WPEWebKit.UserStyleSheet",
+    "WPEWebKit.WebsiteData",
+    "WPEWebKit.WebViewSessionState",
+
+    # Classes
+    # "WPEWebKit.BackForwardList", # failed to generate 'changed' signal
+    # "WPEWebKit.BackForwardListItem", # InitiallyUnowned
+    "WPEWebKit.ContextMenu",
+    # "WPEWebKit.ContextMenuItem", # InitiallyUnowned
+    "WPEWebKit.CookieManager",
+    "WPEWebKit.DeviceInfoPermissionRequest",
+    "WPEWebKit.EditorState",
+    "WPEWebKit.FaviconDatabase",
+    "WPEWebKit.FileChooserRequest",
+    "WPEWebKit.GeolocationManager",
+
+    # TODO: Freestanding functions from ffi
+]
+
+manual = [
+    # Provided by external libraries
+    "Gio.Action",
+    "Gio.AsyncReadyCallback",
+    "Gio.AsyncResult",
+    "Gio.Cancellable",
+    "GLib.Bytes",
+    "GLib.DateTime",
+    "GLib.DestroyNotify",
+    "GLib.Error",
+    "GLib.Variant",
+    "GObject.InitiallyUnowned",
+]
+
+[[object]]
+name = "WPEWebKit.Color"
+status = "generate"
+    [[object.function]]
+    name = "parse"
+    # This is a constructor
+    manual = true
+
+[[object]]
+name = "WPEWebKit.WebViewBackend"
+status = "generate"
+    [[object.function]]
+    name = "new"
+    ignore = true # trait implementation
+
+    [[object.function]]
+    name = "get_wpe_backend"
+    ignore = true # safety

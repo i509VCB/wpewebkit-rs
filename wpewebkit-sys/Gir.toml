@@ -1,0 +1,18 @@
+[options]
+library = "WPEWebKit"
+version = "1.1"
+target_path = "."
+single_version_file = "."
+min_cfg_version = "1.1"
+work_mode = "sys"
+girs_directories = [
+    "../gir-files/",
+    "../",
+]
+
+external_libraries = [
+    "Gio",
+    "GLib",
+    "GObject",
+    "Soup",
+]
