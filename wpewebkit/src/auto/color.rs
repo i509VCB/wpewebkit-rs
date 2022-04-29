@@ -5,8 +5,7 @@
 
 
 glib::wrapper! {
-    #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct Color(Boxed<ffi::WebKitColor>);
+    pub struct Color(BoxedInline<ffi::WebKitColor>);
 
     match fn {
         copy => |ptr| glib::gobject_ffi::g_boxed_copy(ffi::webkit_color_get_type(), ptr as *mut _) as *mut ffi::WebKitColor,

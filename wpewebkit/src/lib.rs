@@ -11,6 +11,7 @@ pub use glib::object as gobject;
 #[macro_use]
 mod rt;
 
+pub mod color;
 pub mod web_view_backend;
 pub mod prelude;
 

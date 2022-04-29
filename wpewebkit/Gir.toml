@@ -116,6 +116,7 @@ manual = [
 [[object]]
 name = "WPEWebKit.Color"
 status = "generate"
+boxed_inline = true
     [[object.function]]
     name = "parse"
     # This is a constructor
