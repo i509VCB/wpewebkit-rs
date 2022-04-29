@@ -27,9 +27,9 @@ impl InputMethodUnderline {
     }
 
     #[doc(alias = "webkit_input_method_underline_set_color")]
-    pub fn set_color(&mut self, color: Option<&mut Color>) {
+    pub fn set_color(&mut self, color: Option<&Color>) {
         unsafe {
-            ffi::webkit_input_method_underline_set_color(self.to_glib_none_mut().0, color.to_glib_none_mut().0);
+            ffi::webkit_input_method_underline_set_color(self.to_glib_none_mut().0, mut_override(color.to_glib_none().0));
         }
     }
 }

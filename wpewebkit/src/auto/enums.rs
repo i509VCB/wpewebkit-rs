@@ -1657,6 +1657,103 @@ impl ToValue for PolicyDecisionType {
     }
 }
 
+#[cfg(any(feature = "v2_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WebKitProcessModel")]
+pub enum ProcessModel {
+    #[doc(alias = "WEBKIT_PROCESS_MODEL_SHARED_SECONDARY_PROCESS")]
+    SharedSecondaryProcess,
+    #[doc(alias = "WEBKIT_PROCESS_MODEL_MULTIPLE_SECONDARY_PROCESSES")]
+    MultipleSecondaryProcesses,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v2_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
+impl fmt::Display for ProcessModel {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "ProcessModel::{}", match *self {
+            Self::SharedSecondaryProcess => "SharedSecondaryProcess",
+            Self::MultipleSecondaryProcesses => "MultipleSecondaryProcesses",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v2_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
+#[doc(hidden)]
+impl IntoGlib for ProcessModel {
+    type GlibType = ffi::WebKitProcessModel;
+
+    fn into_glib(self) -> ffi::WebKitProcessModel {
+        match self {
+            Self::SharedSecondaryProcess => ffi::WEBKIT_PROCESS_MODEL_SHARED_SECONDARY_PROCESS,
+            Self::MultipleSecondaryProcesses => ffi::WEBKIT_PROCESS_MODEL_MULTIPLE_SECONDARY_PROCESSES,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v2_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitProcessModel> for ProcessModel {
+    unsafe fn from_glib(value: ffi::WebKitProcessModel) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_PROCESS_MODEL_SHARED_SECONDARY_PROCESS => Self::SharedSecondaryProcess,
+            ffi::WEBKIT_PROCESS_MODEL_MULTIPLE_SECONDARY_PROCESSES => Self::MultipleSecondaryProcesses,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v2_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
+impl StaticType for ProcessModel {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_process_model_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v2_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
+impl glib::value::ValueType for ProcessModel {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v2_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
+unsafe impl<'a> FromValue<'a> for ProcessModel {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v2_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
+impl ToValue for ProcessModel {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]

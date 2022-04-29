@@ -3,6 +3,9 @@
 // from ../gir-files
 // DO NOT EDIT
 
+mod back_forward_list;
+pub use self::back_forward_list::BackForwardList;
+
 mod context_menu;
 pub use self::context_menu::ContextMenu;
 
@@ -88,6 +91,9 @@ pub use self::plugin::Plugin;
 mod policy_decision;
 pub use self::policy_decision::PolicyDecision;
 
+mod response_policy_decision;
+pub use self::response_policy_decision::ResponsePolicyDecision;
+
 mod security_manager;
 pub use self::security_manager::SecurityManager;
 
@@ -117,6 +123,9 @@ mod website_data_access_permission_request;
 #[cfg(any(feature = "v2_30", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
 pub use self::website_data_access_permission_request::WebsiteDataAccessPermissionRequest;
+
+mod application_info;
+pub use self::application_info::ApplicationInfo;
 
 #[cfg(any(feature = "v2_24", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
@@ -176,6 +185,13 @@ mod rectangle;
 #[cfg(any(feature = "v2_28", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
 pub use self::rectangle::Rectangle;
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+mod script_dialog;
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+pub use self::script_dialog::ScriptDialog;
 
 #[cfg(any(feature = "v2_16", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_16")))]
@@ -249,6 +265,9 @@ pub use self::enums::NavigationType;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_16")))]
 pub use self::enums::NetworkProxyMode;
 pub use self::enums::PolicyDecisionType;
+#[cfg(any(feature = "v2_4", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
+pub use self::enums::ProcessModel;
 pub use self::enums::SaveMode;
 pub use self::enums::ScriptDialogType;
 pub use self::enums::TLSErrorsPolicy;
@@ -280,6 +299,7 @@ pub use self::flags::WebsiteDataTypes;
 
 #[doc(hidden)]
 pub mod traits {
+    pub use super::back_forward_list::BackForwardListExt;
     pub use super::context_menu::ContextMenuExt;
     pub use super::cookie_manager::CookieManagerExt;
     #[cfg(any(feature = "v2_10", feature = "dox"))]
@@ -307,6 +327,7 @@ pub mod traits {
     #[cfg_attr(feature = "v2_32", deprecated = "Since 2.32")]
     pub use super::plugin::PluginExt;
     pub use super::policy_decision::PolicyDecisionExt;
+    pub use super::response_policy_decision::ResponsePolicyDecisionExt;
     pub use super::security_manager::SecurityManagerExt;
     pub use super::uri_scheme_request::URISchemeRequestExt;
     #[cfg(any(feature = "v2_6", feature = "dox"))]

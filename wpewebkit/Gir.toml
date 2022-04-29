@@ -35,7 +35,7 @@ generate = [
     "WPEWebKit.NavigationType",
     "WPEWebKit.NetworkProxyMode",
     "WPEWebKit.PolicyDecisionType",
-    # "WPEWebKit.ProcessModel", # webkit_process_model_get_type is missing from ffi?
+    "WPEWebKit.ProcessModel",
     "WPEWebKit.SaveMode",
     "WPEWebKit.ScriptDialogType",
     "WPEWebKit.TLSErrorsPolicy",
@@ -52,16 +52,14 @@ generate = [
     "WPEWebKit.WebsiteDataTypes",
 
     # Structures
-    # "WPEWebKit.ApplicationInfo", # Missing webkit_application_info_(un)ref
+    "WPEWebKit.ApplicationInfo",
     "WPEWebKit.GeolocationPosition",
-    "WPEWebKit.InputMethodUnderline",
     "WPEWebKit.ITPFirstParty",
     "WPEWebKit.ITPThirdParty",
     "WPEWebKit.MimeInfo",
     "WPEWebKit.NetworkProxySettings",
     "WPEWebKit.OptionMenuItem",
     "WPEWebKit.Rectangle",
-    # "WPEWebKit.ScriptDialog", # Missing webkit_script_dialog_(un)ref
     "WPEWebKit.SecurityOrigin",
     "WPEWebKit.UserScript",
     "WPEWebKit.UserStyleSheet",
@@ -69,7 +67,7 @@ generate = [
     "WPEWebKit.WebViewSessionState",
 
     # Classes
-    # "WPEWebKit.BackForwardList", # failed to generate 'changed' signal
+    "WPEWebKit.BackForwardList",
     # "WPEWebKit.BackForwardListItem", # InitiallyUnowned
     "WPEWebKit.ContextMenu",
     # "WPEWebKit.ContextMenuItem", # InitiallyUnowned
@@ -89,7 +87,7 @@ generate = [
     "WPEWebKit.OptionMenu",
     "WPEWebKit.Plugin",
     "WPEWebKit.PolicyDecision",
-    # "WPEWebKit.ResponsePolicyDecision", # is_mime_type_supported
+    "WPEWebKit.ResponsePolicyDecision",
     "WPEWebKit.SecurityManager",
     "WPEWebKit.URISchemeRequest",
     "WPEWebKit.UserContentManager",
@@ -124,12 +122,26 @@ status = "generate"
     manual = true
 
 [[object]]
+name = "WPEWebKit.InputMethodUnderline"
+status = "generate"
+    [[object.function]]
+    name = "set_color"
+        [[object.function.parameter]]
+        name = "color"
+        const = true
+
+[[object]]
+name = "WPEWebKit.ScriptDialog"
+status = "generate"
+version = "2.24" # Because of webkit_script_dialog_(un)ref
+
+[[object]]
 name = "WPEWebKit.WebViewBackend"
 status = "generate"
     [[object.function]]
     name = "new"
-    ignore = true # trait implementation
+    ignore = true # manually implemented
 
     [[object.function]]
     name = "get_wpe_backend"
-    ignore = true # safety
+    ignore = true # not useful in Rust
