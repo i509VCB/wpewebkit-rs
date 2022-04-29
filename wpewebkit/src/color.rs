@@ -48,11 +48,9 @@ impl Color {
         self.inner.alpha = alpha;
     }
 
-    /// Creates a new [`Color`] using the `color_str` representation.
+    /// Creates a new [`Color`] using the string representation.
     ///
-    /// This function only allows use of [standard html color names] or hex values.
-    /// 
-    /// [html color names]: https://htmlcolorcodes.com/color-names/
+    /// This function only allows use of [standard html color names] or a hex value.
     /// 
     /// ```
     /// use wpewebkit::Color;
@@ -65,6 +63,8 @@ impl Color {
     /// assert_eq!(indigo.blue(), indigo_hex.blue());
     /// assert_eq!(indigo.alpha(), indigo_hex.alpha());
     /// ```
+    /// 
+    /// [standard html color names]: https://htmlcolorcodes.com/color-names
     #[doc(alias = "webkit_color_parse")]
     pub fn parse(color_str: &str) -> Result<Color, glib::BoolError> {
         skip_assert_initialized!();
