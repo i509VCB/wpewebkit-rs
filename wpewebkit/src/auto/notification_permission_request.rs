@@ -3,11 +3,12 @@
 // from ../gir-files
 // DO NOT EDIT
 
+use crate::PermissionRequest;
 use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WebKitNotificationPermissionRequest")]
-    pub struct NotificationPermissionRequest(Object<ffi::WebKitNotificationPermissionRequest, ffi::WebKitNotificationPermissionRequestClass>);
+    pub struct NotificationPermissionRequest(Object<ffi::WebKitNotificationPermissionRequest, ffi::WebKitNotificationPermissionRequestClass>) @implements PermissionRequest;
 
     match fn {
         type_ => || ffi::webkit_notification_permission_request_get_type(),

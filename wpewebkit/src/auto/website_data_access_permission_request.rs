@@ -3,13 +3,14 @@
 // from ../gir-files
 // DO NOT EDIT
 
+use crate::PermissionRequest;
 use glib::object::IsA;
 use glib::translate::*;
 use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WebKitWebsiteDataAccessPermissionRequest")]
-    pub struct WebsiteDataAccessPermissionRequest(Object<ffi::WebKitWebsiteDataAccessPermissionRequest, ffi::WebKitWebsiteDataAccessPermissionRequestClass>);
+    pub struct WebsiteDataAccessPermissionRequest(Object<ffi::WebKitWebsiteDataAccessPermissionRequest, ffi::WebKitWebsiteDataAccessPermissionRequestClass>) @implements PermissionRequest;
 
     match fn {
         type_ => || ffi::webkit_website_data_access_permission_request_get_type(),

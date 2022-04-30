@@ -3,6 +3,7 @@
 // from ../gir-files
 // DO NOT EDIT
 
+use crate::PermissionRequest;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -15,7 +16,7 @@ use std::mem::transmute;
 
 glib::wrapper! {
     #[doc(alias = "WebKitUserMediaPermissionRequest")]
-    pub struct UserMediaPermissionRequest(Object<ffi::WebKitUserMediaPermissionRequest, ffi::WebKitUserMediaPermissionRequestClass>);
+    pub struct UserMediaPermissionRequest(Object<ffi::WebKitUserMediaPermissionRequest, ffi::WebKitUserMediaPermissionRequestClass>) @implements PermissionRequest;
 
     match fn {
         type_ => || ffi::webkit_user_media_permission_request_get_type(),

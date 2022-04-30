@@ -3,13 +3,14 @@
 // from ../gir-files
 // DO NOT EDIT
 
+use crate::PermissionRequest;
 use glib::object::IsA;
 use glib::translate::*;
 use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WebKitInstallMissingMediaPluginsPermissionRequest")]
-    pub struct InstallMissingMediaPluginsPermissionRequest(Object<ffi::WebKitInstallMissingMediaPluginsPermissionRequest, ffi::WebKitInstallMissingMediaPluginsPermissionRequestClass>);
+    pub struct InstallMissingMediaPluginsPermissionRequest(Object<ffi::WebKitInstallMissingMediaPluginsPermissionRequest, ffi::WebKitInstallMissingMediaPluginsPermissionRequestClass>) @implements PermissionRequest;
 
     match fn {
         type_ => || ffi::webkit_install_missing_media_plugins_permission_request_get_type(),

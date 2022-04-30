@@ -3,11 +3,12 @@
 // from ../gir-files
 // DO NOT EDIT
 
+use crate::PermissionRequest;
 use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WebKitDeviceInfoPermissionRequest")]
-    pub struct DeviceInfoPermissionRequest(Object<ffi::WebKitDeviceInfoPermissionRequest, ffi::WebKitDeviceInfoPermissionRequestClass>);
+    pub struct DeviceInfoPermissionRequest(Object<ffi::WebKitDeviceInfoPermissionRequest, ffi::WebKitDeviceInfoPermissionRequestClass>) @implements PermissionRequest;
 
     match fn {
         type_ => || ffi::webkit_device_info_permission_request_get_type(),

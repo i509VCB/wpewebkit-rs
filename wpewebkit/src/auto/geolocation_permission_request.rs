@@ -3,11 +3,12 @@
 // from ../gir-files
 // DO NOT EDIT
 
+use crate::PermissionRequest;
 use std::fmt;
 
 glib::wrapper! {
     #[doc(alias = "WebKitGeolocationPermissionRequest")]
-    pub struct GeolocationPermissionRequest(Object<ffi::WebKitGeolocationPermissionRequest, ffi::WebKitGeolocationPermissionRequestClass>);
+    pub struct GeolocationPermissionRequest(Object<ffi::WebKitGeolocationPermissionRequest, ffi::WebKitGeolocationPermissionRequestClass>) @implements PermissionRequest;
 
     match fn {
         type_ => || ffi::webkit_geolocation_permission_request_get_type(),

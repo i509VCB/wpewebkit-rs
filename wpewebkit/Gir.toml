@@ -106,6 +106,9 @@ generate = [
     "WPEWebKit.UserContentFilterError",
     "WPEWebKit.UserMessageError",
 
+    # Interfaces
+    "WPEWebKit.PermissionRequest",
+
     # TODO: Freestanding functions from ffi
 ]
 
