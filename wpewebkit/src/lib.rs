@@ -18,6 +18,7 @@ pub mod prelude;
 pub use prelude::*;
 
 #[macro_use]
+#[allow(unused_imports)]
 mod auto;
 pub use auto::*;
 
