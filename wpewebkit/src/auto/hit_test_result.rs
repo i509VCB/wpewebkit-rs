@@ -3,8 +3,11 @@
 // from ../gir-files
 // DO NOT EDIT
 
+use glib::object::Cast;
 use glib::object::IsA;
 use glib::translate::*;
+use glib::StaticType;
+use glib::ToValue;
 use std::fmt;
 
 glib::wrapper! {
@@ -19,6 +22,97 @@ glib::wrapper! {
 impl HitTestResult {
         pub const NONE: Option<&'static HitTestResult> = None;
     
+
+            // rustdoc-stripper-ignore-next
+            /// Creates a new builder-pattern struct instance to construct [`HitTestResult`] objects.
+            ///
+            /// This method returns an instance of [`HitTestResultBuilder`](crate::builders::HitTestResultBuilder) which can be used to create [`HitTestResult`] objects.
+            pub fn builder() -> HitTestResultBuilder {
+                HitTestResultBuilder::default()
+            }
+        
+}
+
+#[derive(Clone, Default)]
+// rustdoc-stripper-ignore-next
+        /// A [builder-pattern] type to construct [`HitTestResult`] objects.
+        ///
+        /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+#[must_use = "The builder must be built to be used"]
+pub struct HitTestResultBuilder {
+    context: Option<u32>,
+    image_uri: Option<String>,
+    link_label: Option<String>,
+    link_title: Option<String>,
+    link_uri: Option<String>,
+    media_uri: Option<String>,
+}
+
+impl HitTestResultBuilder {
+    // rustdoc-stripper-ignore-next
+    /// Create a new [`HitTestResultBuilder`].
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+
+    // rustdoc-stripper-ignore-next
+    /// Build the [`HitTestResult`].
+    #[must_use = "Building the object from the builder is usually expensive and is not expected to have side effects"]
+    pub fn build(self) -> HitTestResult {
+        let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
+if let Some(ref context) = self.context {
+                properties.push(("context", context));
+            }
+if let Some(ref image_uri) = self.image_uri {
+                properties.push(("image-uri", image_uri));
+            }
+if let Some(ref link_label) = self.link_label {
+                properties.push(("link-label", link_label));
+            }
+if let Some(ref link_title) = self.link_title {
+                properties.push(("link-title", link_title));
+            }
+if let Some(ref link_uri) = self.link_uri {
+                properties.push(("link-uri", link_uri));
+            }
+if let Some(ref media_uri) = self.media_uri {
+                properties.push(("media-uri", media_uri));
+            }
+        glib::Object::new::<HitTestResult>(&properties)
+                .expect("Failed to create an instance of HitTestResult")
+
+    }
+
+    pub fn context(mut self, context: u32) -> Self {
+        self.context = Some(context);
+        self
+    }
+
+    pub fn image_uri(mut self, image_uri: &str) -> Self {
+        self.image_uri = Some(image_uri.to_string());
+        self
+    }
+
+    pub fn link_label(mut self, link_label: &str) -> Self {
+        self.link_label = Some(link_label.to_string());
+        self
+    }
+
+    pub fn link_title(mut self, link_title: &str) -> Self {
+        self.link_title = Some(link_title.to_string());
+        self
+    }
+
+    pub fn link_uri(mut self, link_uri: &str) -> Self {
+        self.link_uri = Some(link_uri.to_string());
+        self
+    }
+
+    pub fn media_uri(mut self, media_uri: &str) -> Self {
+        self.media_uri = Some(media_uri.to_string());
+        self
+    }
 }
 
 pub trait HitTestResultExt: 'static {

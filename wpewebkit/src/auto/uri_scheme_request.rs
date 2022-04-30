@@ -3,6 +3,10 @@
 // from ../gir-files
 // DO NOT EDIT
 
+#[cfg(any(feature = "v2_36", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_36")))]
+use crate::URISchemeResponse;
+use crate::WebView;
 use glib::object::IsA;
 use glib::translate::*;
 use std::fmt;
@@ -30,10 +34,10 @@ pub trait URISchemeRequestExt: 'static {
     #[doc(alias = "webkit_uri_scheme_request_finish_error")]
     fn finish_error(&self, error: &mut glib::Error);
 
-    //#[cfg(any(feature = "v2_36", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_36")))]
-    //#[doc(alias = "webkit_uri_scheme_request_finish_with_response")]
-    //fn finish_with_response(&self, response: /*Ignored*/&URISchemeResponse);
+    #[cfg(any(feature = "v2_36", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_36")))]
+    #[doc(alias = "webkit_uri_scheme_request_finish_with_response")]
+    fn finish_with_response(&self, response: &impl IsA<URISchemeResponse>);
 
     //#[cfg(any(feature = "v2_36", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_36")))]
@@ -59,9 +63,9 @@ pub trait URISchemeRequestExt: 'static {
     #[doc(alias = "get_uri")]
     fn uri(&self) -> Option<glib::GString>;
 
-    //#[doc(alias = "webkit_uri_scheme_request_get_web_view")]
-    //#[doc(alias = "get_web_view")]
-    //fn web_view(&self) -> /*Ignored*/Option<WebView>;
+    #[doc(alias = "webkit_uri_scheme_request_get_web_view")]
+    #[doc(alias = "get_web_view")]
+    fn web_view(&self) -> Option<WebView>;
 }
 
 impl<O: IsA<URISchemeRequest>> URISchemeRequestExt for O {
@@ -79,11 +83,13 @@ impl<O: IsA<URISchemeRequest>> URISchemeRequestExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v2_36", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_36")))]
-    //fn finish_with_response(&self, response: /*Ignored*/&URISchemeResponse) {
-    //    unsafe { TODO: call ffi:webkit_uri_scheme_request_finish_with_response() }
-    //}
+    #[cfg(any(feature = "v2_36", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_36")))]
+    fn finish_with_response(&self, response: &impl IsA<URISchemeResponse>) {
+        unsafe {
+            ffi::webkit_uri_scheme_request_finish_with_response(self.as_ref().to_glib_none().0, response.as_ref().to_glib_none().0);
+        }
+    }
 
     //#[cfg(any(feature = "v2_36", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_36")))]
@@ -117,9 +123,11 @@ impl<O: IsA<URISchemeRequest>> URISchemeRequestExt for O {
         }
     }
 
-    //fn web_view(&self) -> /*Ignored*/Option<WebView> {
-    //    unsafe { TODO: call ffi:webkit_uri_scheme_request_get_web_view() }
-    //}
+    fn web_view(&self) -> Option<WebView> {
+        unsafe {
+            from_glib_none(ffi::webkit_uri_scheme_request_get_web_view(self.as_ref().to_glib_none().0))
+        }
+    }
 }
 
 impl fmt::Display for URISchemeRequest {

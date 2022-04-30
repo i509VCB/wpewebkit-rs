@@ -3,6 +3,8 @@
 // from ../gir-files
 // DO NOT EDIT
 
+use crate::URIRequest;
+use crate::URIResponse;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -37,9 +39,9 @@ pub trait WebResourceExt: 'static {
     
     fn data_future(&self) -> Pin<Box_<dyn std::future::Future<Output = Result<Vec<u8>, glib::Error>> + 'static>>;
 
-    //#[doc(alias = "webkit_web_resource_get_response")]
-    //#[doc(alias = "get_response")]
-    //fn response(&self) -> /*Ignored*/Option<URIResponse>;
+    #[doc(alias = "webkit_web_resource_get_response")]
+    #[doc(alias = "get_response")]
+    fn response(&self) -> Option<URIResponse>;
 
     #[doc(alias = "webkit_web_resource_get_uri")]
     #[doc(alias = "get_uri")]
@@ -48,10 +50,10 @@ pub trait WebResourceExt: 'static {
     #[doc(alias = "failed")]
     fn connect_failed<F: Fn(&Self, &glib::Error) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    //#[cfg(any(feature = "v2_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
-    //#[doc(alias = "failed-with-tls-errors")]
-    //fn connect_failed_with_tls_errors<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
+    #[cfg(any(feature = "v2_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+    #[doc(alias = "failed-with-tls-errors")]
+    fn connect_failed_with_tls_errors<F: Fn(&Self, &gio::TlsCertificate, gio::TlsCertificateFlags) + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[doc(alias = "finished")]
     fn connect_finished<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -59,8 +61,8 @@ pub trait WebResourceExt: 'static {
     #[doc(alias = "received-data")]
     fn connect_received_data<F: Fn(&Self, u64) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    //#[doc(alias = "sent-request")]
-    //fn connect_sent_request<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
+    #[doc(alias = "sent-request")]
+    fn connect_sent_request<F: Fn(&Self, &URIRequest, &URIResponse) + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[doc(alias = "response")]
     fn connect_response_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -111,9 +113,11 @@ impl<O: IsA<WebResource>> WebResourceExt for O {
         }))
     }
 
-    //fn response(&self) -> /*Ignored*/Option<URIResponse> {
-    //    unsafe { TODO: call ffi:webkit_web_resource_get_response() }
-    //}
+    fn response(&self) -> Option<URIResponse> {
+        unsafe {
+            from_glib_none(ffi::webkit_web_resource_get_response(self.as_ref().to_glib_none().0))
+        }
+    }
 
     fn uri(&self) -> Option<glib::GString> {
         unsafe {
@@ -133,12 +137,19 @@ impl<O: IsA<WebResource>> WebResourceExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v2_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
-    //fn connect_failed_with_tls_errors<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
-    //    Ignored certificate: Gio.TlsCertificate
-    //    Ignored errors: Gio.TlsCertificateFlags
-    //}
+    #[cfg(any(feature = "v2_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+    fn connect_failed_with_tls_errors<F: Fn(&Self, &gio::TlsCertificate, gio::TlsCertificateFlags) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn failed_with_tls_errors_trampoline<P: IsA<WebResource>, F: Fn(&P, &gio::TlsCertificate, gio::TlsCertificateFlags) + 'static>(this: *mut ffi::WebKitWebResource, certificate: *mut gio::ffi::GTlsCertificate, errors: gio::ffi::GTlsCertificateFlags, f: glib::ffi::gpointer) {
+            let f: &F = &*(f as *const F);
+            f(WebResource::from_glib_borrow(this).unsafe_cast_ref(), &from_glib_borrow(certificate), from_glib(errors))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"failed-with-tls-errors\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(failed_with_tls_errors_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
 
     fn connect_finished<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn finished_trampoline<P: IsA<WebResource>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitWebResource, f: glib::ffi::gpointer) {
@@ -164,10 +175,17 @@ impl<O: IsA<WebResource>> WebResourceExt for O {
         }
     }
 
-    //fn connect_sent_request<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
-    //    Ignored request: WPEWebKit.URIRequest
-    //    Ignored redirected_response: WPEWebKit.URIResponse
-    //}
+    fn connect_sent_request<F: Fn(&Self, &URIRequest, &URIResponse) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn sent_request_trampoline<P: IsA<WebResource>, F: Fn(&P, &URIRequest, &URIResponse) + 'static>(this: *mut ffi::WebKitWebResource, request: *mut ffi::WebKitURIRequest, redirected_response: *mut ffi::WebKitURIResponse, f: glib::ffi::gpointer) {
+            let f: &F = &*(f as *const F);
+            f(WebResource::from_glib_borrow(this).unsafe_cast_ref(), &from_glib_borrow(request), &from_glib_borrow(redirected_response))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(self.as_ptr() as *mut _, b"sent-request\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(sent_request_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
 
     fn connect_response_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_response_trampoline<P: IsA<WebResource>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitWebResource, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {

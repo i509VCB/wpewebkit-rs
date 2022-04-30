@@ -3,6 +3,16 @@
 // from ../gir-files
 // DO NOT EDIT
 
+mod authentication_request;
+pub use self::authentication_request::AuthenticationRequest;
+
+#[cfg(any(feature = "v2_18", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_18")))]
+mod automation_session;
+#[cfg(any(feature = "v2_18", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_18")))]
+pub use self::automation_session::AutomationSession;
+
 mod back_forward_list;
 pub use self::back_forward_list::BackForwardList;
 
@@ -19,6 +29,9 @@ mod device_info_permission_request;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 pub use self::device_info_permission_request::DeviceInfoPermissionRequest;
 
+mod download;
+pub use self::download::Download;
+
 #[cfg(any(feature = "v2_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
 mod editor_state;
@@ -31,6 +44,12 @@ pub use self::favicon_database::FaviconDatabase;
 
 mod file_chooser_request;
 pub use self::file_chooser_request::FileChooserRequest;
+
+mod find_controller;
+pub use self::find_controller::FindController;
+
+mod form_submission_request;
+pub use self::form_submission_request::FormSubmissionRequest;
 
 #[cfg(any(feature = "v2_26", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_26")))]
@@ -58,6 +77,9 @@ mod install_missing_media_plugins_permission_request;
 #[cfg(any(feature = "v2_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
 pub use self::install_missing_media_plugins_permission_request::InstallMissingMediaPluginsPermissionRequest;
+
+mod media_key_system_permission_request;
+pub use self::media_key_system_permission_request::MediaKeySystemPermissionRequest;
 
 mod navigation_policy_decision;
 pub use self::navigation_policy_decision::NavigationPolicyDecision;
@@ -100,8 +122,20 @@ pub use self::response_policy_decision::ResponsePolicyDecision;
 mod security_manager;
 pub use self::security_manager::SecurityManager;
 
+mod settings;
+pub use self::settings::Settings;
+
+mod uri_request;
+pub use self::uri_request::URIRequest;
+
+mod uri_response;
+pub use self::uri_response::URIResponse;
+
 mod uri_scheme_request;
 pub use self::uri_scheme_request::URISchemeRequest;
+
+mod uri_scheme_response;
+pub use self::uri_scheme_response::URISchemeResponse;
 
 #[cfg(any(feature = "v2_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
@@ -117,8 +151,14 @@ mod user_media_permission_request;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
 pub use self::user_media_permission_request::UserMediaPermissionRequest;
 
+mod web_context;
+pub use self::web_context::WebContext;
+
 mod web_resource;
 pub use self::web_resource::WebResource;
+
+mod web_view;
+pub use self::web_view::WebView;
 
 #[cfg(any(feature = "v2_30", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
@@ -126,6 +166,23 @@ mod website_data_access_permission_request;
 #[cfg(any(feature = "v2_30", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
 pub use self::website_data_access_permission_request::WebsiteDataAccessPermissionRequest;
+
+#[cfg(any(feature = "v2_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
+mod website_data_manager;
+#[cfg(any(feature = "v2_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
+pub use self::website_data_manager::WebsiteDataManager;
+
+#[cfg(any(feature = "v2_30", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+mod website_policies;
+#[cfg(any(feature = "v2_30", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+pub use self::website_policies::WebsitePolicies;
+
+mod window_properties;
+pub use self::window_properties::WindowProperties;
 
 mod application_info;
 pub use self::application_info::ApplicationInfo;
@@ -136,6 +193,13 @@ mod color;
 #[cfg(any(feature = "v2_24", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 pub use self::color::Color;
+
+#[cfg(any(feature = "v2_2", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_2")))]
+mod credential;
+#[cfg(any(feature = "v2_2", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_2")))]
+pub use self::credential::Credential;
 
 #[cfg(any(feature = "v2_26", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_26")))]
@@ -165,8 +229,21 @@ mod input_method_underline;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
 pub use self::input_method_underline::InputMethodUnderline;
 
+mod javascript_result;
+pub use self::javascript_result::JavascriptResult;
+
+#[cfg(any(feature = "v2_34", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_34")))]
+mod memory_pressure_settings;
+#[cfg(any(feature = "v2_34", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_34")))]
+pub use self::memory_pressure_settings::MemoryPressureSettings;
+
 mod mime_info;
 pub use self::mime_info::MimeInfo;
+
+mod navigation_action;
+pub use self::navigation_action::NavigationAction;
 
 #[cfg(any(feature = "v2_16", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_16")))]
@@ -202,6 +279,13 @@ mod security_origin;
 #[cfg(any(feature = "v2_16", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_16")))]
 pub use self::security_origin::SecurityOrigin;
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+mod user_content_filter;
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+pub use self::user_content_filter::UserContentFilter;
 
 #[cfg(any(feature = "v2_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
@@ -334,14 +418,21 @@ pub use self::constants::EDITING_COMMAND_UNDO;
 
 #[doc(hidden)]
 pub mod traits {
+    pub use super::authentication_request::AuthenticationRequestExt;
+    #[cfg(any(feature = "v2_18", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_18")))]
+    pub use super::automation_session::AutomationSessionExt;
     pub use super::back_forward_list::BackForwardListExt;
     pub use super::context_menu::ContextMenuExt;
     pub use super::cookie_manager::CookieManagerExt;
+    pub use super::download::DownloadExt;
     #[cfg(any(feature = "v2_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
     pub use super::editor_state::EditorStateExt;
     pub use super::favicon_database::FaviconDatabaseExt;
     pub use super::file_chooser_request::FileChooserRequestExt;
+    pub use super::find_controller::FindControllerExt;
+    pub use super::form_submission_request::FormSubmissionRequestExt;
     #[cfg(any(feature = "v2_26", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_26")))]
     pub use super::geolocation_manager::GeolocationManagerExt;
@@ -365,15 +456,49 @@ pub mod traits {
     pub use super::policy_decision::PolicyDecisionExt;
     pub use super::response_policy_decision::ResponsePolicyDecisionExt;
     pub use super::security_manager::SecurityManagerExt;
+    pub use super::settings::SettingsExt;
+    pub use super::uri_request::URIRequestExt;
+    pub use super::uri_response::URIResponseExt;
     pub use super::uri_scheme_request::URISchemeRequestExt;
+    pub use super::uri_scheme_response::URISchemeResponseExt;
     #[cfg(any(feature = "v2_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
     pub use super::user_content_manager::UserContentManagerExt;
     #[cfg(any(feature = "v2_8", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
     pub use super::user_media_permission_request::UserMediaPermissionRequestExt;
+    pub use super::web_context::WebContextExt;
     pub use super::web_resource::WebResourceExt;
+    pub use super::web_view::WebViewExt;
     #[cfg(any(feature = "v2_30", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
     pub use super::website_data_access_permission_request::WebsiteDataAccessPermissionRequestExt;
+    #[cfg(any(feature = "v2_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
+    pub use super::website_data_manager::WebsiteDataManagerExt;
+    #[cfg(any(feature = "v2_30", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+    pub use super::website_policies::WebsitePoliciesExt;
+    pub use super::window_properties::WindowPropertiesExt;
+}
+#[doc(hidden)]
+pub mod builders {
+    #[cfg(any(feature = "v2_18", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_18")))]
+    pub use super::automation_session::AutomationSessionBuilder;
+    pub use super::download::DownloadBuilder;
+    pub use super::find_controller::FindControllerBuilder;
+    pub use super::hit_test_result::HitTestResultBuilder;
+    pub use super::settings::SettingsBuilder;
+    pub use super::uri_request::URIRequestBuilder;
+    pub use super::uri_scheme_response::URISchemeResponseBuilder;
+    pub use super::web_context::WebContextBuilder;
+    pub use super::web_view::WebViewBuilder;
+    #[cfg(any(feature = "v2_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
+    pub use super::website_data_manager::WebsiteDataManagerBuilder;
+    #[cfg(any(feature = "v2_30", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+    pub use super::website_policies::WebsitePoliciesBuilder;
+    pub use super::window_properties::WindowPropertiesBuilder;
 }

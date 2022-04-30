@@ -3,6 +3,9 @@
 // from ../gir-files
 // DO NOT EDIT
 
+#[cfg(any(feature = "v2_32", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_32")))]
+use crate::MediaKeySystemPermissionRequest;
 #[cfg(any(feature = "v2_8", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
 use crate::UserMediaPermissionRequest;
@@ -39,12 +42,15 @@ pub fn minor_version() -> u32 {
     }
 }
 
-//#[cfg(any(feature = "v2_32", feature = "dox"))]
-//#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_32")))]
-//#[doc(alias = "webkit_media_key_system_permission_get_name")]
-//pub fn media_key_system_permission_get_name(request: /*Ignored*/&MediaKeySystemPermissionRequest) -> Option<glib::GString> {
-//    unsafe { TODO: call ffi:webkit_media_key_system_permission_get_name() }
-//}
+#[cfg(any(feature = "v2_32", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_32")))]
+#[doc(alias = "webkit_media_key_system_permission_get_name")]
+pub fn media_key_system_permission_get_name(request: &impl IsA<MediaKeySystemPermissionRequest>) -> Option<glib::GString> {
+    skip_assert_initialized!();
+    unsafe {
+        from_glib_none(ffi::webkit_media_key_system_permission_get_name(request.as_ref().to_glib_none().0))
+    }
+}
 
 #[cfg(any(feature = "v2_24", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]

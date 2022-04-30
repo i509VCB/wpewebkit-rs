@@ -3,11 +3,32 @@
 // from ../gir-files
 // DO NOT EDIT
 
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+use crate::JavascriptResult;
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+use crate::UserContentFilter;
 use crate::UserScript;
 use crate::UserStyleSheet;
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+use glib::object::Cast;
 use glib::object::IsA;
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+use glib::signal::connect_raw;
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+use glib::signal::SignalHandlerId;
 use glib::translate::*;
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+use std::boxed::Box as Box_;
 use std::fmt;
+#[cfg(any(feature = "v2_8", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+use std::mem::transmute;
 
 glib::wrapper! {
     #[doc(alias = "WebKitUserContentManager")]
@@ -40,10 +61,10 @@ impl Default for UserContentManager {
                  }
 
 pub trait UserContentManagerExt: 'static {
-    //#[cfg(any(feature = "v2_24", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
-    //#[doc(alias = "webkit_user_content_manager_add_filter")]
-    //fn add_filter(&self, filter: /*Ignored*/&UserContentFilter);
+    #[cfg(any(feature = "v2_24", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+    #[doc(alias = "webkit_user_content_manager_add_filter")]
+    fn add_filter(&self, filter: &UserContentFilter);
 
     #[doc(alias = "webkit_user_content_manager_add_script")]
     fn add_script(&self, script: &UserScript);
@@ -72,10 +93,10 @@ pub trait UserContentManagerExt: 'static {
     #[doc(alias = "webkit_user_content_manager_remove_all_style_sheets")]
     fn remove_all_style_sheets(&self);
 
-    //#[cfg(any(feature = "v2_24", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
-    //#[doc(alias = "webkit_user_content_manager_remove_filter")]
-    //fn remove_filter(&self, filter: /*Ignored*/&UserContentFilter);
+    #[cfg(any(feature = "v2_24", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+    #[doc(alias = "webkit_user_content_manager_remove_filter")]
+    fn remove_filter(&self, filter: &UserContentFilter);
 
     #[cfg(any(feature = "v2_26", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_26")))]
@@ -102,18 +123,20 @@ pub trait UserContentManagerExt: 'static {
     #[doc(alias = "webkit_user_content_manager_unregister_script_message_handler_in_world")]
     fn unregister_script_message_handler_in_world(&self, name: &str, world_name: &str);
 
-    //#[cfg(any(feature = "v2_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
-    //#[doc(alias = "script-message-received")]
-    //fn connect_script_message_received<Unsupported or ignored types>(&self, detail: Option<&str>, f: F) -> SignalHandlerId;
+    #[cfg(any(feature = "v2_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+    #[doc(alias = "script-message-received")]
+    fn connect_script_message_received<F: Fn(&Self, &JavascriptResult) + 'static>(&self, detail: Option<&str>, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<UserContentManager>> UserContentManagerExt for O {
-    //#[cfg(any(feature = "v2_24", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
-    //fn add_filter(&self, filter: /*Ignored*/&UserContentFilter) {
-    //    unsafe { TODO: call ffi:webkit_user_content_manager_add_filter() }
-    //}
+    #[cfg(any(feature = "v2_24", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+    fn add_filter(&self, filter: &UserContentFilter) {
+        unsafe {
+            ffi::webkit_user_content_manager_add_filter(self.as_ref().to_glib_none().0, filter.to_glib_none().0);
+        }
+    }
 
     fn add_script(&self, script: &UserScript) {
         unsafe {
@@ -163,11 +186,13 @@ impl<O: IsA<UserContentManager>> UserContentManagerExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v2_24", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
-    //fn remove_filter(&self, filter: /*Ignored*/&UserContentFilter) {
-    //    unsafe { TODO: call ffi:webkit_user_content_manager_remove_filter() }
-    //}
+    #[cfg(any(feature = "v2_24", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+    fn remove_filter(&self, filter: &UserContentFilter) {
+        unsafe {
+            ffi::webkit_user_content_manager_remove_filter(self.as_ref().to_glib_none().0, filter.to_glib_none().0);
+        }
+    }
 
     #[cfg(any(feature = "v2_26", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_26")))]
@@ -209,11 +234,21 @@ impl<O: IsA<UserContentManager>> UserContentManagerExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v2_8", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
-    //fn connect_script_message_received<Unsupported or ignored types>(&self, detail: Option<&str>, f: F) -> SignalHandlerId {
-    //    Ignored js_result: WPEWebKit.JavascriptResult
-    //}
+    #[cfg(any(feature = "v2_8", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
+    fn connect_script_message_received<F: Fn(&Self, &JavascriptResult) + 'static>(&self, detail: Option<&str>, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn script_message_received_trampoline<P: IsA<UserContentManager>, F: Fn(&P, &JavascriptResult) + 'static>(this: *mut ffi::WebKitUserContentManager, js_result: *mut ffi::WebKitJavascriptResult, f: glib::ffi::gpointer) {
+            let f: &F = &*(f as *const F);
+            f(UserContentManager::from_glib_borrow(this).unsafe_cast_ref(), &from_glib_borrow(js_result))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            let detailed_signal_name = detail.map(|name| { format!("script-message-received::{}\0", name) });
+            let signal_name: &[u8] = detailed_signal_name.as_ref().map_or(&b"script-message-received\0"[..], |n| n.as_bytes());
+            connect_raw(self.as_ptr() as *mut _, signal_name.as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(script_message_received_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+        }
+    }
 }
 
 impl fmt::Display for UserContentManager {

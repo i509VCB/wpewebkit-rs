@@ -54,34 +54,35 @@ generate = [
 
     # Structures
     "WPEWebKit.ApplicationInfo",
+    "WPEWebKit.Credential",
     "WPEWebKit.GeolocationPosition",
     "WPEWebKit.ITPFirstParty",
     "WPEWebKit.ITPThirdParty",
+    "WPEWebKit.JavascriptResult",
     "WPEWebKit.MimeInfo",
+    "WPEWebKit.NavigationAction",
     "WPEWebKit.NetworkProxySettings",
     "WPEWebKit.OptionMenuItem",
     "WPEWebKit.Rectangle",
     "WPEWebKit.SecurityOrigin",
+    "WPEWebKit.UserContentFilter",
     "WPEWebKit.UserScript",
-    "WPEWebKit.UserStyleSheet",
     "WPEWebKit.WebsiteData",
     "WPEWebKit.WebViewSessionState",
 
     # Classes
     "WPEWebKit.BackForwardList",
-    # "WPEWebKit.BackForwardListItem", # InitiallyUnowned
     "WPEWebKit.ContextMenu",
-    # "WPEWebKit.ContextMenuItem", # InitiallyUnowned
     "WPEWebKit.CookieManager",
     "WPEWebKit.DeviceInfoPermissionRequest",
     "WPEWebKit.EditorState",
     "WPEWebKit.FaviconDatabase",
     "WPEWebKit.FileChooserRequest",
+    "WPEWebKit.FormSubmissionRequest",
     "WPEWebKit.GeolocationManager",
     "WPEWebKit.GeolocationPermissionRequest",
-    "WPEWebKit.HitTestResult",
-    "WPEWebKit.InputMethodContext",
     "WPEWebKit.InstallMissingMediaPluginsPermissionRequest",
+    "WPEWebKit.MediaKeySystemPermissionRequest",
     "WPEWebKit.NavigationPolicyDecision",
     "WPEWebKit.Notification",
     "WPEWebKit.NotificationPermissionRequest",
@@ -109,6 +110,10 @@ generate = [
 
     # Interfaces
     "WPEWebKit.PermissionRequest",
+
+    # Callbacks
+    "WPEWebKit.FrameDisplayedCallback",
+    "WPEWebKit.URISchemeRequestCallback",
 ]
 
 manual = [
@@ -117,14 +122,23 @@ manual = [
     "Gio.AsyncReadyCallback",
     "Gio.AsyncResult",
     "Gio.Cancellable",
+    "Gio.File",
     "Gio.InputStream",
+    "Gio.TlsCertificate",
+    "Gio.TlsCertificateFlags",
+    "Gio.TlsPasswordFlags",
+    "Gio.UnixFDList",
     "GLib.Bytes",
     "GLib.DateTime",
     "GLib.DestroyNotify",
     "GLib.Error",
     "GLib.Quark",
+    "GLib.TimeSpan",
     "GLib.Variant",
     "GObject.InitiallyUnowned",
+
+    # FIXME: gir panic
+    "WPEWebKit.UserContentFilterStore", 
 ]
 
 [[object]]
@@ -135,13 +149,52 @@ status = "generate"
     assertion = "skip"
 
 [[object]]
+name = "WPEWebKit.AuthenticationRequest"
+status = "generate"
+    [[object.function]]
+    name = "authenticate"
+    manual = true # *const and *mut mismatch in ffi
+
+[[object]]
+name = "WPEWebKit.AutomationSession"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEWebKit.BackForwardListItem"
+status = "skip" # TODO: InitiallyUnowned
+
+[[object]]
 name = "WPEWebKit.Color"
 status = "generate"
 boxed_inline = true
     [[object.function]]
     name = "parse"
-    # This is a constructor
-    manual = true
+    manual = true # This is a constructor
+
+[[object]]
+name = "WPEWebKit.ContextMenuItem"
+status = "skip" # TODO: InitiallyUnowned
+
+[[object]]
+name = "WPEWebKit.Download"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEWebKit.FindController"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEWebKit.HitTestResult"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEWebKit.InputMethodContext"
+status = "generate"
+generate_builder = false # Cannot generate builder because InputMethodContext is a base class
 
 [[object]]
 name = "WPEWebKit.InputMethodUnderline"
@@ -153,9 +206,96 @@ status = "generate"
         const = true
 
 [[object]]
+name = "WPEWebKit.MemoryPressureSettings"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEWebKit.UserMessage"
+status = "skip" # FIXME: InitiallyUnowned
+generate_builder = true
+
+[[object]]
+name = "WPEWebKit.UserStyleSheet"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEWebKit.URIRequest"
+status = "generate"
+generate_builder = true
+module_name = "uri_request"
+
+[[object]]
+name = "WPEWebKit.URIResponse"
+status = "generate"
+generate_builder = true
+module_name = "uri_response"
+
+[[object]]
+name = "WPEWebKit.URISchemeResponse"
+status = "generate"
+generate_builder = true
+module_name = "uri_scheme_response"
+
+[[object]]
 name = "WPEWebKit.ScriptDialog"
 status = "generate"
 version = "2.24" # Because of webkit_script_dialog_(un)ref
+
+[[object]]
+name = "WPEWebKit.Settings"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEWebKit.WebContext"
+status = "generate"
+generate_builder = true # FIXME: Builder contains no members
+    [[object.function]]
+    name = "set_network_proxy_settings"
+    ignore = true # webkit_web_context_set_network_proxy_settings requires *mut WebKitNetworkProxySettings
+
+[[object]]
+name = "WPEWebKit.WebsiteDataManager"
+status = "generate"
+generate_builder = true
+    [[object.function]]
+    name = "clear"
+    manual = true # Because glib::TimeSpan needs conversion to glib_sys::GTimeSpan (typedef as i64)
+
+    [[object.function]]
+    name = "remove"
+    manual = true # Because of list parameter
+
+    [[object.function]]
+    name = "set_network_proxy_settings"
+    manual = true # Because of *const and *mut mismatch on `proxy_settings` parameter
+
+[[object]]
+name = "WPEWebKit.WebsitePolicies"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEWebKit.WebView"
+status = "generate"
+generate_builder = true
+    [[object.function]]
+    name = "new"
+    manual = true # FFI takes *mut but to_glib_ptr returns *const
+    [[object.function]]
+    name = "new_with_context"
+    manual = true # FFI takes *mut but to_glib_ptr returns *const
+    [[object.function]]
+    name = "new_with_related_view"
+    manual = true # FFI takes *mut but to_glib_ptr returns *const
+    [[object.function]]
+    name = "new_with_settings"
+    manual = true # FFI takes *mut but to_glib_ptr returns *const
+    [[object.function]]
+    name = "new_with_user_content_manager"
+    manual = true # FFI takes *mut but to_glib_ptr returns *const
 
 [[object]]
 name = "WPEWebKit.WebViewBackend"
@@ -167,3 +307,8 @@ status = "generate"
     [[object.function]]
     name = "get_wpe_backend"
     ignore = true # not useful in Rust
+
+[[object]]
+name = "WPEWebKit.WindowProperties"
+status = "generate"
+generate_builder = true

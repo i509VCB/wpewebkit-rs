@@ -3,6 +3,9 @@
 // from ../gir-files
 // DO NOT EDIT
 
+#[cfg(any(feature = "v2_30", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+use crate::WebsitePolicies;
 use glib::object::IsA;
 use glib::translate::*;
 use std::fmt;
@@ -32,10 +35,10 @@ pub trait PolicyDecisionExt: 'static {
     #[doc(alias = "use")]
     fn use_(&self);
 
-    //#[cfg(any(feature = "v2_30", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
-    //#[doc(alias = "webkit_policy_decision_use_with_policies")]
-    //fn use_with_policies(&self, policies: /*Ignored*/&WebsitePolicies);
+    #[cfg(any(feature = "v2_30", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+    #[doc(alias = "webkit_policy_decision_use_with_policies")]
+    fn use_with_policies(&self, policies: &impl IsA<WebsitePolicies>);
 }
 
 impl<O: IsA<PolicyDecision>> PolicyDecisionExt for O {
@@ -57,11 +60,13 @@ impl<O: IsA<PolicyDecision>> PolicyDecisionExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v2_30", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
-    //fn use_with_policies(&self, policies: /*Ignored*/&WebsitePolicies) {
-    //    unsafe { TODO: call ffi:webkit_policy_decision_use_with_policies() }
-    //}
+    #[cfg(any(feature = "v2_30", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+    fn use_with_policies(&self, policies: &impl IsA<WebsitePolicies>) {
+        unsafe {
+            ffi::webkit_policy_decision_use_with_policies(self.as_ref().to_glib_none().0, policies.as_ref().to_glib_none().0);
+        }
+    }
 }
 
 impl fmt::Display for PolicyDecision {

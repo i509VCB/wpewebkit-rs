@@ -4,6 +4,8 @@
 // DO NOT EDIT
 
 use crate::PolicyDecision;
+use crate::URIRequest;
+use crate::URIResponse;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -28,13 +30,13 @@ impl ResponsePolicyDecision {
 }
 
 pub trait ResponsePolicyDecisionExt: 'static {
-    //#[doc(alias = "webkit_response_policy_decision_get_request")]
-    //#[doc(alias = "get_request")]
-    //fn request(&self) -> /*Ignored*/Option<URIRequest>;
+    #[doc(alias = "webkit_response_policy_decision_get_request")]
+    #[doc(alias = "get_request")]
+    fn request(&self) -> Option<URIRequest>;
 
-    //#[doc(alias = "webkit_response_policy_decision_get_response")]
-    //#[doc(alias = "get_response")]
-    //fn response(&self) -> /*Ignored*/Option<URIResponse>;
+    #[doc(alias = "webkit_response_policy_decision_get_response")]
+    #[doc(alias = "get_response")]
+    fn response(&self) -> Option<URIResponse>;
 
     #[cfg(any(feature = "v2_4", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
@@ -49,13 +51,17 @@ pub trait ResponsePolicyDecisionExt: 'static {
 }
 
 impl<O: IsA<ResponsePolicyDecision>> ResponsePolicyDecisionExt for O {
-    //fn request(&self) -> /*Ignored*/Option<URIRequest> {
-    //    unsafe { TODO: call ffi:webkit_response_policy_decision_get_request() }
-    //}
+    fn request(&self) -> Option<URIRequest> {
+        unsafe {
+            from_glib_none(ffi::webkit_response_policy_decision_get_request(self.as_ref().to_glib_none().0))
+        }
+    }
 
-    //fn response(&self) -> /*Ignored*/Option<URIResponse> {
-    //    unsafe { TODO: call ffi:webkit_response_policy_decision_get_response() }
-    //}
+    fn response(&self) -> Option<URIResponse> {
+        unsafe {
+            from_glib_none(ffi::webkit_response_policy_decision_get_response(self.as_ref().to_glib_none().0))
+        }
+    }
 
     #[cfg(any(feature = "v2_4", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
