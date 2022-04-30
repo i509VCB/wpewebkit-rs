@@ -22,4 +22,5 @@ pub use prelude::*;
 mod auto;
 pub use auto::*;
 
+// TODO: Not ideal to do manually?
 pub use auto::functions::*;

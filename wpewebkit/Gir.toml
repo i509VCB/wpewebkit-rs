@@ -1,9 +1,3 @@
-external_libraries = [
-    "Gio",
-    "GLib",
-    "GObject",
-]
-
 [options]
 library = "WPEWebKit"
 version = "1.1"
@@ -18,6 +12,12 @@ girs_directories = [
     "../",
 ]
 use_gi_docgen = true
+
+external_libraries = [
+    "Gio",
+    "GLib",
+    "GObject",
+]
 
 generate = [
     # Enums

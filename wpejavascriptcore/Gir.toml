@@ -1,0 +1,67 @@
+[options]
+library = "WPEJavaScriptCore"
+version = "1.1"
+target_path = "."
+single_version_file = true
+min_cfg_version = "1.1"
+work_mode = "normal"
+deprecate_by_min_version = true
+girs_directories = [
+    "../gir-files/",
+    "../",
+]
+use_gi_docgen = true
+
+external_libraries = [
+    "Glib",
+    "GObject",
+]
+
+generate = [
+    "WPEJavaScriptCore.CheckSyntaxMode",
+    "WPEJavaScriptCore.CheckSyntaxResult",
+    "WPEJavaScriptCore.Class",
+    "WPEJavaScriptCore.ClassDeletePropertyFunction",
+    "WPEJavaScriptCore.ClassEnumeratePropertiesFunction",
+    "WPEJavaScriptCore.ClassGetPropertyFunction",
+    "WPEJavaScriptCore.ClassHasPropertyFunction",
+    "WPEJavaScriptCore.ClassSetPropertyFunction",
+    "WPEJavaScriptCore.Exception",
+    "WPEJavaScriptCore.ExceptionHandler",
+    "WPEJavaScriptCore.OptionsFunc",
+    "WPEJavaScriptCore.OptionType",
+    "WPEJavaScriptCore.TypedArrayType",
+    "WPEJavaScriptCore.ValuePropertyFlags",
+    "WPEJavaScriptCore.VirtualMachine",
+]
+
+manual = [
+    "GLib.Bytes",
+    "GLib.DestroyNotify",
+    "GLib.OptionGroup",
+    "GObject.Callback",
+]
+
+[[object]]
+name = "WPEJavaScriptCore.*"
+status = "generate"
+
+[[object]]
+name = "WPEJavaScriptCore.ClassVTable"
+status = "skip" # FIXME(panic): Record ClassVTable has record_boxed=true but don't have glib:get_type function
+generate_builder = true
+
+[[object]]
+name = "WPEJavaScriptCore.Context"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEJavaScriptCore.Value"
+status = "generate"
+generate_builder = true
+
+[[object]]
+name = "WPEJavaScriptCore.WeakValue"
+status = "generate"
+generate_builder = true
