@@ -3,9 +3,11 @@
 // from ../gir-files
 // DO NOT EDIT
 
+use glib::error::ErrorDomain;
 use glib::translate::*;
 use glib::value::FromValue;
 use glib::value::ToValue;
+use glib::Quark;
 use glib::StaticType;
 use glib::Type;
 use std::fmt;
@@ -972,6 +974,248 @@ impl ToValue for CredentialPersistence {
     }
 }
 
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WebKitDownloadError")]
+pub enum DownloadError {
+    #[doc(alias = "WEBKIT_DOWNLOAD_ERROR_NETWORK")]
+    Network,
+    #[doc(alias = "WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER")]
+    CancelledByUser,
+    #[doc(alias = "WEBKIT_DOWNLOAD_ERROR_DESTINATION")]
+    Destination,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl DownloadError {
+    #[doc(alias = "webkit_download_error_quark")]
+    pub fn quark() -> glib::Quark {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib(ffi::webkit_download_error_quark())
+        }
+    }
+}
+
+impl fmt::Display for DownloadError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "DownloadError::{}", match *self {
+            Self::Network => "Network",
+            Self::CancelledByUser => "CancelledByUser",
+            Self::Destination => "Destination",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for DownloadError {
+    type GlibType = ffi::WebKitDownloadError;
+
+    fn into_glib(self) -> ffi::WebKitDownloadError {
+        match self {
+            Self::Network => ffi::WEBKIT_DOWNLOAD_ERROR_NETWORK,
+            Self::CancelledByUser => ffi::WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER,
+            Self::Destination => ffi::WEBKIT_DOWNLOAD_ERROR_DESTINATION,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitDownloadError> for DownloadError {
+    unsafe fn from_glib(value: ffi::WebKitDownloadError) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_DOWNLOAD_ERROR_NETWORK => Self::Network,
+            ffi::WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER => Self::CancelledByUser,
+            ffi::WEBKIT_DOWNLOAD_ERROR_DESTINATION => Self::Destination,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+impl ErrorDomain for DownloadError {
+    fn domain() -> Quark {
+        skip_assert_initialized!();
+        
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
+            glib::ffi::g_quark_from_static_string(b"WebKitDownloadError\0".as_ptr() as *const _)
+        });
+        unsafe { from_glib(*QUARK) }
+    }
+
+    fn code(self) -> i32 {
+        self.into_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        skip_assert_initialized!();
+        match code {
+            ffi::WEBKIT_DOWNLOAD_ERROR_NETWORK => Some(Self::Network),
+            ffi::WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER => Some(Self::CancelledByUser),
+            ffi::WEBKIT_DOWNLOAD_ERROR_DESTINATION => Some(Self::Destination),
+            value => Some(Self::__Unknown(value)),
+}
+    }
+}
+
+impl StaticType for DownloadError {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_download_error_get_type()) }
+    }
+}
+
+impl glib::value::ValueType for DownloadError {
+    type Type = Self;
+}
+
+unsafe impl<'a> FromValue<'a> for DownloadError {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for DownloadError {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WebKitFaviconDatabaseError")]
+pub enum FaviconDatabaseError {
+    #[doc(alias = "WEBKIT_FAVICON_DATABASE_ERROR_NOT_INITIALIZED")]
+    NotInitialized,
+    #[doc(alias = "WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_NOT_FOUND")]
+    FaviconNotFound,
+    #[doc(alias = "WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_UNKNOWN")]
+    FaviconUnknown,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl FaviconDatabaseError {
+    #[doc(alias = "webkit_favicon_database_error_quark")]
+    pub fn quark() -> glib::Quark {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib(ffi::webkit_favicon_database_error_quark())
+        }
+    }
+}
+
+impl fmt::Display for FaviconDatabaseError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "FaviconDatabaseError::{}", match *self {
+            Self::NotInitialized => "NotInitialized",
+            Self::FaviconNotFound => "FaviconNotFound",
+            Self::FaviconUnknown => "FaviconUnknown",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for FaviconDatabaseError {
+    type GlibType = ffi::WebKitFaviconDatabaseError;
+
+    fn into_glib(self) -> ffi::WebKitFaviconDatabaseError {
+        match self {
+            Self::NotInitialized => ffi::WEBKIT_FAVICON_DATABASE_ERROR_NOT_INITIALIZED,
+            Self::FaviconNotFound => ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_NOT_FOUND,
+            Self::FaviconUnknown => ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_UNKNOWN,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitFaviconDatabaseError> for FaviconDatabaseError {
+    unsafe fn from_glib(value: ffi::WebKitFaviconDatabaseError) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_FAVICON_DATABASE_ERROR_NOT_INITIALIZED => Self::NotInitialized,
+            ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_NOT_FOUND => Self::FaviconNotFound,
+            ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_UNKNOWN => Self::FaviconUnknown,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+impl ErrorDomain for FaviconDatabaseError {
+    fn domain() -> Quark {
+        skip_assert_initialized!();
+        
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
+            glib::ffi::g_quark_from_static_string(b"WebKitFaviconDatabaseError\0".as_ptr() as *const _)
+        });
+        unsafe { from_glib(*QUARK) }
+    }
+
+    fn code(self) -> i32 {
+        self.into_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        skip_assert_initialized!();
+        match code {
+            ffi::WEBKIT_FAVICON_DATABASE_ERROR_NOT_INITIALIZED => Some(Self::NotInitialized),
+            ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_NOT_FOUND => Some(Self::FaviconNotFound),
+            ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_UNKNOWN => Some(Self::FaviconUnknown),
+            value => Some(Self::__Unknown(value)),
+}
+    }
+}
+
+impl StaticType for FaviconDatabaseError {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_favicon_database_error_get_type()) }
+    }
+}
+
+impl glib::value::ValueType for FaviconDatabaseError {
+    type Type = Self;
+}
+
+unsafe impl<'a> FromValue<'a> for FaviconDatabaseError {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for FaviconDatabaseError {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
 #[cfg(any(feature = "v2_28", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1162,6 +1406,115 @@ unsafe impl<'a> FromValue<'a> for InsecureContentEvent {
 }
 
 impl ToValue for InsecureContentEvent {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WebKitJavascriptError")]
+pub enum JavascriptError {
+    #[doc(alias = "WEBKIT_JAVASCRIPT_ERROR_SCRIPT_FAILED")]
+    Failed,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl JavascriptError {
+    #[doc(alias = "webkit_javascript_error_quark")]
+    pub fn quark() -> glib::Quark {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib(ffi::webkit_javascript_error_quark())
+        }
+    }
+}
+
+impl fmt::Display for JavascriptError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "JavascriptError::{}", match *self {
+            Self::Failed => "Failed",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for JavascriptError {
+    type GlibType = ffi::WebKitJavascriptError;
+
+    fn into_glib(self) -> ffi::WebKitJavascriptError {
+        match self {
+            Self::Failed => ffi::WEBKIT_JAVASCRIPT_ERROR_SCRIPT_FAILED,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitJavascriptError> for JavascriptError {
+    unsafe fn from_glib(value: ffi::WebKitJavascriptError) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_JAVASCRIPT_ERROR_SCRIPT_FAILED => Self::Failed,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+impl ErrorDomain for JavascriptError {
+    fn domain() -> Quark {
+        skip_assert_initialized!();
+        
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
+            glib::ffi::g_quark_from_static_string(b"WebKitJavascriptError\0".as_ptr() as *const _)
+        });
+        unsafe { from_glib(*QUARK) }
+    }
+
+    fn code(self) -> i32 {
+        self.into_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        skip_assert_initialized!();
+        match code {
+            ffi::WEBKIT_JAVASCRIPT_ERROR_SCRIPT_FAILED => Some(Self::Failed),
+            _ => Some(Self::Failed),
+}
+    }
+}
+
+impl StaticType for JavascriptError {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_javascript_error_get_type()) }
+    }
+}
+
+impl glib::value::ValueType for JavascriptError {
+    type Type = Self;
+}
+
+unsafe impl<'a> FromValue<'a> for JavascriptError {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for JavascriptError {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -1469,6 +1822,139 @@ impl ToValue for NavigationType {
     }
 }
 
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WebKitNetworkError")]
+pub enum NetworkError {
+    #[doc(alias = "WEBKIT_NETWORK_ERROR_FAILED")]
+    Failed,
+    #[doc(alias = "WEBKIT_NETWORK_ERROR_TRANSPORT")]
+    Transport,
+    #[doc(alias = "WEBKIT_NETWORK_ERROR_UNKNOWN_PROTOCOL")]
+    UnknownProtocol,
+    #[doc(alias = "WEBKIT_NETWORK_ERROR_CANCELLED")]
+    Cancelled,
+    #[doc(alias = "WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST")]
+    FileDoesNotExist,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl NetworkError {
+    #[doc(alias = "webkit_network_error_quark")]
+    pub fn quark() -> glib::Quark {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib(ffi::webkit_network_error_quark())
+        }
+    }
+}
+
+impl fmt::Display for NetworkError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "NetworkError::{}", match *self {
+            Self::Failed => "Failed",
+            Self::Transport => "Transport",
+            Self::UnknownProtocol => "UnknownProtocol",
+            Self::Cancelled => "Cancelled",
+            Self::FileDoesNotExist => "FileDoesNotExist",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for NetworkError {
+    type GlibType = ffi::WebKitNetworkError;
+
+    fn into_glib(self) -> ffi::WebKitNetworkError {
+        match self {
+            Self::Failed => ffi::WEBKIT_NETWORK_ERROR_FAILED,
+            Self::Transport => ffi::WEBKIT_NETWORK_ERROR_TRANSPORT,
+            Self::UnknownProtocol => ffi::WEBKIT_NETWORK_ERROR_UNKNOWN_PROTOCOL,
+            Self::Cancelled => ffi::WEBKIT_NETWORK_ERROR_CANCELLED,
+            Self::FileDoesNotExist => ffi::WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitNetworkError> for NetworkError {
+    unsafe fn from_glib(value: ffi::WebKitNetworkError) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_NETWORK_ERROR_FAILED => Self::Failed,
+            ffi::WEBKIT_NETWORK_ERROR_TRANSPORT => Self::Transport,
+            ffi::WEBKIT_NETWORK_ERROR_UNKNOWN_PROTOCOL => Self::UnknownProtocol,
+            ffi::WEBKIT_NETWORK_ERROR_CANCELLED => Self::Cancelled,
+            ffi::WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST => Self::FileDoesNotExist,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+impl ErrorDomain for NetworkError {
+    fn domain() -> Quark {
+        skip_assert_initialized!();
+        
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
+            glib::ffi::g_quark_from_static_string(b"WebKitNetworkError\0".as_ptr() as *const _)
+        });
+        unsafe { from_glib(*QUARK) }
+    }
+
+    fn code(self) -> i32 {
+        self.into_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        skip_assert_initialized!();
+        match code {
+            ffi::WEBKIT_NETWORK_ERROR_FAILED => Some(Self::Failed),
+            ffi::WEBKIT_NETWORK_ERROR_TRANSPORT => Some(Self::Transport),
+            ffi::WEBKIT_NETWORK_ERROR_UNKNOWN_PROTOCOL => Some(Self::UnknownProtocol),
+            ffi::WEBKIT_NETWORK_ERROR_CANCELLED => Some(Self::Cancelled),
+            ffi::WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST => Some(Self::FileDoesNotExist),
+            _ => Some(Self::Failed),
+}
+    }
+}
+
+impl StaticType for NetworkError {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_network_error_get_type()) }
+    }
+}
+
+impl glib::value::ValueType for NetworkError {
+    type Type = Self;
+}
+
+unsafe impl<'a> FromValue<'a> for NetworkError {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for NetworkError {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
 #[cfg(any(feature = "v2_16", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_16")))]
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1574,6 +2060,145 @@ impl ToValue for NetworkProxyMode {
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "WebKitPluginError")]
+pub enum PluginError {
+    #[doc(alias = "WEBKIT_PLUGIN_ERROR_FAILED")]
+    Failed,
+    #[doc(alias = "WEBKIT_PLUGIN_ERROR_CANNOT_FIND_PLUGIN")]
+    CannotFindPlugin,
+    #[doc(alias = "WEBKIT_PLUGIN_ERROR_CANNOT_LOAD_PLUGIN")]
+    CannotLoadPlugin,
+    #[doc(alias = "WEBKIT_PLUGIN_ERROR_JAVA_UNAVAILABLE")]
+    JavaUnavailable,
+    #[doc(alias = "WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED")]
+    ConnectionCancelled,
+    #[doc(alias = "WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD")]
+    WillHandleLoad,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl PluginError {
+    #[doc(alias = "webkit_plugin_error_quark")]
+    pub fn quark() -> glib::Quark {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib(ffi::webkit_plugin_error_quark())
+        }
+    }
+}
+
+impl fmt::Display for PluginError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "PluginError::{}", match *self {
+            Self::Failed => "Failed",
+            Self::CannotFindPlugin => "CannotFindPlugin",
+            Self::CannotLoadPlugin => "CannotLoadPlugin",
+            Self::JavaUnavailable => "JavaUnavailable",
+            Self::ConnectionCancelled => "ConnectionCancelled",
+            Self::WillHandleLoad => "WillHandleLoad",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for PluginError {
+    type GlibType = ffi::WebKitPluginError;
+
+    fn into_glib(self) -> ffi::WebKitPluginError {
+        match self {
+            Self::Failed => ffi::WEBKIT_PLUGIN_ERROR_FAILED,
+            Self::CannotFindPlugin => ffi::WEBKIT_PLUGIN_ERROR_CANNOT_FIND_PLUGIN,
+            Self::CannotLoadPlugin => ffi::WEBKIT_PLUGIN_ERROR_CANNOT_LOAD_PLUGIN,
+            Self::JavaUnavailable => ffi::WEBKIT_PLUGIN_ERROR_JAVA_UNAVAILABLE,
+            Self::ConnectionCancelled => ffi::WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED,
+            Self::WillHandleLoad => ffi::WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitPluginError> for PluginError {
+    unsafe fn from_glib(value: ffi::WebKitPluginError) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_PLUGIN_ERROR_FAILED => Self::Failed,
+            ffi::WEBKIT_PLUGIN_ERROR_CANNOT_FIND_PLUGIN => Self::CannotFindPlugin,
+            ffi::WEBKIT_PLUGIN_ERROR_CANNOT_LOAD_PLUGIN => Self::CannotLoadPlugin,
+            ffi::WEBKIT_PLUGIN_ERROR_JAVA_UNAVAILABLE => Self::JavaUnavailable,
+            ffi::WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED => Self::ConnectionCancelled,
+            ffi::WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD => Self::WillHandleLoad,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+impl ErrorDomain for PluginError {
+    fn domain() -> Quark {
+        skip_assert_initialized!();
+        
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
+            glib::ffi::g_quark_from_static_string(b"WebKitPluginError\0".as_ptr() as *const _)
+        });
+        unsafe { from_glib(*QUARK) }
+    }
+
+    fn code(self) -> i32 {
+        self.into_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        skip_assert_initialized!();
+        match code {
+            ffi::WEBKIT_PLUGIN_ERROR_FAILED => Some(Self::Failed),
+            ffi::WEBKIT_PLUGIN_ERROR_CANNOT_FIND_PLUGIN => Some(Self::CannotFindPlugin),
+            ffi::WEBKIT_PLUGIN_ERROR_CANNOT_LOAD_PLUGIN => Some(Self::CannotLoadPlugin),
+            ffi::WEBKIT_PLUGIN_ERROR_JAVA_UNAVAILABLE => Some(Self::JavaUnavailable),
+            ffi::WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED => Some(Self::ConnectionCancelled),
+            ffi::WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD => Some(Self::WillHandleLoad),
+            _ => Some(Self::Failed),
+}
+    }
+}
+
+impl StaticType for PluginError {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_plugin_error_get_type()) }
+    }
+}
+
+impl glib::value::ValueType for PluginError {
+    type Type = Self;
+}
+
+unsafe impl<'a> FromValue<'a> for PluginError {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for PluginError {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
 #[doc(alias = "WebKitPolicyDecisionType")]
 pub enum PolicyDecisionType {
     #[doc(alias = "WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION")]
@@ -1644,6 +2269,139 @@ unsafe impl<'a> FromValue<'a> for PolicyDecisionType {
 }
 
 impl ToValue for PolicyDecisionType {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WebKitPolicyError")]
+pub enum PolicyError {
+    #[doc(alias = "WEBKIT_POLICY_ERROR_FAILED")]
+    Failed,
+    #[doc(alias = "WEBKIT_POLICY_ERROR_CANNOT_SHOW_MIME_TYPE")]
+    CannotShowMimeType,
+    #[doc(alias = "WEBKIT_POLICY_ERROR_CANNOT_SHOW_URI")]
+    CannotShowUri,
+    #[doc(alias = "WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE")]
+    FrameLoadInterruptedByPolicyChange,
+    #[doc(alias = "WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT")]
+    CannotUseRestrictedPort,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl PolicyError {
+    #[doc(alias = "webkit_policy_error_quark")]
+    pub fn quark() -> glib::Quark {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib(ffi::webkit_policy_error_quark())
+        }
+    }
+}
+
+impl fmt::Display for PolicyError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "PolicyError::{}", match *self {
+            Self::Failed => "Failed",
+            Self::CannotShowMimeType => "CannotShowMimeType",
+            Self::CannotShowUri => "CannotShowUri",
+            Self::FrameLoadInterruptedByPolicyChange => "FrameLoadInterruptedByPolicyChange",
+            Self::CannotUseRestrictedPort => "CannotUseRestrictedPort",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for PolicyError {
+    type GlibType = ffi::WebKitPolicyError;
+
+    fn into_glib(self) -> ffi::WebKitPolicyError {
+        match self {
+            Self::Failed => ffi::WEBKIT_POLICY_ERROR_FAILED,
+            Self::CannotShowMimeType => ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_MIME_TYPE,
+            Self::CannotShowUri => ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_URI,
+            Self::FrameLoadInterruptedByPolicyChange => ffi::WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE,
+            Self::CannotUseRestrictedPort => ffi::WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitPolicyError> for PolicyError {
+    unsafe fn from_glib(value: ffi::WebKitPolicyError) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_POLICY_ERROR_FAILED => Self::Failed,
+            ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_MIME_TYPE => Self::CannotShowMimeType,
+            ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_URI => Self::CannotShowUri,
+            ffi::WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE => Self::FrameLoadInterruptedByPolicyChange,
+            ffi::WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT => Self::CannotUseRestrictedPort,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+impl ErrorDomain for PolicyError {
+    fn domain() -> Quark {
+        skip_assert_initialized!();
+        
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
+            glib::ffi::g_quark_from_static_string(b"WebKitPolicyError\0".as_ptr() as *const _)
+        });
+        unsafe { from_glib(*QUARK) }
+    }
+
+    fn code(self) -> i32 {
+        self.into_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        skip_assert_initialized!();
+        match code {
+            ffi::WEBKIT_POLICY_ERROR_FAILED => Some(Self::Failed),
+            ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_MIME_TYPE => Some(Self::CannotShowMimeType),
+            ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_URI => Some(Self::CannotShowUri),
+            ffi::WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE => Some(Self::FrameLoadInterruptedByPolicyChange),
+            ffi::WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT => Some(Self::CannotUseRestrictedPort),
+            _ => Some(Self::Failed),
+}
+    }
+}
+
+impl StaticType for PolicyError {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_policy_error_get_type()) }
+    }
+}
+
+impl glib::value::ValueType for PolicyError {
+    type Type = Self;
+}
+
+unsafe impl<'a> FromValue<'a> for PolicyError {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for PolicyError {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -1924,6 +2682,115 @@ impl ToValue for ScriptDialogType {
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[derive(Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "WebKitSnapshotError")]
+pub enum SnapshotError {
+    #[doc(alias = "WEBKIT_SNAPSHOT_ERROR_FAILED_TO_CREATE")]
+    Create,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+impl SnapshotError {
+    #[doc(alias = "webkit_snapshot_error_quark")]
+    pub fn quark() -> glib::Quark {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib(ffi::webkit_snapshot_error_quark())
+        }
+    }
+}
+
+impl fmt::Display for SnapshotError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SnapshotError::{}", match *self {
+            Self::Create => "Create",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[doc(hidden)]
+impl IntoGlib for SnapshotError {
+    type GlibType = ffi::WebKitSnapshotError;
+
+    fn into_glib(self) -> ffi::WebKitSnapshotError {
+        match self {
+            Self::Create => ffi::WEBKIT_SNAPSHOT_ERROR_FAILED_TO_CREATE,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitSnapshotError> for SnapshotError {
+    unsafe fn from_glib(value: ffi::WebKitSnapshotError) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_SNAPSHOT_ERROR_FAILED_TO_CREATE => Self::Create,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+impl ErrorDomain for SnapshotError {
+    fn domain() -> Quark {
+        skip_assert_initialized!();
+        
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
+            glib::ffi::g_quark_from_static_string(b"WebKitSnapshotError\0".as_ptr() as *const _)
+        });
+        unsafe { from_glib(*QUARK) }
+    }
+
+    fn code(self) -> i32 {
+        self.into_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        skip_assert_initialized!();
+        match code {
+            ffi::WEBKIT_SNAPSHOT_ERROR_FAILED_TO_CREATE => Some(Self::Create),
+            value => Some(Self::__Unknown(value)),
+}
+    }
+}
+
+impl StaticType for SnapshotError {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_snapshot_error_get_type()) }
+    }
+}
+
+impl glib::value::ValueType for SnapshotError {
+    type Type = Self;
+}
+
+unsafe impl<'a> FromValue<'a> for SnapshotError {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+impl ToValue for SnapshotError {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
 #[doc(alias = "WebKitTLSErrorsPolicy")]
 pub enum TLSErrorsPolicy {
     #[doc(alias = "WEBKIT_TLS_ERRORS_POLICY_IGNORE")]
@@ -1989,6 +2856,141 @@ unsafe impl<'a> FromValue<'a> for TLSErrorsPolicy {
 }
 
 impl ToValue for TLSErrorsPolicy {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WebKitUserContentFilterError")]
+pub enum UserContentFilterError {
+    #[doc(alias = "WEBKIT_USER_CONTENT_FILTER_ERROR_INVALID_SOURCE")]
+    InvalidSource,
+    #[doc(alias = "WEBKIT_USER_CONTENT_FILTER_ERROR_NOT_FOUND")]
+    NotFound,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+impl UserContentFilterError {
+    #[doc(alias = "webkit_user_content_filter_error_quark")]
+    pub fn quark() -> glib::Quark {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib(ffi::webkit_user_content_filter_error_quark())
+        }
+    }
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+impl fmt::Display for UserContentFilterError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "UserContentFilterError::{}", match *self {
+            Self::InvalidSource => "InvalidSource",
+            Self::NotFound => "NotFound",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+#[doc(hidden)]
+impl IntoGlib for UserContentFilterError {
+    type GlibType = ffi::WebKitUserContentFilterError;
+
+    fn into_glib(self) -> ffi::WebKitUserContentFilterError {
+        match self {
+            Self::InvalidSource => ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_INVALID_SOURCE,
+            Self::NotFound => ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_NOT_FOUND,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitUserContentFilterError> for UserContentFilterError {
+    unsafe fn from_glib(value: ffi::WebKitUserContentFilterError) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_INVALID_SOURCE => Self::InvalidSource,
+            ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_NOT_FOUND => Self::NotFound,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+impl ErrorDomain for UserContentFilterError {
+    fn domain() -> Quark {
+        skip_assert_initialized!();
+        
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
+            glib::ffi::g_quark_from_static_string(b"WebKitUserContentFilterError\0".as_ptr() as *const _)
+        });
+        unsafe { from_glib(*QUARK) }
+    }
+
+    fn code(self) -> i32 {
+        self.into_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        skip_assert_initialized!();
+        match code {
+            ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_INVALID_SOURCE => Some(Self::InvalidSource),
+            ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_NOT_FOUND => Some(Self::NotFound),
+            value => Some(Self::__Unknown(value)),
+}
+    }
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+impl StaticType for UserContentFilterError {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_user_content_filter_error_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+impl glib::value::ValueType for UserContentFilterError {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+unsafe impl<'a> FromValue<'a> for UserContentFilterError {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+impl ToValue for UserContentFilterError {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {
@@ -2086,6 +3088,135 @@ unsafe impl<'a> FromValue<'a> for UserContentInjectedFrames {
 #[cfg(any(feature = "v2_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
 impl ToValue for UserContentInjectedFrames {
+    fn to_value(&self) -> glib::Value {
+        let mut value = glib::Value::for_value_type::<Self>();
+        unsafe {
+            glib::gobject_ffi::g_value_set_enum(value.to_glib_none_mut().0, self.into_glib());
+        }
+        value
+    }
+
+    fn value_type(&self) -> glib::Type {
+        Self::static_type()
+    }
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Clone, Copy)]
+#[non_exhaustive]
+#[doc(alias = "WebKitUserMessageError")]
+pub enum UserMessageError {
+    #[doc(alias = "WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE")]
+    Message,
+#[doc(hidden)]
+    __Unknown(i32),
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+impl UserMessageError {
+    #[doc(alias = "webkit_user_message_error_quark")]
+    pub fn quark() -> glib::Quark {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib(ffi::webkit_user_message_error_quark())
+        }
+    }
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+impl fmt::Display for UserMessageError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "UserMessageError::{}", match *self {
+            Self::Message => "Message",
+            _ => "Unknown",
+        })
+    }
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+#[doc(hidden)]
+impl IntoGlib for UserMessageError {
+    type GlibType = ffi::WebKitUserMessageError;
+
+    fn into_glib(self) -> ffi::WebKitUserMessageError {
+        match self {
+            Self::Message => ffi::WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE,
+            Self::__Unknown(value) => value,
+}
+    }
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+#[doc(hidden)]
+impl FromGlib<ffi::WebKitUserMessageError> for UserMessageError {
+    unsafe fn from_glib(value: ffi::WebKitUserMessageError) -> Self {
+        skip_assert_initialized!();
+        match value {
+            ffi::WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE => Self::Message,
+            value => Self::__Unknown(value),
+}
+    }
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+impl ErrorDomain for UserMessageError {
+    fn domain() -> Quark {
+        skip_assert_initialized!();
+        
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
+            glib::ffi::g_quark_from_static_string(b"WebKitUserMessageError\0".as_ptr() as *const _)
+        });
+        unsafe { from_glib(*QUARK) }
+    }
+
+    fn code(self) -> i32 {
+        self.into_glib()
+    }
+
+    fn from(code: i32) -> Option<Self> {
+        skip_assert_initialized!();
+        match code {
+            ffi::WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE => Some(Self::Message),
+            value => Some(Self::__Unknown(value)),
+}
+    }
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+impl StaticType for UserMessageError {
+    fn static_type() -> Type {
+        unsafe { from_glib(ffi::webkit_user_message_error_get_type()) }
+    }
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+impl glib::value::ValueType for UserMessageError {
+    type Type = Self;
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+unsafe impl<'a> FromValue<'a> for UserMessageError {
+    type Checker = glib::value::GenericValueTypeChecker<Self>;
+
+    unsafe fn from_value(value: &'a glib::Value) -> Self {
+        skip_assert_initialized!();
+        from_glib(glib::gobject_ffi::g_value_get_enum(value.to_glib_none().0))
+    }
+}
+
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+impl ToValue for UserMessageError {
     fn to_value(&self) -> glib::Value {
         let mut value = glib::Value::for_value_type::<Self>();
         unsafe {

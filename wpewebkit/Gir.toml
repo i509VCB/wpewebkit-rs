@@ -95,6 +95,17 @@ generate = [
     "WPEWebKit.WebResource",
     "WPEWebKit.WebsiteDataAccessPermissionRequest",
 
+    # Error domains
+    "WPEWebKit.DownloadError",
+    "WPEWebKit.FaviconDatabaseError",
+    "WPEWebKit.JavascriptError",
+    "WPEWebKit.NetworkError",
+    "WPEWebKit.PluginError",
+    "WPEWebKit.PolicyError",
+    "WPEWebKit.SnapshotError",
+    "WPEWebKit.UserContentFilterError",
+    "WPEWebKit.UserMessageError",
+
     # TODO: Freestanding functions from ffi
 ]
 
@@ -109,6 +120,7 @@ manual = [
     "GLib.DateTime",
     "GLib.DestroyNotify",
     "GLib.Error",
+    "GLib.Quark",
     "GLib.Variant",
     "GObject.InitiallyUnowned",
 ]

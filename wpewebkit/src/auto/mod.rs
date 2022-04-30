@@ -252,28 +252,41 @@ pub use self::enums::CookiePersistentStorage;
 #[cfg(any(feature = "v2_2", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_2")))]
 pub use self::enums::CredentialPersistence;
+pub use self::enums::DownloadError;
+pub use self::enums::FaviconDatabaseError;
 #[cfg(any(feature = "v2_28", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
 pub use self::enums::InputPurpose;
 pub use self::enums::InsecureContentEvent;
+pub use self::enums::JavascriptError;
 pub use self::enums::LoadEvent;
 #[cfg(any(feature = "v2_34", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_34")))]
 pub use self::enums::MediaCaptureState;
 pub use self::enums::NavigationType;
+pub use self::enums::NetworkError;
 #[cfg(any(feature = "v2_16", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_16")))]
 pub use self::enums::NetworkProxyMode;
+pub use self::enums::PluginError;
 pub use self::enums::PolicyDecisionType;
+pub use self::enums::PolicyError;
 #[cfg(any(feature = "v2_4", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
 pub use self::enums::ProcessModel;
 pub use self::enums::SaveMode;
 pub use self::enums::ScriptDialogType;
+pub use self::enums::SnapshotError;
 pub use self::enums::TLSErrorsPolicy;
+#[cfg(any(feature = "v2_24", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
+pub use self::enums::UserContentFilterError;
 #[cfg(any(feature = "v2_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
 pub use self::enums::UserContentInjectedFrames;
+#[cfg(any(feature = "v2_28", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
+pub use self::enums::UserMessageError;
 #[cfg(any(feature = "v2_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
 pub use self::enums::UserScriptInjectionTime;
