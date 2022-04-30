@@ -6,26 +6,71 @@
 use std::ffi::CStr;
 
 #[doc(alias = "WEBKIT_EDITING_COMMAND_COPY")]
-pub static EDITING_COMMAND_COPY: once_cell::sync::Lazy<&'static str> = once_cell::sync::Lazy::new(|| unsafe{CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_COPY).to_str().unwrap()});
+pub static EDITING_COMMAND_COPY: once_cell::sync::Lazy<&'static str> =
+    once_cell::sync::Lazy::new(|| unsafe {
+        CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_COPY)
+            .to_str()
+            .unwrap()
+    });
 #[cfg(any(feature = "v2_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
 #[doc(alias = "WEBKIT_EDITING_COMMAND_CREATE_LINK")]
-pub static EDITING_COMMAND_CREATE_LINK: once_cell::sync::Lazy<&'static str> = once_cell::sync::Lazy::new(|| unsafe{CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_CREATE_LINK).to_str().unwrap()});
+pub static EDITING_COMMAND_CREATE_LINK: once_cell::sync::Lazy<&'static str> =
+    once_cell::sync::Lazy::new(|| unsafe {
+        CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_CREATE_LINK)
+            .to_str()
+            .unwrap()
+    });
 #[doc(alias = "WEBKIT_EDITING_COMMAND_CUT")]
-pub static EDITING_COMMAND_CUT: once_cell::sync::Lazy<&'static str> = once_cell::sync::Lazy::new(|| unsafe{CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_CUT).to_str().unwrap()});
+pub static EDITING_COMMAND_CUT: once_cell::sync::Lazy<&'static str> =
+    once_cell::sync::Lazy::new(|| unsafe {
+        CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_CUT)
+            .to_str()
+            .unwrap()
+    });
 #[cfg(any(feature = "v2_10", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
 #[doc(alias = "WEBKIT_EDITING_COMMAND_INSERT_IMAGE")]
-pub static EDITING_COMMAND_INSERT_IMAGE: once_cell::sync::Lazy<&'static str> = once_cell::sync::Lazy::new(|| unsafe{CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_INSERT_IMAGE).to_str().unwrap()});
+pub static EDITING_COMMAND_INSERT_IMAGE: once_cell::sync::Lazy<&'static str> =
+    once_cell::sync::Lazy::new(|| unsafe {
+        CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_INSERT_IMAGE)
+            .to_str()
+            .unwrap()
+    });
 #[doc(alias = "WEBKIT_EDITING_COMMAND_PASTE")]
-pub static EDITING_COMMAND_PASTE: once_cell::sync::Lazy<&'static str> = once_cell::sync::Lazy::new(|| unsafe{CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_PASTE).to_str().unwrap()});
+pub static EDITING_COMMAND_PASTE: once_cell::sync::Lazy<&'static str> =
+    once_cell::sync::Lazy::new(|| unsafe {
+        CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_PASTE)
+            .to_str()
+            .unwrap()
+    });
 #[cfg(any(feature = "v2_30", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
 #[doc(alias = "WEBKIT_EDITING_COMMAND_PASTE_AS_PLAIN_TEXT")]
-pub static EDITING_COMMAND_PASTE_AS_PLAIN_TEXT: once_cell::sync::Lazy<&'static str> = once_cell::sync::Lazy::new(|| unsafe{CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_PASTE_AS_PLAIN_TEXT).to_str().unwrap()});
+pub static EDITING_COMMAND_PASTE_AS_PLAIN_TEXT: once_cell::sync::Lazy<&'static str> =
+    once_cell::sync::Lazy::new(|| unsafe {
+        CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_PASTE_AS_PLAIN_TEXT)
+            .to_str()
+            .unwrap()
+    });
 #[doc(alias = "WEBKIT_EDITING_COMMAND_REDO")]
-pub static EDITING_COMMAND_REDO: once_cell::sync::Lazy<&'static str> = once_cell::sync::Lazy::new(|| unsafe{CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_REDO).to_str().unwrap()});
+pub static EDITING_COMMAND_REDO: once_cell::sync::Lazy<&'static str> =
+    once_cell::sync::Lazy::new(|| unsafe {
+        CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_REDO)
+            .to_str()
+            .unwrap()
+    });
 #[doc(alias = "WEBKIT_EDITING_COMMAND_SELECT_ALL")]
-pub static EDITING_COMMAND_SELECT_ALL: once_cell::sync::Lazy<&'static str> = once_cell::sync::Lazy::new(|| unsafe{CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_SELECT_ALL).to_str().unwrap()});
+pub static EDITING_COMMAND_SELECT_ALL: once_cell::sync::Lazy<&'static str> =
+    once_cell::sync::Lazy::new(|| unsafe {
+        CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_SELECT_ALL)
+            .to_str()
+            .unwrap()
+    });
 #[doc(alias = "WEBKIT_EDITING_COMMAND_UNDO")]
-pub static EDITING_COMMAND_UNDO: once_cell::sync::Lazy<&'static str> = once_cell::sync::Lazy::new(|| unsafe{CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_UNDO).to_str().unwrap()});
+pub static EDITING_COMMAND_UNDO: once_cell::sync::Lazy<&'static str> =
+    once_cell::sync::Lazy::new(|| unsafe {
+        CStr::from_ptr(ffi::WEBKIT_EDITING_COMMAND_UNDO)
+            .to_str()
+            .unwrap()
+    });

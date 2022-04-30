@@ -40,4 +40,3 @@ impl FromGlib<ffi::JSCValuePropertyFlags> for ValuePropertyFlags {
         Self::from_bits_truncate(value)
     }
 }
-

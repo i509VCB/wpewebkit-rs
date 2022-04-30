@@ -1,4 +1,7 @@
-use wpejavascriptcore::{Context, traits::{ContextExt, ValueExt}};
+use wpejavascriptcore::{
+    traits::{ContextExt, ValueExt},
+    Context,
+};
 
 #[test]
 fn forty_two() {
@@ -10,8 +13,7 @@ fn forty_two() {
             println!("is_number: {}", value.is_number());
             println!("{:?}", value.to_int32());
             println!("{:?}", value.to_boolean());
-            
-        },
+        }
         None => println!("eval error"),
     };
 }

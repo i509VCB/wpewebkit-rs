@@ -18,8 +18,7 @@ glib::wrapper! {
 }
 
 impl WebsiteDataAccessPermissionRequest {
-        pub const NONE: Option<&'static WebsiteDataAccessPermissionRequest> = None;
-    
+    pub const NONE: Option<&'static WebsiteDataAccessPermissionRequest> = None;
 }
 
 pub trait WebsiteDataAccessPermissionRequestExt: 'static {
@@ -35,13 +34,21 @@ pub trait WebsiteDataAccessPermissionRequestExt: 'static {
 impl<O: IsA<WebsiteDataAccessPermissionRequest>> WebsiteDataAccessPermissionRequestExt for O {
     fn current_domain(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_website_data_access_permission_request_get_current_domain(self.as_ref().to_glib_none().0))
+            from_glib_none(
+                ffi::webkit_website_data_access_permission_request_get_current_domain(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 
     fn requesting_domain(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_website_data_access_permission_request_get_requesting_domain(self.as_ref().to_glib_none().0))
+            from_glib_none(
+                ffi::webkit_website_data_access_permission_request_get_requesting_domain(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 }

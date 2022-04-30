@@ -3,7 +3,6 @@
 // from ../gir-files
 // DO NOT EDIT
 
-
 glib::wrapper! {
     pub struct Color(BoxedInline<ffi::WebKitColor>);
 

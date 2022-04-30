@@ -28,7 +28,10 @@ impl ScriptDialog {
     #[doc(alias = "webkit_script_dialog_confirm_set_confirmed")]
     pub fn confirm_set_confirmed(&self, confirmed: bool) {
         unsafe {
-            ffi::webkit_script_dialog_confirm_set_confirmed(self.to_glib_none().0, confirmed.into_glib());
+            ffi::webkit_script_dialog_confirm_set_confirmed(
+                self.to_glib_none().0,
+                confirmed.into_glib(),
+            );
         }
     }
 
@@ -36,22 +39,24 @@ impl ScriptDialog {
     #[doc(alias = "get_dialog_type")]
     pub fn dialog_type(&self) -> ScriptDialogType {
         unsafe {
-            from_glib(ffi::webkit_script_dialog_get_dialog_type(self.to_glib_none().0))
+            from_glib(ffi::webkit_script_dialog_get_dialog_type(
+                self.to_glib_none().0,
+            ))
         }
     }
 
     #[doc(alias = "webkit_script_dialog_get_message")]
     #[doc(alias = "get_message")]
     pub fn message(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::webkit_script_dialog_get_message(self.to_glib_none().0))
-        }
+        unsafe { from_glib_none(ffi::webkit_script_dialog_get_message(self.to_glib_none().0)) }
     }
 
     #[doc(alias = "webkit_script_dialog_prompt_get_default_text")]
     pub fn prompt_get_default_text(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_script_dialog_prompt_get_default_text(self.to_glib_none().0))
+            from_glib_none(ffi::webkit_script_dialog_prompt_get_default_text(
+                self.to_glib_none().0,
+            ))
         }
     }
 

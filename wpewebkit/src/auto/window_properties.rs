@@ -20,24 +20,22 @@ glib::wrapper! {
 }
 
 impl WindowProperties {
-        pub const NONE: Option<&'static WindowProperties> = None;
-    
+    pub const NONE: Option<&'static WindowProperties> = None;
 
-            // rustdoc-stripper-ignore-next
-            /// Creates a new builder-pattern struct instance to construct [`WindowProperties`] objects.
-            ///
-            /// This method returns an instance of [`WindowPropertiesBuilder`](crate::builders::WindowPropertiesBuilder) which can be used to create [`WindowProperties`] objects.
-            pub fn builder() -> WindowPropertiesBuilder {
-                WindowPropertiesBuilder::default()
-            }
-        
+    // rustdoc-stripper-ignore-next
+    /// Creates a new builder-pattern struct instance to construct [`WindowProperties`] objects.
+    ///
+    /// This method returns an instance of [`WindowPropertiesBuilder`](crate::builders::WindowPropertiesBuilder) which can be used to create [`WindowProperties`] objects.
+    pub fn builder() -> WindowPropertiesBuilder {
+        WindowPropertiesBuilder::default()
+    }
 }
 
 #[derive(Clone, Default)]
 // rustdoc-stripper-ignore-next
-        /// A [builder-pattern] type to construct [`WindowProperties`] objects.
-        ///
-        /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+/// A [builder-pattern] type to construct [`WindowProperties`] objects.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 #[must_use = "The builder must be built to be used"]
 pub struct WindowPropertiesBuilder {
     fullscreen: Option<bool>,
@@ -56,36 +54,34 @@ impl WindowPropertiesBuilder {
         Self::default()
     }
 
-
     // rustdoc-stripper-ignore-next
     /// Build the [`WindowProperties`].
     #[must_use = "Building the object from the builder is usually expensive and is not expected to have side effects"]
     pub fn build(self) -> WindowProperties {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
-if let Some(ref fullscreen) = self.fullscreen {
-                properties.push(("fullscreen", fullscreen));
-            }
-if let Some(ref locationbar_visible) = self.locationbar_visible {
-                properties.push(("locationbar-visible", locationbar_visible));
-            }
-if let Some(ref menubar_visible) = self.menubar_visible {
-                properties.push(("menubar-visible", menubar_visible));
-            }
-if let Some(ref resizable) = self.resizable {
-                properties.push(("resizable", resizable));
-            }
-if let Some(ref scrollbars_visible) = self.scrollbars_visible {
-                properties.push(("scrollbars-visible", scrollbars_visible));
-            }
-if let Some(ref statusbar_visible) = self.statusbar_visible {
-                properties.push(("statusbar-visible", statusbar_visible));
-            }
-if let Some(ref toolbar_visible) = self.toolbar_visible {
-                properties.push(("toolbar-visible", toolbar_visible));
-            }
+        if let Some(ref fullscreen) = self.fullscreen {
+            properties.push(("fullscreen", fullscreen));
+        }
+        if let Some(ref locationbar_visible) = self.locationbar_visible {
+            properties.push(("locationbar-visible", locationbar_visible));
+        }
+        if let Some(ref menubar_visible) = self.menubar_visible {
+            properties.push(("menubar-visible", menubar_visible));
+        }
+        if let Some(ref resizable) = self.resizable {
+            properties.push(("resizable", resizable));
+        }
+        if let Some(ref scrollbars_visible) = self.scrollbars_visible {
+            properties.push(("scrollbars-visible", scrollbars_visible));
+        }
+        if let Some(ref statusbar_visible) = self.statusbar_visible {
+            properties.push(("statusbar-visible", statusbar_visible));
+        }
+        if let Some(ref toolbar_visible) = self.toolbar_visible {
+            properties.push(("toolbar-visible", toolbar_visible));
+        }
         glib::Object::new::<WindowProperties>(&properties)
-                .expect("Failed to create an instance of WindowProperties")
-
+            .expect("Failed to create an instance of WindowProperties")
     }
 
     pub fn fullscreen(mut self, fullscreen: bool) -> Self {
@@ -157,43 +153,57 @@ pub trait WindowPropertiesExt: 'static {
 impl<O: IsA<WindowProperties>> WindowPropertiesExt for O {
     fn is_fullscreen(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_window_properties_get_fullscreen(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_window_properties_get_fullscreen(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn is_locationbar_visible(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_window_properties_get_locationbar_visible(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_window_properties_get_locationbar_visible(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn is_menubar_visible(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_window_properties_get_menubar_visible(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_window_properties_get_menubar_visible(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn is_resizable(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_window_properties_get_resizable(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_window_properties_get_resizable(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn is_scrollbars_visible(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_window_properties_get_scrollbars_visible(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_window_properties_get_scrollbars_visible(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn is_statusbar_visible(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_window_properties_get_statusbar_visible(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_window_properties_get_statusbar_visible(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn is_toolbar_visible(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_window_properties_get_toolbar_visible(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_window_properties_get_toolbar_visible(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 }

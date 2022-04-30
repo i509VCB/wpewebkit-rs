@@ -17,15 +17,12 @@ glib::wrapper! {
 }
 
 impl ContextMenu {
-        pub const NONE: Option<&'static ContextMenu> = None;
-    
+    pub const NONE: Option<&'static ContextMenu> = None;
 
     #[doc(alias = "webkit_context_menu_new")]
     pub fn new() -> ContextMenu {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib_full(ffi::webkit_context_menu_new())
-        }
+        unsafe { from_glib_full(ffi::webkit_context_menu_new()) }
     }
 
     //#[doc(alias = "webkit_context_menu_new_with_items")]
@@ -36,10 +33,10 @@ impl ContextMenu {
 }
 
 impl Default for ContextMenu {
-                     fn default() -> Self {
-                         Self::new()
-                     }
-                 }
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 pub trait ContextMenuExt: 'static {
     //#[doc(alias = "webkit_context_menu_append")]
@@ -108,16 +105,16 @@ impl<O: IsA<ContextMenu>> ContextMenuExt for O {
     //}
 
     fn n_items(&self) -> u32 {
-        unsafe {
-            ffi::webkit_context_menu_get_n_items(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::webkit_context_menu_get_n_items(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v2_8", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
     fn user_data(&self) -> Option<glib::Variant> {
         unsafe {
-            from_glib_none(ffi::webkit_context_menu_get_user_data(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_context_menu_get_user_data(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -151,7 +148,10 @@ impl<O: IsA<ContextMenu>> ContextMenuExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
     fn set_user_data(&self, user_data: &glib::Variant) {
         unsafe {
-            ffi::webkit_context_menu_set_user_data(self.as_ref().to_glib_none().0, user_data.to_glib_none().0);
+            ffi::webkit_context_menu_set_user_data(
+                self.as_ref().to_glib_none().0,
+                user_data.to_glib_none().0,
+            );
         }
     }
 }

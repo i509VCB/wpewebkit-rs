@@ -22,8 +22,7 @@ glib::wrapper! {
 }
 
 impl EditorState {
-        pub const NONE: Option<&'static EditorState> = None;
-    
+    pub const NONE: Option<&'static EditorState> = None;
 }
 
 pub trait EditorStateExt: 'static {
@@ -64,16 +63,16 @@ pub trait EditorStateExt: 'static {
 
 impl<O: IsA<EditorState>> EditorStateExt for O {
     fn typing_attributes(&self) -> u32 {
-        unsafe {
-            ffi::webkit_editor_state_get_typing_attributes(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::webkit_editor_state_get_typing_attributes(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v2_20", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_20")))]
     fn is_copy_available(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_editor_state_is_copy_available(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_editor_state_is_copy_available(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -81,7 +80,9 @@ impl<O: IsA<EditorState>> EditorStateExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_20")))]
     fn is_cut_available(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_editor_state_is_cut_available(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_editor_state_is_cut_available(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -89,7 +90,9 @@ impl<O: IsA<EditorState>> EditorStateExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_20")))]
     fn is_paste_available(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_editor_state_is_paste_available(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_editor_state_is_paste_available(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -97,7 +100,9 @@ impl<O: IsA<EditorState>> EditorStateExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_20")))]
     fn is_redo_available(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_editor_state_is_redo_available(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_editor_state_is_redo_available(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -105,21 +110,36 @@ impl<O: IsA<EditorState>> EditorStateExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_20")))]
     fn is_undo_available(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_editor_state_is_undo_available(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_editor_state_is_undo_available(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v2_10", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
     fn connect_typing_attributes_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_typing_attributes_trampoline<P: IsA<EditorState>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitEditorState, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn notify_typing_attributes_trampoline<
+            P: IsA<EditorState>,
+            F: Fn(&P) + 'static,
+        >(
+            this: *mut ffi::WebKitEditorState,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
             f(EditorState::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::typing-attributes\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_typing_attributes_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::typing-attributes\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_typing_attributes_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

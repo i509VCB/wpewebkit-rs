@@ -26,8 +26,7 @@ glib::wrapper! {
 }
 
 impl NavigationPolicyDecision {
-        pub const NONE: Option<&'static NavigationPolicyDecision> = None;
-    
+    pub const NONE: Option<&'static NavigationPolicyDecision> = None;
 }
 
 pub trait NavigationPolicyDecisionExt: 'static {
@@ -53,7 +52,9 @@ pub trait NavigationPolicyDecisionExt: 'static {
 impl<O: IsA<NavigationPolicyDecision>> NavigationPolicyDecisionExt for O {
     fn frame_name(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_navigation_policy_decision_get_frame_name(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_navigation_policy_decision_get_frame_name(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -61,33 +62,63 @@ impl<O: IsA<NavigationPolicyDecision>> NavigationPolicyDecisionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
     fn navigation_action(&self) -> Option<NavigationAction> {
         unsafe {
-            from_glib_none(ffi::webkit_navigation_policy_decision_get_navigation_action(self.as_ref().to_glib_none().0))
+            from_glib_none(
+                ffi::webkit_navigation_policy_decision_get_navigation_action(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 
     fn connect_frame_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_frame_name_trampoline<P: IsA<NavigationPolicyDecision>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitNavigationPolicyDecision, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn notify_frame_name_trampoline<
+            P: IsA<NavigationPolicyDecision>,
+            F: Fn(&P) + 'static,
+        >(
+            this: *mut ffi::WebKitNavigationPolicyDecision,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
             f(NavigationPolicyDecision::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::frame-name\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_frame_name_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::frame-name\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_frame_name_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     #[cfg(any(feature = "v2_6", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
     fn connect_navigation_action_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_navigation_action_trampoline<P: IsA<NavigationPolicyDecision>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitNavigationPolicyDecision, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn notify_navigation_action_trampoline<
+            P: IsA<NavigationPolicyDecision>,
+            F: Fn(&P) + 'static,
+        >(
+            this: *mut ffi::WebKitNavigationPolicyDecision,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
             f(NavigationPolicyDecision::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::navigation-action\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_navigation_action_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::navigation-action\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_navigation_action_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

@@ -18,8 +18,7 @@ glib::wrapper! {
 }
 
 impl InstallMissingMediaPluginsPermissionRequest {
-        pub const NONE: Option<&'static InstallMissingMediaPluginsPermissionRequest> = None;
-    
+    pub const NONE: Option<&'static InstallMissingMediaPluginsPermissionRequest> = None;
 }
 
 pub trait InstallMissingMediaPluginsPermissionRequestExt: 'static {
@@ -28,10 +27,16 @@ pub trait InstallMissingMediaPluginsPermissionRequestExt: 'static {
     fn description(&self) -> Option<glib::GString>;
 }
 
-impl<O: IsA<InstallMissingMediaPluginsPermissionRequest>> InstallMissingMediaPluginsPermissionRequestExt for O {
+impl<O: IsA<InstallMissingMediaPluginsPermissionRequest>>
+    InstallMissingMediaPluginsPermissionRequestExt for O
+{
     fn description(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_install_missing_media_plugins_permission_request_get_description(self.as_ref().to_glib_none().0))
+            from_glib_none(
+                ffi::webkit_install_missing_media_plugins_permission_request_get_description(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 }

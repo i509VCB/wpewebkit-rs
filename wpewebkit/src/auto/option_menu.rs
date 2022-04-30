@@ -23,8 +23,7 @@ glib::wrapper! {
 }
 
 impl OptionMenu {
-        pub const NONE: Option<&'static OptionMenu> = None;
-    
+    pub const NONE: Option<&'static OptionMenu> = None;
 }
 
 pub trait OptionMenuExt: 'static {
@@ -66,14 +65,15 @@ impl<O: IsA<OptionMenu>> OptionMenuExt for O {
 
     fn item(&self, index: u32) -> Option<OptionMenuItem> {
         unsafe {
-            from_glib_none(ffi::webkit_option_menu_get_item(self.as_ref().to_glib_none().0, index))
+            from_glib_none(ffi::webkit_option_menu_get_item(
+                self.as_ref().to_glib_none().0,
+                index,
+            ))
         }
     }
 
     fn n_items(&self) -> u32 {
-        unsafe {
-            ffi::webkit_option_menu_get_n_items(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::webkit_option_menu_get_n_items(self.as_ref().to_glib_none().0) }
     }
 
     fn select_item(&self, index: u32) {
@@ -85,14 +85,23 @@ impl<O: IsA<OptionMenu>> OptionMenuExt for O {
     #[cfg(any(feature = "v2_18", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_18")))]
     fn connect_close<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn close_trampoline<P: IsA<OptionMenu>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitOptionMenu, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn close_trampoline<P: IsA<OptionMenu>, F: Fn(&P) + 'static>(
+            this: *mut ffi::WebKitOptionMenu,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
             f(OptionMenu::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"close\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(close_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"close\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    close_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

@@ -20,8 +20,7 @@ glib::wrapper! {
 }
 
 impl FormSubmissionRequest {
-        pub const NONE: Option<&'static FormSubmissionRequest> = None;
-    
+    pub const NONE: Option<&'static FormSubmissionRequest> = None;
 }
 
 pub trait FormSubmissionRequestExt: 'static {
@@ -41,8 +40,19 @@ impl<O: IsA<FormSubmissionRequest>> FormSubmissionRequestExt for O {
         unsafe {
             let mut field_names = ptr::null_mut();
             let mut field_values = ptr::null_mut();
-            let ret = from_glib(ffi::webkit_form_submission_request_list_text_fields(self.as_ref().to_glib_none().0, &mut field_names, &mut field_values));
-            if ret { Some((FromGlibPtrContainer::from_glib_none(field_names), FromGlibPtrContainer::from_glib_none(field_values))) } else { None }
+            let ret = from_glib(ffi::webkit_form_submission_request_list_text_fields(
+                self.as_ref().to_glib_none().0,
+                &mut field_names,
+                &mut field_values,
+            ));
+            if ret {
+                Some((
+                    FromGlibPtrContainer::from_glib_none(field_names),
+                    FromGlibPtrContainer::from_glib_none(field_values),
+                ))
+            } else {
+                None
+            }
         }
     }
 

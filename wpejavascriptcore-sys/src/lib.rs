@@ -4,14 +4,19 @@
 // DO NOT EDIT
 
 #![allow(non_camel_case_types, non_upper_case_globals, non_snake_case)]
-#![allow(clippy::approx_constant, clippy::type_complexity, clippy::unreadable_literal, clippy::upper_case_acronyms)]
+#![allow(
+    clippy::approx_constant,
+    clippy::type_complexity,
+    clippy::unreadable_literal,
+    clippy::upper_case_acronyms
+)]
 #![cfg_attr(feature = "dox", feature(doc_cfg))]
 
-
 #[allow(unused_imports)]
-use libc::{c_int, c_char, c_uchar, c_float, c_uint, c_double,
-    c_short, c_ushort, c_long, c_ulong,
-    c_void, size_t, ssize_t, intptr_t, uintptr_t, FILE};
+use libc::{
+    c_char, c_double, c_float, c_int, c_long, c_short, c_uchar, c_uint, c_ulong, c_ushort, c_void,
+    intptr_t, size_t, ssize_t, uintptr_t, FILE,
+};
 
 #[allow(unused_imports)]
 use glib::{gboolean, gconstpointer, gpointer, GType};
@@ -68,13 +73,30 @@ pub const JSC_VALUE_PROPERTY_ENUMERABLE: JSCValuePropertyFlags = 2;
 pub const JSC_VALUE_PROPERTY_WRITABLE: JSCValuePropertyFlags = 4;
 
 // Callbacks
-pub type JSCClassDeletePropertyFunction = Option<unsafe extern "C" fn(*mut JSCClass, *mut JSCContext, gpointer, *const c_char) -> gboolean>;
-pub type JSCClassEnumeratePropertiesFunction = Option<unsafe extern "C" fn(*mut JSCClass, *mut JSCContext, gpointer) -> *mut *mut c_char>;
-pub type JSCClassGetPropertyFunction = Option<unsafe extern "C" fn(*mut JSCClass, *mut JSCContext, gpointer, *const c_char) -> *mut JSCValue>;
-pub type JSCClassHasPropertyFunction = Option<unsafe extern "C" fn(*mut JSCClass, *mut JSCContext, gpointer, *const c_char) -> gboolean>;
-pub type JSCClassSetPropertyFunction = Option<unsafe extern "C" fn(*mut JSCClass, *mut JSCContext, gpointer, *const c_char, *mut JSCValue) -> gboolean>;
-pub type JSCExceptionHandler = Option<unsafe extern "C" fn(*mut JSCContext, *mut JSCException, gpointer)>;
-pub type JSCOptionsFunc = Option<unsafe extern "C" fn(*const c_char, JSCOptionType, *const c_char, gpointer) -> gboolean>;
+pub type JSCClassDeletePropertyFunction = Option<
+    unsafe extern "C" fn(*mut JSCClass, *mut JSCContext, gpointer, *const c_char) -> gboolean,
+>;
+pub type JSCClassEnumeratePropertiesFunction =
+    Option<unsafe extern "C" fn(*mut JSCClass, *mut JSCContext, gpointer) -> *mut *mut c_char>;
+pub type JSCClassGetPropertyFunction = Option<
+    unsafe extern "C" fn(*mut JSCClass, *mut JSCContext, gpointer, *const c_char) -> *mut JSCValue,
+>;
+pub type JSCClassHasPropertyFunction = Option<
+    unsafe extern "C" fn(*mut JSCClass, *mut JSCContext, gpointer, *const c_char) -> gboolean,
+>;
+pub type JSCClassSetPropertyFunction = Option<
+    unsafe extern "C" fn(
+        *mut JSCClass,
+        *mut JSCContext,
+        gpointer,
+        *const c_char,
+        *mut JSCValue,
+    ) -> gboolean,
+>;
+pub type JSCExceptionHandler =
+    Option<unsafe extern "C" fn(*mut JSCContext, *mut JSCException, gpointer)>;
+pub type JSCOptionsFunc =
+    Option<unsafe extern "C" fn(*const c_char, JSCOptionType, *const c_char, gpointer) -> gboolean>;
 
 // Records
 #[repr(C)]
@@ -102,16 +124,16 @@ pub struct JSCClassVTable {
 impl ::std::fmt::Debug for JSCClassVTable {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCClassVTable @ {:p}", self))
-         .field("get_property", &self.get_property)
-         .field("set_property", &self.set_property)
-         .field("has_property", &self.has_property)
-         .field("delete_property", &self.delete_property)
-         .field("enumerate_properties", &self.enumerate_properties)
-         .field("_jsc_reserved0", &self._jsc_reserved0)
-         .field("_jsc_reserved1", &self._jsc_reserved1)
-         .field("_jsc_reserved2", &self._jsc_reserved2)
-         .field("_jsc_reserved3", &self._jsc_reserved3)
-         .finish()
+            .field("get_property", &self.get_property)
+            .field("set_property", &self.set_property)
+            .field("has_property", &self.has_property)
+            .field("delete_property", &self.delete_property)
+            .field("enumerate_properties", &self.enumerate_properties)
+            .field("_jsc_reserved0", &self._jsc_reserved0)
+            .field("_jsc_reserved1", &self._jsc_reserved1)
+            .field("_jsc_reserved2", &self._jsc_reserved2)
+            .field("_jsc_reserved3", &self._jsc_reserved3)
+            .finish()
     }
 }
 
@@ -128,12 +150,12 @@ pub struct JSCContextClass {
 impl ::std::fmt::Debug for JSCContextClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCContextClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("_jsc_reserved0", &self._jsc_reserved0)
-         .field("_jsc_reserved1", &self._jsc_reserved1)
-         .field("_jsc_reserved2", &self._jsc_reserved2)
-         .field("_jsc_reserved3", &self._jsc_reserved3)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("_jsc_reserved0", &self._jsc_reserved0)
+            .field("_jsc_reserved1", &self._jsc_reserved1)
+            .field("_jsc_reserved2", &self._jsc_reserved2)
+            .field("_jsc_reserved3", &self._jsc_reserved3)
+            .finish()
     }
 }
 
@@ -158,12 +180,12 @@ pub struct JSCExceptionClass {
 impl ::std::fmt::Debug for JSCExceptionClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCExceptionClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("_jsc_reserved0", &self._jsc_reserved0)
-         .field("_jsc_reserved1", &self._jsc_reserved1)
-         .field("_jsc_reserved2", &self._jsc_reserved2)
-         .field("_jsc_reserved3", &self._jsc_reserved3)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("_jsc_reserved0", &self._jsc_reserved0)
+            .field("_jsc_reserved1", &self._jsc_reserved1)
+            .field("_jsc_reserved2", &self._jsc_reserved2)
+            .field("_jsc_reserved3", &self._jsc_reserved3)
+            .finish()
     }
 }
 
@@ -188,12 +210,12 @@ pub struct JSCValueClass {
 impl ::std::fmt::Debug for JSCValueClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCValueClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("_jsc_reserved0", &self._jsc_reserved0)
-         .field("_jsc_reserved1", &self._jsc_reserved1)
-         .field("_jsc_reserved2", &self._jsc_reserved2)
-         .field("_jsc_reserved3", &self._jsc_reserved3)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("_jsc_reserved0", &self._jsc_reserved0)
+            .field("_jsc_reserved1", &self._jsc_reserved1)
+            .field("_jsc_reserved2", &self._jsc_reserved2)
+            .field("_jsc_reserved3", &self._jsc_reserved3)
+            .finish()
     }
 }
 
@@ -218,12 +240,12 @@ pub struct JSCVirtualMachineClass {
 impl ::std::fmt::Debug for JSCVirtualMachineClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCVirtualMachineClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("_jsc_reserved0", &self._jsc_reserved0)
-         .field("_jsc_reserved1", &self._jsc_reserved1)
-         .field("_jsc_reserved2", &self._jsc_reserved2)
-         .field("_jsc_reserved3", &self._jsc_reserved3)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("_jsc_reserved0", &self._jsc_reserved0)
+            .field("_jsc_reserved1", &self._jsc_reserved1)
+            .field("_jsc_reserved2", &self._jsc_reserved2)
+            .field("_jsc_reserved3", &self._jsc_reserved3)
+            .finish()
     }
 }
 
@@ -248,12 +270,12 @@ pub struct JSCWeakValueClass {
 impl ::std::fmt::Debug for JSCWeakValueClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCWeakValueClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("_jsc_reserved0", &self._jsc_reserved0)
-         .field("_jsc_reserved1", &self._jsc_reserved1)
-         .field("_jsc_reserved2", &self._jsc_reserved2)
-         .field("_jsc_reserved3", &self._jsc_reserved3)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("_jsc_reserved0", &self._jsc_reserved0)
+            .field("_jsc_reserved1", &self._jsc_reserved1)
+            .field("_jsc_reserved2", &self._jsc_reserved2)
+            .field("_jsc_reserved3", &self._jsc_reserved3)
+            .finish()
     }
 }
 
@@ -274,8 +296,7 @@ pub struct JSCClass {
 
 impl ::std::fmt::Debug for JSCClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("JSCClass @ {:p}", self))
-         .finish()
+        f.debug_struct(&format!("JSCClass @ {:p}", self)).finish()
     }
 }
 
@@ -289,8 +310,8 @@ pub struct JSCContext {
 impl ::std::fmt::Debug for JSCContext {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCContext @ {:p}", self))
-         .field("parent", &self.parent)
-         .finish()
+            .field("parent", &self.parent)
+            .finish()
     }
 }
 
@@ -304,8 +325,8 @@ pub struct JSCException {
 impl ::std::fmt::Debug for JSCException {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCException @ {:p}", self))
-         .field("parent", &self.parent)
-         .finish()
+            .field("parent", &self.parent)
+            .finish()
     }
 }
 
@@ -319,8 +340,8 @@ pub struct JSCValue {
 impl ::std::fmt::Debug for JSCValue {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCValue @ {:p}", self))
-         .field("parent", &self.parent)
-         .finish()
+            .field("parent", &self.parent)
+            .finish()
     }
 }
 
@@ -334,8 +355,8 @@ pub struct JSCVirtualMachine {
 impl ::std::fmt::Debug for JSCVirtualMachine {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCVirtualMachine @ {:p}", self))
-         .field("parent", &self.parent)
-         .finish()
+            .field("parent", &self.parent)
+            .finish()
     }
 }
 
@@ -349,8 +370,8 @@ pub struct JSCWeakValue {
 impl ::std::fmt::Debug for JSCWeakValue {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("JSCWeakValue @ {:p}", self))
-         .field("parent", &self.parent)
-         .finish()
+            .field("parent", &self.parent)
+            .finish()
     }
 }
 
@@ -361,13 +382,71 @@ extern "C" {
     // JSCClass
     //=========================================================================
     pub fn jsc_class_get_type() -> GType;
-    pub fn jsc_class_add_constructor(jsc_class: *mut JSCClass, name: *const c_char, callback: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify, return_type: GType, n_params: c_uint, ...) -> *mut JSCValue;
-    pub fn jsc_class_add_constructor_variadic(jsc_class: *mut JSCClass, name: *const c_char, callback: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify, return_type: GType) -> *mut JSCValue;
-    pub fn jsc_class_add_constructorv(jsc_class: *mut JSCClass, name: *const c_char, callback: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify, return_type: GType, n_parameters: c_uint, parameter_types: *mut GType) -> *mut JSCValue;
-    pub fn jsc_class_add_method(jsc_class: *mut JSCClass, name: *const c_char, callback: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify, return_type: GType, n_params: c_uint, ...);
-    pub fn jsc_class_add_method_variadic(jsc_class: *mut JSCClass, name: *const c_char, callback: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify, return_type: GType);
-    pub fn jsc_class_add_methodv(jsc_class: *mut JSCClass, name: *const c_char, callback: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify, return_type: GType, n_parameters: c_uint, parameter_types: *mut GType);
-    pub fn jsc_class_add_property(jsc_class: *mut JSCClass, name: *const c_char, property_type: GType, getter: gobject::GCallback, setter: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify);
+    pub fn jsc_class_add_constructor(
+        jsc_class: *mut JSCClass,
+        name: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+        return_type: GType,
+        n_params: c_uint,
+        ...
+    ) -> *mut JSCValue;
+    pub fn jsc_class_add_constructor_variadic(
+        jsc_class: *mut JSCClass,
+        name: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+        return_type: GType,
+    ) -> *mut JSCValue;
+    pub fn jsc_class_add_constructorv(
+        jsc_class: *mut JSCClass,
+        name: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+        return_type: GType,
+        n_parameters: c_uint,
+        parameter_types: *mut GType,
+    ) -> *mut JSCValue;
+    pub fn jsc_class_add_method(
+        jsc_class: *mut JSCClass,
+        name: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+        return_type: GType,
+        n_params: c_uint,
+        ...
+    );
+    pub fn jsc_class_add_method_variadic(
+        jsc_class: *mut JSCClass,
+        name: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+        return_type: GType,
+    );
+    pub fn jsc_class_add_methodv(
+        jsc_class: *mut JSCClass,
+        name: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+        return_type: GType,
+        n_parameters: c_uint,
+        parameter_types: *mut GType,
+    );
+    pub fn jsc_class_add_property(
+        jsc_class: *mut JSCClass,
+        name: *const c_char,
+        property_type: GType,
+        getter: gobject::GCallback,
+        setter: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+    );
     pub fn jsc_class_get_name(jsc_class: *mut JSCClass) -> *const c_char;
     pub fn jsc_class_get_parent(jsc_class: *mut JSCClass) -> *mut JSCClass;
 
@@ -378,34 +457,99 @@ extern "C" {
     pub fn jsc_context_new() -> *mut JSCContext;
     pub fn jsc_context_new_with_virtual_machine(vm: *mut JSCVirtualMachine) -> *mut JSCContext;
     pub fn jsc_context_get_current() -> *mut JSCContext;
-    pub fn jsc_context_check_syntax(context: *mut JSCContext, code: *const c_char, length: ssize_t, mode: JSCCheckSyntaxMode, uri: *const c_char, line_number: c_uint, exception: *mut *mut JSCException) -> JSCCheckSyntaxResult;
+    pub fn jsc_context_check_syntax(
+        context: *mut JSCContext,
+        code: *const c_char,
+        length: ssize_t,
+        mode: JSCCheckSyntaxMode,
+        uri: *const c_char,
+        line_number: c_uint,
+        exception: *mut *mut JSCException,
+    ) -> JSCCheckSyntaxResult;
     pub fn jsc_context_clear_exception(context: *mut JSCContext);
-    pub fn jsc_context_evaluate(context: *mut JSCContext, code: *const c_char, length: ssize_t) -> *mut JSCValue;
-    pub fn jsc_context_evaluate_in_object(context: *mut JSCContext, code: *const c_char, length: ssize_t, object_instance: gpointer, object_class: *mut JSCClass, uri: *const c_char, line_number: c_uint, object: *mut *mut JSCValue) -> *mut JSCValue;
-    pub fn jsc_context_evaluate_with_source_uri(context: *mut JSCContext, code: *const c_char, length: ssize_t, uri: *const c_char, line_number: c_uint) -> *mut JSCValue;
+    pub fn jsc_context_evaluate(
+        context: *mut JSCContext,
+        code: *const c_char,
+        length: ssize_t,
+    ) -> *mut JSCValue;
+    pub fn jsc_context_evaluate_in_object(
+        context: *mut JSCContext,
+        code: *const c_char,
+        length: ssize_t,
+        object_instance: gpointer,
+        object_class: *mut JSCClass,
+        uri: *const c_char,
+        line_number: c_uint,
+        object: *mut *mut JSCValue,
+    ) -> *mut JSCValue;
+    pub fn jsc_context_evaluate_with_source_uri(
+        context: *mut JSCContext,
+        code: *const c_char,
+        length: ssize_t,
+        uri: *const c_char,
+        line_number: c_uint,
+    ) -> *mut JSCValue;
     pub fn jsc_context_get_exception(context: *mut JSCContext) -> *mut JSCException;
     pub fn jsc_context_get_global_object(context: *mut JSCContext) -> *mut JSCValue;
     pub fn jsc_context_get_value(context: *mut JSCContext, name: *const c_char) -> *mut JSCValue;
     pub fn jsc_context_get_virtual_machine(context: *mut JSCContext) -> *mut JSCVirtualMachine;
     pub fn jsc_context_pop_exception_handler(context: *mut JSCContext);
-    pub fn jsc_context_push_exception_handler(context: *mut JSCContext, handler: JSCExceptionHandler, user_data: gpointer, destroy_notify: glib::GDestroyNotify);
-    pub fn jsc_context_register_class(context: *mut JSCContext, name: *const c_char, parent_class: *mut JSCClass, vtable: *mut JSCClassVTable, destroy_notify: glib::GDestroyNotify) -> *mut JSCClass;
-    pub fn jsc_context_set_value(context: *mut JSCContext, name: *const c_char, value: *mut JSCValue);
+    pub fn jsc_context_push_exception_handler(
+        context: *mut JSCContext,
+        handler: JSCExceptionHandler,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+    );
+    pub fn jsc_context_register_class(
+        context: *mut JSCContext,
+        name: *const c_char,
+        parent_class: *mut JSCClass,
+        vtable: *mut JSCClassVTable,
+        destroy_notify: glib::GDestroyNotify,
+    ) -> *mut JSCClass;
+    pub fn jsc_context_set_value(
+        context: *mut JSCContext,
+        name: *const c_char,
+        value: *mut JSCValue,
+    );
     pub fn jsc_context_throw(context: *mut JSCContext, error_message: *const c_char);
     pub fn jsc_context_throw_exception(context: *mut JSCContext, exception: *mut JSCException);
     pub fn jsc_context_throw_printf(context: *mut JSCContext, format: *const c_char, ...);
-    pub fn jsc_context_throw_with_name(context: *mut JSCContext, error_name: *const c_char, error_message: *const c_char);
-    pub fn jsc_context_throw_with_name_printf(context: *mut JSCContext, error_name: *const c_char, format: *const c_char, ...);
+    pub fn jsc_context_throw_with_name(
+        context: *mut JSCContext,
+        error_name: *const c_char,
+        error_message: *const c_char,
+    );
+    pub fn jsc_context_throw_with_name_printf(
+        context: *mut JSCContext,
+        error_name: *const c_char,
+        format: *const c_char,
+        ...
+    );
 
     //=========================================================================
     // JSCException
     //=========================================================================
     pub fn jsc_exception_get_type() -> GType;
-    pub fn jsc_exception_new(context: *mut JSCContext, message: *const c_char) -> *mut JSCException;
-    pub fn jsc_exception_new_printf(context: *mut JSCContext, format: *const c_char, ...) -> *mut JSCException;
+    pub fn jsc_exception_new(context: *mut JSCContext, message: *const c_char)
+        -> *mut JSCException;
+    pub fn jsc_exception_new_printf(
+        context: *mut JSCContext,
+        format: *const c_char,
+        ...
+    ) -> *mut JSCException;
     //pub fn jsc_exception_new_vprintf(context: *mut JSCContext, format: *const c_char, args: /*Unimplemented*/va_list) -> *mut JSCException;
-    pub fn jsc_exception_new_with_name(context: *mut JSCContext, name: *const c_char, message: *const c_char) -> *mut JSCException;
-    pub fn jsc_exception_new_with_name_printf(context: *mut JSCContext, name: *const c_char, format: *const c_char, ...) -> *mut JSCException;
+    pub fn jsc_exception_new_with_name(
+        context: *mut JSCContext,
+        name: *const c_char,
+        message: *const c_char,
+    ) -> *mut JSCException;
+    pub fn jsc_exception_new_with_name_printf(
+        context: *mut JSCContext,
+        name: *const c_char,
+        format: *const c_char,
+        ...
+    ) -> *mut JSCException;
     //pub fn jsc_exception_new_with_name_vprintf(context: *mut JSCContext, name: *const c_char, format: *const c_char, args: /*Unimplemented*/va_list) -> *mut JSCException;
     pub fn jsc_exception_get_backtrace_string(exception: *mut JSCException) -> *const c_char;
     pub fn jsc_exception_get_column_number(exception: *mut JSCException) -> c_uint;
@@ -420,27 +564,79 @@ extern "C" {
     // JSCValue
     //=========================================================================
     pub fn jsc_value_get_type() -> GType;
-    pub fn jsc_value_new_array(context: *mut JSCContext, first_item_type: GType, ...) -> *mut JSCValue;
+    pub fn jsc_value_new_array(
+        context: *mut JSCContext,
+        first_item_type: GType,
+        ...
+    ) -> *mut JSCValue;
     #[cfg(any(feature = "v2_38", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_38")))]
-    pub fn jsc_value_new_array_buffer(context: *mut JSCContext, data: gpointer, size: size_t, destroy_notify: glib::GDestroyNotify, user_data: gpointer) -> *mut JSCValue;
-    pub fn jsc_value_new_array_from_garray(context: *mut JSCContext, array: *mut glib::GPtrArray) -> *mut JSCValue;
-    pub fn jsc_value_new_array_from_strv(context: *mut JSCContext, strv: *const *const c_char) -> *mut JSCValue;
+    pub fn jsc_value_new_array_buffer(
+        context: *mut JSCContext,
+        data: gpointer,
+        size: size_t,
+        destroy_notify: glib::GDestroyNotify,
+        user_data: gpointer,
+    ) -> *mut JSCValue;
+    pub fn jsc_value_new_array_from_garray(
+        context: *mut JSCContext,
+        array: *mut glib::GPtrArray,
+    ) -> *mut JSCValue;
+    pub fn jsc_value_new_array_from_strv(
+        context: *mut JSCContext,
+        strv: *const *const c_char,
+    ) -> *mut JSCValue;
     pub fn jsc_value_new_boolean(context: *mut JSCContext, value: gboolean) -> *mut JSCValue;
     #[cfg(any(feature = "v2_28", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
     pub fn jsc_value_new_from_json(context: *mut JSCContext, json: *const c_char) -> *mut JSCValue;
-    pub fn jsc_value_new_function(context: *mut JSCContext, name: *const c_char, callback: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify, return_type: GType, n_params: c_uint, ...) -> *mut JSCValue;
-    pub fn jsc_value_new_function_variadic(context: *mut JSCContext, name: *const c_char, callback: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify, return_type: GType) -> *mut JSCValue;
-    pub fn jsc_value_new_functionv(context: *mut JSCContext, name: *const c_char, callback: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify, return_type: GType, n_parameters: c_uint, parameter_types: *mut GType) -> *mut JSCValue;
+    pub fn jsc_value_new_function(
+        context: *mut JSCContext,
+        name: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+        return_type: GType,
+        n_params: c_uint,
+        ...
+    ) -> *mut JSCValue;
+    pub fn jsc_value_new_function_variadic(
+        context: *mut JSCContext,
+        name: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+        return_type: GType,
+    ) -> *mut JSCValue;
+    pub fn jsc_value_new_functionv(
+        context: *mut JSCContext,
+        name: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+        return_type: GType,
+        n_parameters: c_uint,
+        parameter_types: *mut GType,
+    ) -> *mut JSCValue;
     pub fn jsc_value_new_null(context: *mut JSCContext) -> *mut JSCValue;
     pub fn jsc_value_new_number(context: *mut JSCContext, number: c_double) -> *mut JSCValue;
-    pub fn jsc_value_new_object(context: *mut JSCContext, instance: gpointer, jsc_class: *mut JSCClass) -> *mut JSCValue;
+    pub fn jsc_value_new_object(
+        context: *mut JSCContext,
+        instance: gpointer,
+        jsc_class: *mut JSCClass,
+    ) -> *mut JSCValue;
     pub fn jsc_value_new_string(context: *mut JSCContext, string: *const c_char) -> *mut JSCValue;
-    pub fn jsc_value_new_string_from_bytes(context: *mut JSCContext, bytes: *mut glib::GBytes) -> *mut JSCValue;
+    pub fn jsc_value_new_string_from_bytes(
+        context: *mut JSCContext,
+        bytes: *mut glib::GBytes,
+    ) -> *mut JSCValue;
     #[cfg(any(feature = "v2_38", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_38")))]
-    pub fn jsc_value_new_typed_array(context: *mut JSCContext, type_: JSCTypedArrayType, length: size_t) -> *mut JSCValue;
+    pub fn jsc_value_new_typed_array(
+        context: *mut JSCContext,
+        type_: JSCTypedArrayType,
+        length: size_t,
+    ) -> *mut JSCValue;
     pub fn jsc_value_new_undefined(context: *mut JSCContext) -> *mut JSCValue;
     #[cfg(any(feature = "v2_38", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_38")))]
@@ -448,10 +644,26 @@ extern "C" {
     #[cfg(any(feature = "v2_38", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_38")))]
     pub fn jsc_value_array_buffer_get_size(value: *mut JSCValue) -> size_t;
-    pub fn jsc_value_constructor_call(value: *mut JSCValue, first_parameter_type: GType, ...) -> *mut JSCValue;
-    pub fn jsc_value_constructor_callv(value: *mut JSCValue, n_parameters: c_uint, parameters: *mut *mut JSCValue) -> *mut JSCValue;
-    pub fn jsc_value_function_call(value: *mut JSCValue, first_parameter_type: GType, ...) -> *mut JSCValue;
-    pub fn jsc_value_function_callv(value: *mut JSCValue, n_parameters: c_uint, parameters: *mut *mut JSCValue) -> *mut JSCValue;
+    pub fn jsc_value_constructor_call(
+        value: *mut JSCValue,
+        first_parameter_type: GType,
+        ...
+    ) -> *mut JSCValue;
+    pub fn jsc_value_constructor_callv(
+        value: *mut JSCValue,
+        n_parameters: c_uint,
+        parameters: *mut *mut JSCValue,
+    ) -> *mut JSCValue;
+    pub fn jsc_value_function_call(
+        value: *mut JSCValue,
+        first_parameter_type: GType,
+        ...
+    ) -> *mut JSCValue;
+    pub fn jsc_value_function_callv(
+        value: *mut JSCValue,
+        n_parameters: c_uint,
+        parameters: *mut *mut JSCValue,
+    ) -> *mut JSCValue;
     pub fn jsc_value_get_context(value: *mut JSCValue) -> *mut JSCContext;
     pub fn jsc_value_is_array(value: *mut JSCValue) -> gboolean;
     #[cfg(any(feature = "v2_38", feature = "dox"))]
@@ -470,19 +682,62 @@ extern "C" {
     pub fn jsc_value_is_undefined(value: *mut JSCValue) -> gboolean;
     #[cfg(any(feature = "v2_38", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_38")))]
-    pub fn jsc_value_new_typed_array_with_buffer(array_buffer: *mut JSCValue, type_: JSCTypedArrayType, offset: size_t, length: ssize_t) -> *mut JSCValue;
-    pub fn jsc_value_object_define_property_accessor(value: *mut JSCValue, property_name: *const c_char, flags: JSCValuePropertyFlags, property_type: GType, getter: gobject::GCallback, setter: gobject::GCallback, user_data: gpointer, destroy_notify: glib::GDestroyNotify);
-    pub fn jsc_value_object_define_property_data(value: *mut JSCValue, property_name: *const c_char, flags: JSCValuePropertyFlags, property_value: *mut JSCValue);
+    pub fn jsc_value_new_typed_array_with_buffer(
+        array_buffer: *mut JSCValue,
+        type_: JSCTypedArrayType,
+        offset: size_t,
+        length: ssize_t,
+    ) -> *mut JSCValue;
+    pub fn jsc_value_object_define_property_accessor(
+        value: *mut JSCValue,
+        property_name: *const c_char,
+        flags: JSCValuePropertyFlags,
+        property_type: GType,
+        getter: gobject::GCallback,
+        setter: gobject::GCallback,
+        user_data: gpointer,
+        destroy_notify: glib::GDestroyNotify,
+    );
+    pub fn jsc_value_object_define_property_data(
+        value: *mut JSCValue,
+        property_name: *const c_char,
+        flags: JSCValuePropertyFlags,
+        property_value: *mut JSCValue,
+    );
     pub fn jsc_value_object_delete_property(value: *mut JSCValue, name: *const c_char) -> gboolean;
     pub fn jsc_value_object_enumerate_properties(value: *mut JSCValue) -> *mut *mut c_char;
-    pub fn jsc_value_object_get_property(value: *mut JSCValue, name: *const c_char) -> *mut JSCValue;
-    pub fn jsc_value_object_get_property_at_index(value: *mut JSCValue, index: c_uint) -> *mut JSCValue;
+    pub fn jsc_value_object_get_property(
+        value: *mut JSCValue,
+        name: *const c_char,
+    ) -> *mut JSCValue;
+    pub fn jsc_value_object_get_property_at_index(
+        value: *mut JSCValue,
+        index: c_uint,
+    ) -> *mut JSCValue;
     pub fn jsc_value_object_has_property(value: *mut JSCValue, name: *const c_char) -> gboolean;
-    pub fn jsc_value_object_invoke_method(value: *mut JSCValue, name: *const c_char, first_parameter_type: GType, ...) -> *mut JSCValue;
-    pub fn jsc_value_object_invoke_methodv(value: *mut JSCValue, name: *const c_char, n_parameters: c_uint, parameters: *mut *mut JSCValue) -> *mut JSCValue;
+    pub fn jsc_value_object_invoke_method(
+        value: *mut JSCValue,
+        name: *const c_char,
+        first_parameter_type: GType,
+        ...
+    ) -> *mut JSCValue;
+    pub fn jsc_value_object_invoke_methodv(
+        value: *mut JSCValue,
+        name: *const c_char,
+        n_parameters: c_uint,
+        parameters: *mut *mut JSCValue,
+    ) -> *mut JSCValue;
     pub fn jsc_value_object_is_instance_of(value: *mut JSCValue, name: *const c_char) -> gboolean;
-    pub fn jsc_value_object_set_property(value: *mut JSCValue, name: *const c_char, property: *mut JSCValue);
-    pub fn jsc_value_object_set_property_at_index(value: *mut JSCValue, index: c_uint, property: *mut JSCValue);
+    pub fn jsc_value_object_set_property(
+        value: *mut JSCValue,
+        name: *const c_char,
+        property: *mut JSCValue,
+    );
+    pub fn jsc_value_object_set_property_at_index(
+        value: *mut JSCValue,
+        index: c_uint,
+        property: *mut JSCValue,
+    );
     pub fn jsc_value_to_boolean(value: *mut JSCValue) -> gboolean;
     pub fn jsc_value_to_double(value: *mut JSCValue) -> c_double;
     pub fn jsc_value_to_int32(value: *mut JSCValue) -> i32;
@@ -546,7 +801,8 @@ extern "C" {
     pub fn jsc_options_get_option_group() -> *mut glib::GOptionGroup;
     #[cfg(any(feature = "v2_24", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
-    pub fn jsc_options_get_range_string(option: *const c_char, value: *mut *mut c_char) -> gboolean;
+    pub fn jsc_options_get_range_string(option: *const c_char, value: *mut *mut c_char)
+        -> gboolean;
     #[cfg(any(feature = "v2_24", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
     pub fn jsc_options_get_size(option: *const c_char, value: *mut size_t) -> gboolean;

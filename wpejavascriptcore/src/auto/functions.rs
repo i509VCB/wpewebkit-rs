@@ -14,29 +14,22 @@ use std::mem;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 use std::ptr;
 
-
 #[doc(alias = "jsc_get_major_version")]
 #[doc(alias = "get_major_version")]
 pub fn major_version() -> u32 {
-    unsafe {
-        ffi::jsc_get_major_version()
-    }
+    unsafe { ffi::jsc_get_major_version() }
 }
 
 #[doc(alias = "jsc_get_micro_version")]
 #[doc(alias = "get_micro_version")]
 pub fn micro_version() -> u32 {
-    unsafe {
-        ffi::jsc_get_micro_version()
-    }
+    unsafe { ffi::jsc_get_micro_version() }
 }
 
 #[doc(alias = "jsc_get_minor_version")]
 #[doc(alias = "get_minor_version")]
 pub fn minor_version() -> u32 {
-    unsafe {
-        ffi::jsc_get_minor_version()
-    }
+    unsafe { ffi::jsc_get_minor_version() }
 }
 
 #[cfg(any(feature = "v2_24", feature = "dox"))]
@@ -44,12 +37,21 @@ pub fn minor_version() -> u32 {
 #[doc(alias = "jsc_options_foreach")]
 pub fn options_foreach<P: FnMut(&str, &OptionType, Option<&str>) -> bool>(function: P) {
     let function_data: P = function;
-    unsafe extern "C" fn function_func<P: FnMut(&str, &OptionType, Option<&str>) -> bool>(option: *const libc::c_char, type_: ffi::JSCOptionType, description: *const libc::c_char, user_data: glib::ffi::gpointer) -> glib::ffi::gboolean {
+    unsafe extern "C" fn function_func<P: FnMut(&str, &OptionType, Option<&str>) -> bool>(
+        option: *const libc::c_char,
+        type_: ffi::JSCOptionType,
+        description: *const libc::c_char,
+        user_data: glib::ffi::gpointer,
+    ) -> glib::ffi::gboolean {
         let option: Borrowed<glib::GString> = from_glib_borrow(option);
         let type_ = from_glib_borrow(type_);
         let description: Borrowed<Option<glib::GString>> = from_glib_borrow(description);
         let callback: *mut P = user_data as *const _ as usize as *mut P;
-        let res = (*callback)(option.as_str(), &type_, (*description).as_ref().map(|s| s.as_str()));
+        let res = (*callback)(
+            option.as_str(),
+            &type_,
+            (*description).as_ref().map(|s| s.as_str()),
+        );
         res.into_glib()
     }
     let function = Some(function_func::<P> as _);
@@ -65,9 +67,16 @@ pub fn options_foreach<P: FnMut(&str, &OptionType, Option<&str>) -> bool>(functi
 pub fn options_get_boolean(option: &str) -> Option<bool> {
     unsafe {
         let mut value = mem::MaybeUninit::uninit();
-        let ret = from_glib(ffi::jsc_options_get_boolean(option.to_glib_none().0, value.as_mut_ptr()));
+        let ret = from_glib(ffi::jsc_options_get_boolean(
+            option.to_glib_none().0,
+            value.as_mut_ptr(),
+        ));
         let value = value.assume_init();
-        if ret { Some(from_glib(value)) } else { None }
+        if ret {
+            Some(from_glib(value))
+        } else {
+            None
+        }
     }
 }
 
@@ -77,9 +86,16 @@ pub fn options_get_boolean(option: &str) -> Option<bool> {
 pub fn options_get_double(option: &str) -> Option<f64> {
     unsafe {
         let mut value = mem::MaybeUninit::uninit();
-        let ret = from_glib(ffi::jsc_options_get_double(option.to_glib_none().0, value.as_mut_ptr()));
+        let ret = from_glib(ffi::jsc_options_get_double(
+            option.to_glib_none().0,
+            value.as_mut_ptr(),
+        ));
         let value = value.assume_init();
-        if ret { Some(value) } else { None }
+        if ret {
+            Some(value)
+        } else {
+            None
+        }
     }
 }
 
@@ -89,9 +105,16 @@ pub fn options_get_double(option: &str) -> Option<f64> {
 pub fn options_get_int(option: &str) -> Option<i32> {
     unsafe {
         let mut value = mem::MaybeUninit::uninit();
-        let ret = from_glib(ffi::jsc_options_get_int(option.to_glib_none().0, value.as_mut_ptr()));
+        let ret = from_glib(ffi::jsc_options_get_int(
+            option.to_glib_none().0,
+            value.as_mut_ptr(),
+        ));
         let value = value.assume_init();
-        if ret { Some(value) } else { None }
+        if ret {
+            Some(value)
+        } else {
+            None
+        }
     }
 }
 
@@ -99,9 +122,7 @@ pub fn options_get_int(option: &str) -> Option<i32> {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 #[doc(alias = "jsc_options_get_option_group")]
 pub fn options_get_option_group() -> Option<glib::OptionGroup> {
-    unsafe {
-        from_glib_full(ffi::jsc_options_get_option_group())
-    }
+    unsafe { from_glib_full(ffi::jsc_options_get_option_group()) }
 }
 
 #[cfg(any(feature = "v2_24", feature = "dox"))]
@@ -110,8 +131,15 @@ pub fn options_get_option_group() -> Option<glib::OptionGroup> {
 pub fn options_get_range_string(option: &str) -> Option<glib::GString> {
     unsafe {
         let mut value = ptr::null_mut();
-        let ret = from_glib(ffi::jsc_options_get_range_string(option.to_glib_none().0, &mut value));
-        if ret { Some(from_glib_full(value)) } else { None }
+        let ret = from_glib(ffi::jsc_options_get_range_string(
+            option.to_glib_none().0,
+            &mut value,
+        ));
+        if ret {
+            Some(from_glib_full(value))
+        } else {
+            None
+        }
     }
 }
 
@@ -121,9 +149,16 @@ pub fn options_get_range_string(option: &str) -> Option<glib::GString> {
 pub fn options_get_size(option: &str) -> Option<usize> {
     unsafe {
         let mut value = mem::MaybeUninit::uninit();
-        let ret = from_glib(ffi::jsc_options_get_size(option.to_glib_none().0, value.as_mut_ptr()));
+        let ret = from_glib(ffi::jsc_options_get_size(
+            option.to_glib_none().0,
+            value.as_mut_ptr(),
+        ));
         let value = value.assume_init();
-        if ret { Some(value) } else { None }
+        if ret {
+            Some(value)
+        } else {
+            None
+        }
     }
 }
 
@@ -133,8 +168,15 @@ pub fn options_get_size(option: &str) -> Option<usize> {
 pub fn options_get_string(option: &str) -> Option<glib::GString> {
     unsafe {
         let mut value = ptr::null_mut();
-        let ret = from_glib(ffi::jsc_options_get_string(option.to_glib_none().0, &mut value));
-        if ret { Some(from_glib_full(value)) } else { None }
+        let ret = from_glib(ffi::jsc_options_get_string(
+            option.to_glib_none().0,
+            &mut value,
+        ));
+        if ret {
+            Some(from_glib_full(value))
+        } else {
+            None
+        }
     }
 }
 
@@ -144,9 +186,16 @@ pub fn options_get_string(option: &str) -> Option<glib::GString> {
 pub fn options_get_uint(option: &str) -> Option<u32> {
     unsafe {
         let mut value = mem::MaybeUninit::uninit();
-        let ret = from_glib(ffi::jsc_options_get_uint(option.to_glib_none().0, value.as_mut_ptr()));
+        let ret = from_glib(ffi::jsc_options_get_uint(
+            option.to_glib_none().0,
+            value.as_mut_ptr(),
+        ));
         let value = value.assume_init();
-        if ret { Some(value) } else { None }
+        if ret {
+            Some(value)
+        } else {
+            None
+        }
     }
 }
 
@@ -155,7 +204,10 @@ pub fn options_get_uint(option: &str) -> Option<u32> {
 #[doc(alias = "jsc_options_set_boolean")]
 pub fn options_set_boolean(option: &str, value: bool) -> bool {
     unsafe {
-        from_glib(ffi::jsc_options_set_boolean(option.to_glib_none().0, value.into_glib()))
+        from_glib(ffi::jsc_options_set_boolean(
+            option.to_glib_none().0,
+            value.into_glib(),
+        ))
     }
 }
 
@@ -163,18 +215,14 @@ pub fn options_set_boolean(option: &str, value: bool) -> bool {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 #[doc(alias = "jsc_options_set_double")]
 pub fn options_set_double(option: &str, value: f64) -> bool {
-    unsafe {
-        from_glib(ffi::jsc_options_set_double(option.to_glib_none().0, value))
-    }
+    unsafe { from_glib(ffi::jsc_options_set_double(option.to_glib_none().0, value)) }
 }
 
 #[cfg(any(feature = "v2_24", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 #[doc(alias = "jsc_options_set_int")]
 pub fn options_set_int(option: &str, value: i32) -> bool {
-    unsafe {
-        from_glib(ffi::jsc_options_set_int(option.to_glib_none().0, value))
-    }
+    unsafe { from_glib(ffi::jsc_options_set_int(option.to_glib_none().0, value)) }
 }
 
 #[cfg(any(feature = "v2_24", feature = "dox"))]
@@ -182,7 +230,10 @@ pub fn options_set_int(option: &str, value: i32) -> bool {
 #[doc(alias = "jsc_options_set_range_string")]
 pub fn options_set_range_string(option: &str, value: &str) -> bool {
     unsafe {
-        from_glib(ffi::jsc_options_set_range_string(option.to_glib_none().0, value.to_glib_none().0))
+        from_glib(ffi::jsc_options_set_range_string(
+            option.to_glib_none().0,
+            value.to_glib_none().0,
+        ))
     }
 }
 
@@ -190,9 +241,7 @@ pub fn options_set_range_string(option: &str, value: &str) -> bool {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 #[doc(alias = "jsc_options_set_size")]
 pub fn options_set_size(option: &str, value: usize) -> bool {
-    unsafe {
-        from_glib(ffi::jsc_options_set_size(option.to_glib_none().0, value))
-    }
+    unsafe { from_glib(ffi::jsc_options_set_size(option.to_glib_none().0, value)) }
 }
 
 #[cfg(any(feature = "v2_24", feature = "dox"))]
@@ -200,7 +249,10 @@ pub fn options_set_size(option: &str, value: usize) -> bool {
 #[doc(alias = "jsc_options_set_string")]
 pub fn options_set_string(option: &str, value: &str) -> bool {
     unsafe {
-        from_glib(ffi::jsc_options_set_string(option.to_glib_none().0, value.to_glib_none().0))
+        from_glib(ffi::jsc_options_set_string(
+            option.to_glib_none().0,
+            value.to_glib_none().0,
+        ))
     }
 }
 
@@ -208,7 +260,5 @@ pub fn options_set_string(option: &str, value: &str) -> bool {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 #[doc(alias = "jsc_options_set_uint")]
 pub fn options_set_uint(option: &str, value: u32) -> bool {
-    unsafe {
-        from_glib(ffi::jsc_options_set_uint(option.to_glib_none().0, value))
-    }
+    unsafe { from_glib(ffi::jsc_options_set_uint(option.to_glib_none().0, value)) }
 }

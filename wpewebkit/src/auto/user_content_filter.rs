@@ -21,7 +21,9 @@ impl UserContentFilter {
     #[doc(alias = "get_identifier")]
     pub fn identifier(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_user_content_filter_get_identifier(self.to_glib_none().0))
+            from_glib_none(ffi::webkit_user_content_filter_get_identifier(
+                self.to_glib_none().0,
+            ))
         }
     }
 }

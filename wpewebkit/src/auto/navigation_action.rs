@@ -30,9 +30,7 @@ impl NavigationAction {
     #[doc(alias = "webkit_navigation_action_get_modifiers")]
     #[doc(alias = "get_modifiers")]
     pub fn modifiers(&mut self) -> u32 {
-        unsafe {
-            ffi::webkit_navigation_action_get_modifiers(self.to_glib_none_mut().0)
-        }
+        unsafe { ffi::webkit_navigation_action_get_modifiers(self.to_glib_none_mut().0) }
     }
 
     #[cfg(any(feature = "v2_6", feature = "dox"))]
@@ -40,9 +38,7 @@ impl NavigationAction {
     #[doc(alias = "webkit_navigation_action_get_mouse_button")]
     #[doc(alias = "get_mouse_button")]
     pub fn mouse_button(&mut self) -> u32 {
-        unsafe {
-            ffi::webkit_navigation_action_get_mouse_button(self.to_glib_none_mut().0)
-        }
+        unsafe { ffi::webkit_navigation_action_get_mouse_button(self.to_glib_none_mut().0) }
     }
 
     #[cfg(any(feature = "v2_6", feature = "dox"))]
@@ -51,7 +47,9 @@ impl NavigationAction {
     #[doc(alias = "get_navigation_type")]
     pub fn navigation_type(&mut self) -> NavigationType {
         unsafe {
-            from_glib(ffi::webkit_navigation_action_get_navigation_type(self.to_glib_none_mut().0))
+            from_glib(ffi::webkit_navigation_action_get_navigation_type(
+                self.to_glib_none_mut().0,
+            ))
         }
     }
 
@@ -61,7 +59,9 @@ impl NavigationAction {
     #[doc(alias = "get_request")]
     pub fn request(&mut self) -> Option<URIRequest> {
         unsafe {
-            from_glib_none(ffi::webkit_navigation_action_get_request(self.to_glib_none_mut().0))
+            from_glib_none(ffi::webkit_navigation_action_get_request(
+                self.to_glib_none_mut().0,
+            ))
         }
     }
 
@@ -70,7 +70,9 @@ impl NavigationAction {
     #[doc(alias = "webkit_navigation_action_is_redirect")]
     pub fn is_redirect(&mut self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_navigation_action_is_redirect(self.to_glib_none_mut().0))
+            from_glib(ffi::webkit_navigation_action_is_redirect(
+                self.to_glib_none_mut().0,
+            ))
         }
     }
 
@@ -79,7 +81,9 @@ impl NavigationAction {
     #[doc(alias = "webkit_navigation_action_is_user_gesture")]
     pub fn is_user_gesture(&mut self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_navigation_action_is_user_gesture(self.to_glib_none_mut().0))
+            from_glib(ffi::webkit_navigation_action_is_user_gesture(
+                self.to_glib_none_mut().0,
+            ))
         }
     }
 }

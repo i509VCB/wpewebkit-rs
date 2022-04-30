@@ -16,8 +16,7 @@ glib::wrapper! {
 }
 
 impl DeviceInfoPermissionRequest {
-        pub const NONE: Option<&'static DeviceInfoPermissionRequest> = None;
-    
+    pub const NONE: Option<&'static DeviceInfoPermissionRequest> = None;
 }
 
 impl fmt::Display for DeviceInfoPermissionRequest {

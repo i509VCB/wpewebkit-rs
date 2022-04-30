@@ -17,8 +17,7 @@ glib::wrapper! {
 }
 
 impl BackForwardList {
-        pub const NONE: Option<&'static BackForwardList> = None;
-    
+    pub const NONE: Option<&'static BackForwardList> = None;
 }
 
 pub trait BackForwardListExt: 'static {
@@ -92,9 +91,7 @@ impl<O: IsA<BackForwardList>> BackForwardListExt for O {
     //}
 
     fn length(&self) -> u32 {
-        unsafe {
-            ffi::webkit_back_forward_list_get_length(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::webkit_back_forward_list_get_length(self.as_ref().to_glib_none().0) }
     }
 
     //fn nth_item(&self, index: i32) -> /*Ignored*/Option<BackForwardListItem> {

@@ -3,15 +3,15 @@
 // from ../gir-files
 // DO NOT EDIT
 
-use wpe_java_script_core_sys::*;
-use std::mem::{align_of, size_of};
 use std::env;
 use std::error::Error;
 use std::ffi::OsString;
+use std::mem::{align_of, size_of};
 use std::path::Path;
 use std::process::Command;
 use std::str;
 use tempfile::Builder;
+use wpe_java_script_core_sys::*;
 
 static PACKAGES: &[&str] = &["wpe-javascriptcore-1.1"];
 
@@ -65,20 +65,17 @@ fn pkg_config_cflags(packages: &[&str]) -> Result<Vec<String>, Box<dyn Error>> {
     if packages.is_empty() {
         return Ok(Vec::new());
     }
-    let pkg_config = env::var_os("PKG_CONFIG")
-        .unwrap_or_else(|| OsString::from("pkg-config"));
+    let pkg_config = env::var_os("PKG_CONFIG").unwrap_or_else(|| OsString::from("pkg-config"));
     let mut cmd = Command::new(pkg_config);
     cmd.arg("--cflags");
     cmd.args(packages);
     let out = cmd.output()?;
     if !out.status.success() {
-        return Err(format!("command {:?} returned {}",
-                           &cmd, out.status).into());
+        return Err(format!("command {:?} returned {}", &cmd, out.status).into());
     }
     let stdout = str::from_utf8(&out.stdout)?;
     Ok(shell_words::split(stdout.trim())?)
 }
-
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 struct Layout {
@@ -175,8 +172,7 @@ fn cross_validate_layout_with_c() {
 
     let mut results = Results::default();
 
-    for ((rust_name, rust_layout), (c_name, c_layout)) in
-        RUST_LAYOUTS.iter().zip(c_layouts.iter())
+    for ((rust_name, rust_layout), (c_name, c_layout)) in RUST_LAYOUTS.iter().zip(c_layouts.iter())
     {
         if rust_name != c_name {
             results.record_failed();
@@ -217,22 +213,118 @@ fn get_c_output(name: &str) -> Result<String, Box<dyn Error>> {
 }
 
 const RUST_LAYOUTS: &[(&str, Layout)] = &[
-    ("JSCCheckSyntaxMode", Layout {size: size_of::<JSCCheckSyntaxMode>(), alignment: align_of::<JSCCheckSyntaxMode>()}),
-    ("JSCCheckSyntaxResult", Layout {size: size_of::<JSCCheckSyntaxResult>(), alignment: align_of::<JSCCheckSyntaxResult>()}),
-    ("JSCClassVTable", Layout {size: size_of::<JSCClassVTable>(), alignment: align_of::<JSCClassVTable>()}),
-    ("JSCContext", Layout {size: size_of::<JSCContext>(), alignment: align_of::<JSCContext>()}),
-    ("JSCContextClass", Layout {size: size_of::<JSCContextClass>(), alignment: align_of::<JSCContextClass>()}),
-    ("JSCException", Layout {size: size_of::<JSCException>(), alignment: align_of::<JSCException>()}),
-    ("JSCExceptionClass", Layout {size: size_of::<JSCExceptionClass>(), alignment: align_of::<JSCExceptionClass>()}),
-    ("JSCOptionType", Layout {size: size_of::<JSCOptionType>(), alignment: align_of::<JSCOptionType>()}),
-    ("JSCTypedArrayType", Layout {size: size_of::<JSCTypedArrayType>(), alignment: align_of::<JSCTypedArrayType>()}),
-    ("JSCValue", Layout {size: size_of::<JSCValue>(), alignment: align_of::<JSCValue>()}),
-    ("JSCValueClass", Layout {size: size_of::<JSCValueClass>(), alignment: align_of::<JSCValueClass>()}),
-    ("JSCValuePropertyFlags", Layout {size: size_of::<JSCValuePropertyFlags>(), alignment: align_of::<JSCValuePropertyFlags>()}),
-    ("JSCVirtualMachine", Layout {size: size_of::<JSCVirtualMachine>(), alignment: align_of::<JSCVirtualMachine>()}),
-    ("JSCVirtualMachineClass", Layout {size: size_of::<JSCVirtualMachineClass>(), alignment: align_of::<JSCVirtualMachineClass>()}),
-    ("JSCWeakValue", Layout {size: size_of::<JSCWeakValue>(), alignment: align_of::<JSCWeakValue>()}),
-    ("JSCWeakValueClass", Layout {size: size_of::<JSCWeakValueClass>(), alignment: align_of::<JSCWeakValueClass>()}),
+    (
+        "JSCCheckSyntaxMode",
+        Layout {
+            size: size_of::<JSCCheckSyntaxMode>(),
+            alignment: align_of::<JSCCheckSyntaxMode>(),
+        },
+    ),
+    (
+        "JSCCheckSyntaxResult",
+        Layout {
+            size: size_of::<JSCCheckSyntaxResult>(),
+            alignment: align_of::<JSCCheckSyntaxResult>(),
+        },
+    ),
+    (
+        "JSCClassVTable",
+        Layout {
+            size: size_of::<JSCClassVTable>(),
+            alignment: align_of::<JSCClassVTable>(),
+        },
+    ),
+    (
+        "JSCContext",
+        Layout {
+            size: size_of::<JSCContext>(),
+            alignment: align_of::<JSCContext>(),
+        },
+    ),
+    (
+        "JSCContextClass",
+        Layout {
+            size: size_of::<JSCContextClass>(),
+            alignment: align_of::<JSCContextClass>(),
+        },
+    ),
+    (
+        "JSCException",
+        Layout {
+            size: size_of::<JSCException>(),
+            alignment: align_of::<JSCException>(),
+        },
+    ),
+    (
+        "JSCExceptionClass",
+        Layout {
+            size: size_of::<JSCExceptionClass>(),
+            alignment: align_of::<JSCExceptionClass>(),
+        },
+    ),
+    (
+        "JSCOptionType",
+        Layout {
+            size: size_of::<JSCOptionType>(),
+            alignment: align_of::<JSCOptionType>(),
+        },
+    ),
+    (
+        "JSCTypedArrayType",
+        Layout {
+            size: size_of::<JSCTypedArrayType>(),
+            alignment: align_of::<JSCTypedArrayType>(),
+        },
+    ),
+    (
+        "JSCValue",
+        Layout {
+            size: size_of::<JSCValue>(),
+            alignment: align_of::<JSCValue>(),
+        },
+    ),
+    (
+        "JSCValueClass",
+        Layout {
+            size: size_of::<JSCValueClass>(),
+            alignment: align_of::<JSCValueClass>(),
+        },
+    ),
+    (
+        "JSCValuePropertyFlags",
+        Layout {
+            size: size_of::<JSCValuePropertyFlags>(),
+            alignment: align_of::<JSCValuePropertyFlags>(),
+        },
+    ),
+    (
+        "JSCVirtualMachine",
+        Layout {
+            size: size_of::<JSCVirtualMachine>(),
+            alignment: align_of::<JSCVirtualMachine>(),
+        },
+    ),
+    (
+        "JSCVirtualMachineClass",
+        Layout {
+            size: size_of::<JSCVirtualMachineClass>(),
+            alignment: align_of::<JSCVirtualMachineClass>(),
+        },
+    ),
+    (
+        "JSCWeakValue",
+        Layout {
+            size: size_of::<JSCWeakValue>(),
+            alignment: align_of::<JSCWeakValue>(),
+        },
+    ),
+    (
+        "JSCWeakValueClass",
+        Layout {
+            size: size_of::<JSCWeakValueClass>(),
+            alignment: align_of::<JSCWeakValueClass>(),
+        },
+    ),
 ];
 
 const RUST_CONSTANTS: &[(&str, &str)] = &[
@@ -243,7 +335,10 @@ const RUST_CONSTANTS: &[(&str, &str)] = &[
     ("(gint) JSC_CHECK_SYNTAX_RESULT_RECOVERABLE_ERROR", "1"),
     ("(gint) JSC_CHECK_SYNTAX_RESULT_STACK_OVERFLOW_ERROR", "5"),
     ("(gint) JSC_CHECK_SYNTAX_RESULT_SUCCESS", "0"),
-    ("(gint) JSC_CHECK_SYNTAX_RESULT_UNTERMINATED_LITERAL_ERROR", "3"),
+    (
+        "(gint) JSC_CHECK_SYNTAX_RESULT_UNTERMINATED_LITERAL_ERROR",
+        "3",
+    ),
     ("JSC_MAJOR_VERSION", "2"),
     ("JSC_MICRO_VERSION", "1"),
     ("JSC_MINOR_VERSION", "35"),
@@ -274,5 +369,3 @@ const RUST_CONSTANTS: &[(&str, &str)] = &[
     ("(guint) JSC_VALUE_PROPERTY_ENUMERABLE", "2"),
     ("(guint) JSC_VALUE_PROPERTY_WRITABLE", "4"),
 ];
-
-

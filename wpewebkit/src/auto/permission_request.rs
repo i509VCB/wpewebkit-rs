@@ -17,8 +17,7 @@ glib::wrapper! {
 }
 
 impl PermissionRequest {
-        pub const NONE: Option<&'static PermissionRequest> = None;
-    
+    pub const NONE: Option<&'static PermissionRequest> = None;
 }
 
 pub trait PermissionRequestExt: 'static {

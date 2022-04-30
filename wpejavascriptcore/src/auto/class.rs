@@ -54,18 +54,14 @@ impl Class {
     #[doc(alias = "jsc_class_get_name")]
     #[doc(alias = "get_name")]
     pub fn name(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::jsc_class_get_name(self.to_glib_none().0))
-        }
+        unsafe { from_glib_none(ffi::jsc_class_get_name(self.to_glib_none().0)) }
     }
 
     #[doc(alias = "jsc_class_get_parent")]
     #[doc(alias = "get_parent")]
-#[must_use]
+    #[must_use]
     pub fn parent(&self) -> Option<Class> {
-        unsafe {
-            from_glib_none(ffi::jsc_class_get_parent(self.to_glib_none().0))
-        }
+        unsafe { from_glib_none(ffi::jsc_class_get_parent(self.to_glib_none().0)) }
     }
 }
 

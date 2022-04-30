@@ -14,8 +14,7 @@ use std::fmt;
 
 #[cfg(any(feature = "v2_2", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_2")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitAuthenticationScheme")]
 pub enum AuthenticationScheme {
@@ -39,7 +38,7 @@ pub enum AuthenticationScheme {
     ClientCertificatePinRequested,
     #[doc(alias = "WEBKIT_AUTHENTICATION_SCHEME_UNKNOWN")]
     Unknown,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -47,19 +46,23 @@ pub enum AuthenticationScheme {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_2")))]
 impl fmt::Display for AuthenticationScheme {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "AuthenticationScheme::{}", match *self {
-            Self::Default => "Default",
-            Self::HttpBasic => "HttpBasic",
-            Self::HttpDigest => "HttpDigest",
-            Self::HtmlForm => "HtmlForm",
-            Self::Ntlm => "Ntlm",
-            Self::Negotiate => "Negotiate",
-            Self::ClientCertificateRequested => "ClientCertificateRequested",
-            Self::ServerTrustEvaluationRequested => "ServerTrustEvaluationRequested",
-            Self::ClientCertificatePinRequested => "ClientCertificatePinRequested",
-            Self::Unknown => "Unknown",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "AuthenticationScheme::{}",
+            match *self {
+                Self::Default => "Default",
+                Self::HttpBasic => "HttpBasic",
+                Self::HttpDigest => "HttpDigest",
+                Self::HtmlForm => "HtmlForm",
+                Self::Ntlm => "Ntlm",
+                Self::Negotiate => "Negotiate",
+                Self::ClientCertificateRequested => "ClientCertificateRequested",
+                Self::ServerTrustEvaluationRequested => "ServerTrustEvaluationRequested",
+                Self::ClientCertificatePinRequested => "ClientCertificatePinRequested",
+                Self::Unknown => "Unknown",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -77,12 +80,18 @@ impl IntoGlib for AuthenticationScheme {
             Self::HtmlForm => ffi::WEBKIT_AUTHENTICATION_SCHEME_HTML_FORM,
             Self::Ntlm => ffi::WEBKIT_AUTHENTICATION_SCHEME_NTLM,
             Self::Negotiate => ffi::WEBKIT_AUTHENTICATION_SCHEME_NEGOTIATE,
-            Self::ClientCertificateRequested => ffi::WEBKIT_AUTHENTICATION_SCHEME_CLIENT_CERTIFICATE_REQUESTED,
-            Self::ServerTrustEvaluationRequested => ffi::WEBKIT_AUTHENTICATION_SCHEME_SERVER_TRUST_EVALUATION_REQUESTED,
-            Self::ClientCertificatePinRequested => ffi::WEBKIT_AUTHENTICATION_SCHEME_CLIENT_CERTIFICATE_PIN_REQUESTED,
+            Self::ClientCertificateRequested => {
+                ffi::WEBKIT_AUTHENTICATION_SCHEME_CLIENT_CERTIFICATE_REQUESTED
+            }
+            Self::ServerTrustEvaluationRequested => {
+                ffi::WEBKIT_AUTHENTICATION_SCHEME_SERVER_TRUST_EVALUATION_REQUESTED
+            }
+            Self::ClientCertificatePinRequested => {
+                ffi::WEBKIT_AUTHENTICATION_SCHEME_CLIENT_CERTIFICATE_PIN_REQUESTED
+            }
             Self::Unknown => ffi::WEBKIT_AUTHENTICATION_SCHEME_UNKNOWN,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -99,12 +108,18 @@ impl FromGlib<ffi::WebKitAuthenticationScheme> for AuthenticationScheme {
             ffi::WEBKIT_AUTHENTICATION_SCHEME_HTML_FORM => Self::HtmlForm,
             ffi::WEBKIT_AUTHENTICATION_SCHEME_NTLM => Self::Ntlm,
             ffi::WEBKIT_AUTHENTICATION_SCHEME_NEGOTIATE => Self::Negotiate,
-            ffi::WEBKIT_AUTHENTICATION_SCHEME_CLIENT_CERTIFICATE_REQUESTED => Self::ClientCertificateRequested,
-            ffi::WEBKIT_AUTHENTICATION_SCHEME_SERVER_TRUST_EVALUATION_REQUESTED => Self::ServerTrustEvaluationRequested,
-            ffi::WEBKIT_AUTHENTICATION_SCHEME_CLIENT_CERTIFICATE_PIN_REQUESTED => Self::ClientCertificatePinRequested,
+            ffi::WEBKIT_AUTHENTICATION_SCHEME_CLIENT_CERTIFICATE_REQUESTED => {
+                Self::ClientCertificateRequested
+            }
+            ffi::WEBKIT_AUTHENTICATION_SCHEME_SERVER_TRUST_EVALUATION_REQUESTED => {
+                Self::ServerTrustEvaluationRequested
+            }
+            ffi::WEBKIT_AUTHENTICATION_SCHEME_CLIENT_CERTIFICATE_PIN_REQUESTED => {
+                Self::ClientCertificatePinRequested
+            }
             ffi::WEBKIT_AUTHENTICATION_SCHEME_UNKNOWN => Self::Unknown,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -151,8 +166,7 @@ impl ToValue for AuthenticationScheme {
 
 #[cfg(any(feature = "v2_28", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitAutomationBrowsingContextPresentation")]
 pub enum AutomationBrowsingContextPresentation {
@@ -160,7 +174,7 @@ pub enum AutomationBrowsingContextPresentation {
     Window,
     #[doc(alias = "WEBKIT_AUTOMATION_BROWSING_CONTEXT_PRESENTATION_TAB")]
     Tab,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -168,11 +182,15 @@ pub enum AutomationBrowsingContextPresentation {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
 impl fmt::Display for AutomationBrowsingContextPresentation {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "AutomationBrowsingContextPresentation::{}", match *self {
-            Self::Window => "Window",
-            Self::Tab => "Tab",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "AutomationBrowsingContextPresentation::{}",
+            match *self {
+                Self::Window => "Window",
+                Self::Tab => "Tab",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -187,21 +205,23 @@ impl IntoGlib for AutomationBrowsingContextPresentation {
             Self::Window => ffi::WEBKIT_AUTOMATION_BROWSING_CONTEXT_PRESENTATION_WINDOW,
             Self::Tab => ffi::WEBKIT_AUTOMATION_BROWSING_CONTEXT_PRESENTATION_TAB,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
 #[cfg(any(feature = "v2_28", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
 #[doc(hidden)]
-impl FromGlib<ffi::WebKitAutomationBrowsingContextPresentation> for AutomationBrowsingContextPresentation {
+impl FromGlib<ffi::WebKitAutomationBrowsingContextPresentation>
+    for AutomationBrowsingContextPresentation
+{
     unsafe fn from_glib(value: ffi::WebKitAutomationBrowsingContextPresentation) -> Self {
         skip_assert_initialized!();
         match value {
             ffi::WEBKIT_AUTOMATION_BROWSING_CONTEXT_PRESENTATION_WINDOW => Self::Window,
             ffi::WEBKIT_AUTOMATION_BROWSING_CONTEXT_PRESENTATION_TAB => Self::Tab,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -248,8 +268,7 @@ impl ToValue for AutomationBrowsingContextPresentation {
 
 #[cfg(any(feature = "v2_30", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitAutoplayPolicy")]
 pub enum AutoplayPolicy {
@@ -259,7 +278,7 @@ pub enum AutoplayPolicy {
     AllowWithoutSound,
     #[doc(alias = "WEBKIT_AUTOPLAY_DENY")]
     Deny,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -267,12 +286,16 @@ pub enum AutoplayPolicy {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
 impl fmt::Display for AutoplayPolicy {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "AutoplayPolicy::{}", match *self {
-            Self::Allow => "Allow",
-            Self::AllowWithoutSound => "AllowWithoutSound",
-            Self::Deny => "Deny",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "AutoplayPolicy::{}",
+            match *self {
+                Self::Allow => "Allow",
+                Self::AllowWithoutSound => "AllowWithoutSound",
+                Self::Deny => "Deny",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -288,7 +311,7 @@ impl IntoGlib for AutoplayPolicy {
             Self::AllowWithoutSound => ffi::WEBKIT_AUTOPLAY_ALLOW_WITHOUT_SOUND,
             Self::Deny => ffi::WEBKIT_AUTOPLAY_DENY,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -303,7 +326,7 @@ impl FromGlib<ffi::WebKitAutoplayPolicy> for AutoplayPolicy {
             ffi::WEBKIT_AUTOPLAY_ALLOW_WITHOUT_SOUND => Self::AllowWithoutSound,
             ffi::WEBKIT_AUTOPLAY_DENY => Self::Deny,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -348,8 +371,7 @@ impl ToValue for AutoplayPolicy {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitCacheModel")]
 pub enum CacheModel {
@@ -359,18 +381,22 @@ pub enum CacheModel {
     WebBrowser,
     #[doc(alias = "WEBKIT_CACHE_MODEL_DOCUMENT_BROWSER")]
     DocumentBrowser,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for CacheModel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CacheModel::{}", match *self {
-            Self::DocumentViewer => "DocumentViewer",
-            Self::WebBrowser => "WebBrowser",
-            Self::DocumentBrowser => "DocumentBrowser",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "CacheModel::{}",
+            match *self {
+                Self::DocumentViewer => "DocumentViewer",
+                Self::WebBrowser => "WebBrowser",
+                Self::DocumentBrowser => "DocumentBrowser",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -384,7 +410,7 @@ impl IntoGlib for CacheModel {
             Self::WebBrowser => ffi::WEBKIT_CACHE_MODEL_WEB_BROWSER,
             Self::DocumentBrowser => ffi::WEBKIT_CACHE_MODEL_DOCUMENT_BROWSER,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -397,7 +423,7 @@ impl FromGlib<ffi::WebKitCacheModel> for CacheModel {
             ffi::WEBKIT_CACHE_MODEL_WEB_BROWSER => Self::WebBrowser,
             ffi::WEBKIT_CACHE_MODEL_DOCUMENT_BROWSER => Self::DocumentBrowser,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -434,8 +460,7 @@ impl ToValue for CacheModel {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitContextMenuAction")]
 pub enum ContextMenuAction {
@@ -519,55 +544,59 @@ pub enum ContextMenuAction {
     DownloadAudioToDisk,
     #[doc(alias = "WEBKIT_CONTEXT_MENU_ACTION_CUSTOM")]
     Custom,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for ContextMenuAction {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "ContextMenuAction::{}", match *self {
-            Self::NoAction => "NoAction",
-            Self::OpenLink => "OpenLink",
-            Self::OpenLinkInNewWindow => "OpenLinkInNewWindow",
-            Self::DownloadLinkToDisk => "DownloadLinkToDisk",
-            Self::CopyLinkToClipboard => "CopyLinkToClipboard",
-            Self::OpenImageInNewWindow => "OpenImageInNewWindow",
-            Self::DownloadImageToDisk => "DownloadImageToDisk",
-            Self::CopyImageToClipboard => "CopyImageToClipboard",
-            Self::OpenFrameInNewWindow => "OpenFrameInNewWindow",
-            Self::GoBack => "GoBack",
-            Self::GoForward => "GoForward",
-            Self::Stop => "Stop",
-            Self::Reload => "Reload",
-            Self::Copy => "Copy",
-            Self::Cut => "Cut",
-            Self::Paste => "Paste",
-            Self::SpellingGuess => "SpellingGuess",
-            Self::NoGuessesFound => "NoGuessesFound",
-            Self::IgnoreSpelling => "IgnoreSpelling",
-            Self::LearnSpelling => "LearnSpelling",
-            Self::IgnoreGrammar => "IgnoreGrammar",
-            Self::FontMenu => "FontMenu",
-            Self::Bold => "Bold",
-            Self::Italic => "Italic",
-            Self::Underline => "Underline",
-            Self::Outline => "Outline",
-            Self::InspectElement => "InspectElement",
-            Self::OpenVideoInNewWindow => "OpenVideoInNewWindow",
-            Self::OpenAudioInNewWindow => "OpenAudioInNewWindow",
-            Self::CopyVideoLinkToClipboard => "CopyVideoLinkToClipboard",
-            Self::CopyAudioLinkToClipboard => "CopyAudioLinkToClipboard",
-            Self::ToggleMediaControls => "ToggleMediaControls",
-            Self::ToggleMediaLoop => "ToggleMediaLoop",
-            Self::EnterVideoFullscreen => "EnterVideoFullscreen",
-            Self::MediaPlay => "MediaPlay",
-            Self::MediaPause => "MediaPause",
-            Self::MediaMute => "MediaMute",
-            Self::DownloadVideoToDisk => "DownloadVideoToDisk",
-            Self::DownloadAudioToDisk => "DownloadAudioToDisk",
-            Self::Custom => "Custom",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "ContextMenuAction::{}",
+            match *self {
+                Self::NoAction => "NoAction",
+                Self::OpenLink => "OpenLink",
+                Self::OpenLinkInNewWindow => "OpenLinkInNewWindow",
+                Self::DownloadLinkToDisk => "DownloadLinkToDisk",
+                Self::CopyLinkToClipboard => "CopyLinkToClipboard",
+                Self::OpenImageInNewWindow => "OpenImageInNewWindow",
+                Self::DownloadImageToDisk => "DownloadImageToDisk",
+                Self::CopyImageToClipboard => "CopyImageToClipboard",
+                Self::OpenFrameInNewWindow => "OpenFrameInNewWindow",
+                Self::GoBack => "GoBack",
+                Self::GoForward => "GoForward",
+                Self::Stop => "Stop",
+                Self::Reload => "Reload",
+                Self::Copy => "Copy",
+                Self::Cut => "Cut",
+                Self::Paste => "Paste",
+                Self::SpellingGuess => "SpellingGuess",
+                Self::NoGuessesFound => "NoGuessesFound",
+                Self::IgnoreSpelling => "IgnoreSpelling",
+                Self::LearnSpelling => "LearnSpelling",
+                Self::IgnoreGrammar => "IgnoreGrammar",
+                Self::FontMenu => "FontMenu",
+                Self::Bold => "Bold",
+                Self::Italic => "Italic",
+                Self::Underline => "Underline",
+                Self::Outline => "Outline",
+                Self::InspectElement => "InspectElement",
+                Self::OpenVideoInNewWindow => "OpenVideoInNewWindow",
+                Self::OpenAudioInNewWindow => "OpenAudioInNewWindow",
+                Self::CopyVideoLinkToClipboard => "CopyVideoLinkToClipboard",
+                Self::CopyAudioLinkToClipboard => "CopyAudioLinkToClipboard",
+                Self::ToggleMediaControls => "ToggleMediaControls",
+                Self::ToggleMediaLoop => "ToggleMediaLoop",
+                Self::EnterVideoFullscreen => "EnterVideoFullscreen",
+                Self::MediaPlay => "MediaPlay",
+                Self::MediaPause => "MediaPause",
+                Self::MediaMute => "MediaMute",
+                Self::DownloadVideoToDisk => "DownloadVideoToDisk",
+                Self::DownloadAudioToDisk => "DownloadAudioToDisk",
+                Self::Custom => "Custom",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -606,8 +635,12 @@ impl IntoGlib for ContextMenuAction {
             Self::InspectElement => ffi::WEBKIT_CONTEXT_MENU_ACTION_INSPECT_ELEMENT,
             Self::OpenVideoInNewWindow => ffi::WEBKIT_CONTEXT_MENU_ACTION_OPEN_VIDEO_IN_NEW_WINDOW,
             Self::OpenAudioInNewWindow => ffi::WEBKIT_CONTEXT_MENU_ACTION_OPEN_AUDIO_IN_NEW_WINDOW,
-            Self::CopyVideoLinkToClipboard => ffi::WEBKIT_CONTEXT_MENU_ACTION_COPY_VIDEO_LINK_TO_CLIPBOARD,
-            Self::CopyAudioLinkToClipboard => ffi::WEBKIT_CONTEXT_MENU_ACTION_COPY_AUDIO_LINK_TO_CLIPBOARD,
+            Self::CopyVideoLinkToClipboard => {
+                ffi::WEBKIT_CONTEXT_MENU_ACTION_COPY_VIDEO_LINK_TO_CLIPBOARD
+            }
+            Self::CopyAudioLinkToClipboard => {
+                ffi::WEBKIT_CONTEXT_MENU_ACTION_COPY_AUDIO_LINK_TO_CLIPBOARD
+            }
             Self::ToggleMediaControls => ffi::WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_CONTROLS,
             Self::ToggleMediaLoop => ffi::WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_LOOP,
             Self::EnterVideoFullscreen => ffi::WEBKIT_CONTEXT_MENU_ACTION_ENTER_VIDEO_FULLSCREEN,
@@ -618,7 +651,7 @@ impl IntoGlib for ContextMenuAction {
             Self::DownloadAudioToDisk => ffi::WEBKIT_CONTEXT_MENU_ACTION_DOWNLOAD_AUDIO_TO_DISK,
             Self::Custom => ffi::WEBKIT_CONTEXT_MENU_ACTION_CUSTOM,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -656,8 +689,12 @@ impl FromGlib<ffi::WebKitContextMenuAction> for ContextMenuAction {
             ffi::WEBKIT_CONTEXT_MENU_ACTION_INSPECT_ELEMENT => Self::InspectElement,
             ffi::WEBKIT_CONTEXT_MENU_ACTION_OPEN_VIDEO_IN_NEW_WINDOW => Self::OpenVideoInNewWindow,
             ffi::WEBKIT_CONTEXT_MENU_ACTION_OPEN_AUDIO_IN_NEW_WINDOW => Self::OpenAudioInNewWindow,
-            ffi::WEBKIT_CONTEXT_MENU_ACTION_COPY_VIDEO_LINK_TO_CLIPBOARD => Self::CopyVideoLinkToClipboard,
-            ffi::WEBKIT_CONTEXT_MENU_ACTION_COPY_AUDIO_LINK_TO_CLIPBOARD => Self::CopyAudioLinkToClipboard,
+            ffi::WEBKIT_CONTEXT_MENU_ACTION_COPY_VIDEO_LINK_TO_CLIPBOARD => {
+                Self::CopyVideoLinkToClipboard
+            }
+            ffi::WEBKIT_CONTEXT_MENU_ACTION_COPY_AUDIO_LINK_TO_CLIPBOARD => {
+                Self::CopyAudioLinkToClipboard
+            }
             ffi::WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_CONTROLS => Self::ToggleMediaControls,
             ffi::WEBKIT_CONTEXT_MENU_ACTION_TOGGLE_MEDIA_LOOP => Self::ToggleMediaLoop,
             ffi::WEBKIT_CONTEXT_MENU_ACTION_ENTER_VIDEO_FULLSCREEN => Self::EnterVideoFullscreen,
@@ -668,7 +705,7 @@ impl FromGlib<ffi::WebKitContextMenuAction> for ContextMenuAction {
             ffi::WEBKIT_CONTEXT_MENU_ACTION_DOWNLOAD_AUDIO_TO_DISK => Self::DownloadAudioToDisk,
             ffi::WEBKIT_CONTEXT_MENU_ACTION_CUSTOM => Self::Custom,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -705,8 +742,7 @@ impl ToValue for ContextMenuAction {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitCookieAcceptPolicy")]
 pub enum CookieAcceptPolicy {
@@ -716,18 +752,22 @@ pub enum CookieAcceptPolicy {
     Never,
     #[doc(alias = "WEBKIT_COOKIE_POLICY_ACCEPT_NO_THIRD_PARTY")]
     NoThirdParty,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for CookieAcceptPolicy {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CookieAcceptPolicy::{}", match *self {
-            Self::Always => "Always",
-            Self::Never => "Never",
-            Self::NoThirdParty => "NoThirdParty",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "CookieAcceptPolicy::{}",
+            match *self {
+                Self::Always => "Always",
+                Self::Never => "Never",
+                Self::NoThirdParty => "NoThirdParty",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -741,7 +781,7 @@ impl IntoGlib for CookieAcceptPolicy {
             Self::Never => ffi::WEBKIT_COOKIE_POLICY_ACCEPT_NEVER,
             Self::NoThirdParty => ffi::WEBKIT_COOKIE_POLICY_ACCEPT_NO_THIRD_PARTY,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -754,7 +794,7 @@ impl FromGlib<ffi::WebKitCookieAcceptPolicy> for CookieAcceptPolicy {
             ffi::WEBKIT_COOKIE_POLICY_ACCEPT_NEVER => Self::Never,
             ffi::WEBKIT_COOKIE_POLICY_ACCEPT_NO_THIRD_PARTY => Self::NoThirdParty,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -791,8 +831,7 @@ impl ToValue for CookieAcceptPolicy {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitCookiePersistentStorage")]
 pub enum CookiePersistentStorage {
@@ -800,17 +839,21 @@ pub enum CookiePersistentStorage {
     Text,
     #[doc(alias = "WEBKIT_COOKIE_PERSISTENT_STORAGE_SQLITE")]
     Sqlite,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for CookiePersistentStorage {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CookiePersistentStorage::{}", match *self {
-            Self::Text => "Text",
-            Self::Sqlite => "Sqlite",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "CookiePersistentStorage::{}",
+            match *self {
+                Self::Text => "Text",
+                Self::Sqlite => "Sqlite",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -823,7 +866,7 @@ impl IntoGlib for CookiePersistentStorage {
             Self::Text => ffi::WEBKIT_COOKIE_PERSISTENT_STORAGE_TEXT,
             Self::Sqlite => ffi::WEBKIT_COOKIE_PERSISTENT_STORAGE_SQLITE,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -835,7 +878,7 @@ impl FromGlib<ffi::WebKitCookiePersistentStorage> for CookiePersistentStorage {
             ffi::WEBKIT_COOKIE_PERSISTENT_STORAGE_TEXT => Self::Text,
             ffi::WEBKIT_COOKIE_PERSISTENT_STORAGE_SQLITE => Self::Sqlite,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -874,8 +917,7 @@ impl ToValue for CookiePersistentStorage {
 
 #[cfg(any(feature = "v2_2", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_2")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitCredentialPersistence")]
 pub enum CredentialPersistence {
@@ -885,7 +927,7 @@ pub enum CredentialPersistence {
     ForSession,
     #[doc(alias = "WEBKIT_CREDENTIAL_PERSISTENCE_PERMANENT")]
     Permanent,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -893,12 +935,16 @@ pub enum CredentialPersistence {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_2")))]
 impl fmt::Display for CredentialPersistence {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CredentialPersistence::{}", match *self {
-            Self::None => "None",
-            Self::ForSession => "ForSession",
-            Self::Permanent => "Permanent",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "CredentialPersistence::{}",
+            match *self {
+                Self::None => "None",
+                Self::ForSession => "ForSession",
+                Self::Permanent => "Permanent",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -914,7 +960,7 @@ impl IntoGlib for CredentialPersistence {
             Self::ForSession => ffi::WEBKIT_CREDENTIAL_PERSISTENCE_FOR_SESSION,
             Self::Permanent => ffi::WEBKIT_CREDENTIAL_PERSISTENCE_PERMANENT,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -929,7 +975,7 @@ impl FromGlib<ffi::WebKitCredentialPersistence> for CredentialPersistence {
             ffi::WEBKIT_CREDENTIAL_PERSISTENCE_FOR_SESSION => Self::ForSession,
             ffi::WEBKIT_CREDENTIAL_PERSISTENCE_PERMANENT => Self::Permanent,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -974,8 +1020,7 @@ impl ToValue for CredentialPersistence {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitDownloadError")]
 pub enum DownloadError {
@@ -985,7 +1030,7 @@ pub enum DownloadError {
     CancelledByUser,
     #[doc(alias = "WEBKIT_DOWNLOAD_ERROR_DESTINATION")]
     Destination,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -993,20 +1038,22 @@ impl DownloadError {
     #[doc(alias = "webkit_download_error_quark")]
     pub fn quark() -> glib::Quark {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib(ffi::webkit_download_error_quark())
-        }
+        unsafe { from_glib(ffi::webkit_download_error_quark()) }
     }
 }
 
 impl fmt::Display for DownloadError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "DownloadError::{}", match *self {
-            Self::Network => "Network",
-            Self::CancelledByUser => "CancelledByUser",
-            Self::Destination => "Destination",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "DownloadError::{}",
+            match *self {
+                Self::Network => "Network",
+                Self::CancelledByUser => "CancelledByUser",
+                Self::Destination => "Destination",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1020,7 +1067,7 @@ impl IntoGlib for DownloadError {
             Self::CancelledByUser => ffi::WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER,
             Self::Destination => ffi::WEBKIT_DOWNLOAD_ERROR_DESTINATION,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -1033,17 +1080,18 @@ impl FromGlib<ffi::WebKitDownloadError> for DownloadError {
             ffi::WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER => Self::CancelledByUser,
             ffi::WEBKIT_DOWNLOAD_ERROR_DESTINATION => Self::Destination,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
 impl ErrorDomain for DownloadError {
     fn domain() -> Quark {
         skip_assert_initialized!();
-        
-        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
-            glib::ffi::g_quark_from_static_string(b"WebKitDownloadError\0".as_ptr() as *const _)
-        });
+
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> =
+            once_cell::sync::Lazy::new(|| unsafe {
+                glib::ffi::g_quark_from_static_string(b"WebKitDownloadError\0".as_ptr() as *const _)
+            });
         unsafe { from_glib(*QUARK) }
     }
 
@@ -1058,7 +1106,7 @@ impl ErrorDomain for DownloadError {
             ffi::WEBKIT_DOWNLOAD_ERROR_CANCELLED_BY_USER => Some(Self::CancelledByUser),
             ffi::WEBKIT_DOWNLOAD_ERROR_DESTINATION => Some(Self::Destination),
             value => Some(Self::__Unknown(value)),
-}
+        }
     }
 }
 
@@ -1095,8 +1143,7 @@ impl ToValue for DownloadError {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitFaviconDatabaseError")]
 pub enum FaviconDatabaseError {
@@ -1106,7 +1153,7 @@ pub enum FaviconDatabaseError {
     FaviconNotFound,
     #[doc(alias = "WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_UNKNOWN")]
     FaviconUnknown,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -1114,20 +1161,22 @@ impl FaviconDatabaseError {
     #[doc(alias = "webkit_favicon_database_error_quark")]
     pub fn quark() -> glib::Quark {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib(ffi::webkit_favicon_database_error_quark())
-        }
+        unsafe { from_glib(ffi::webkit_favicon_database_error_quark()) }
     }
 }
 
 impl fmt::Display for FaviconDatabaseError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "FaviconDatabaseError::{}", match *self {
-            Self::NotInitialized => "NotInitialized",
-            Self::FaviconNotFound => "FaviconNotFound",
-            Self::FaviconUnknown => "FaviconUnknown",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "FaviconDatabaseError::{}",
+            match *self {
+                Self::NotInitialized => "NotInitialized",
+                Self::FaviconNotFound => "FaviconNotFound",
+                Self::FaviconUnknown => "FaviconUnknown",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1141,7 +1190,7 @@ impl IntoGlib for FaviconDatabaseError {
             Self::FaviconNotFound => ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_NOT_FOUND,
             Self::FaviconUnknown => ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_UNKNOWN,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -1154,17 +1203,20 @@ impl FromGlib<ffi::WebKitFaviconDatabaseError> for FaviconDatabaseError {
             ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_NOT_FOUND => Self::FaviconNotFound,
             ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_UNKNOWN => Self::FaviconUnknown,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
 impl ErrorDomain for FaviconDatabaseError {
     fn domain() -> Quark {
         skip_assert_initialized!();
-        
-        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
-            glib::ffi::g_quark_from_static_string(b"WebKitFaviconDatabaseError\0".as_ptr() as *const _)
-        });
+
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> =
+            once_cell::sync::Lazy::new(|| unsafe {
+                glib::ffi::g_quark_from_static_string(
+                    b"WebKitFaviconDatabaseError\0".as_ptr() as *const _
+                )
+            });
         unsafe { from_glib(*QUARK) }
     }
 
@@ -1179,7 +1231,7 @@ impl ErrorDomain for FaviconDatabaseError {
             ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_NOT_FOUND => Some(Self::FaviconNotFound),
             ffi::WEBKIT_FAVICON_DATABASE_ERROR_FAVICON_UNKNOWN => Some(Self::FaviconUnknown),
             value => Some(Self::__Unknown(value)),
-}
+        }
     }
 }
 
@@ -1218,8 +1270,7 @@ impl ToValue for FaviconDatabaseError {
 
 #[cfg(any(feature = "v2_28", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitInputPurpose")]
 pub enum InputPurpose {
@@ -1237,7 +1288,7 @@ pub enum InputPurpose {
     Email,
     #[doc(alias = "WEBKIT_INPUT_PURPOSE_PASSWORD")]
     Password,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -1245,16 +1296,20 @@ pub enum InputPurpose {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
 impl fmt::Display for InputPurpose {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "InputPurpose::{}", match *self {
-            Self::FreeForm => "FreeForm",
-            Self::Digits => "Digits",
-            Self::Number => "Number",
-            Self::Phone => "Phone",
-            Self::Url => "Url",
-            Self::Email => "Email",
-            Self::Password => "Password",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "InputPurpose::{}",
+            match *self {
+                Self::FreeForm => "FreeForm",
+                Self::Digits => "Digits",
+                Self::Number => "Number",
+                Self::Phone => "Phone",
+                Self::Url => "Url",
+                Self::Email => "Email",
+                Self::Password => "Password",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1274,7 +1329,7 @@ impl IntoGlib for InputPurpose {
             Self::Email => ffi::WEBKIT_INPUT_PURPOSE_EMAIL,
             Self::Password => ffi::WEBKIT_INPUT_PURPOSE_PASSWORD,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -1293,7 +1348,7 @@ impl FromGlib<ffi::WebKitInputPurpose> for InputPurpose {
             ffi::WEBKIT_INPUT_PURPOSE_EMAIL => Self::Email,
             ffi::WEBKIT_INPUT_PURPOSE_PASSWORD => Self::Password,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -1338,8 +1393,7 @@ impl ToValue for InputPurpose {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitInsecureContentEvent")]
 pub enum InsecureContentEvent {
@@ -1347,17 +1401,21 @@ pub enum InsecureContentEvent {
     Run,
     #[doc(alias = "WEBKIT_INSECURE_CONTENT_DISPLAYED")]
     Displayed,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for InsecureContentEvent {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "InsecureContentEvent::{}", match *self {
-            Self::Run => "Run",
-            Self::Displayed => "Displayed",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "InsecureContentEvent::{}",
+            match *self {
+                Self::Run => "Run",
+                Self::Displayed => "Displayed",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1370,7 +1428,7 @@ impl IntoGlib for InsecureContentEvent {
             Self::Run => ffi::WEBKIT_INSECURE_CONTENT_RUN,
             Self::Displayed => ffi::WEBKIT_INSECURE_CONTENT_DISPLAYED,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -1382,7 +1440,7 @@ impl FromGlib<ffi::WebKitInsecureContentEvent> for InsecureContentEvent {
             ffi::WEBKIT_INSECURE_CONTENT_RUN => Self::Run,
             ffi::WEBKIT_INSECURE_CONTENT_DISPLAYED => Self::Displayed,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -1419,14 +1477,13 @@ impl ToValue for InsecureContentEvent {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitJavascriptError")]
 pub enum JavascriptError {
     #[doc(alias = "WEBKIT_JAVASCRIPT_ERROR_SCRIPT_FAILED")]
     Failed,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -1434,18 +1491,20 @@ impl JavascriptError {
     #[doc(alias = "webkit_javascript_error_quark")]
     pub fn quark() -> glib::Quark {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib(ffi::webkit_javascript_error_quark())
-        }
+        unsafe { from_glib(ffi::webkit_javascript_error_quark()) }
     }
 }
 
 impl fmt::Display for JavascriptError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "JavascriptError::{}", match *self {
-            Self::Failed => "Failed",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "JavascriptError::{}",
+            match *self {
+                Self::Failed => "Failed",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1457,7 +1516,7 @@ impl IntoGlib for JavascriptError {
         match self {
             Self::Failed => ffi::WEBKIT_JAVASCRIPT_ERROR_SCRIPT_FAILED,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -1468,17 +1527,20 @@ impl FromGlib<ffi::WebKitJavascriptError> for JavascriptError {
         match value {
             ffi::WEBKIT_JAVASCRIPT_ERROR_SCRIPT_FAILED => Self::Failed,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
 impl ErrorDomain for JavascriptError {
     fn domain() -> Quark {
         skip_assert_initialized!();
-        
-        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
-            glib::ffi::g_quark_from_static_string(b"WebKitJavascriptError\0".as_ptr() as *const _)
-        });
+
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> =
+            once_cell::sync::Lazy::new(|| unsafe {
+                glib::ffi::g_quark_from_static_string(
+                    b"WebKitJavascriptError\0".as_ptr() as *const _
+                )
+            });
         unsafe { from_glib(*QUARK) }
     }
 
@@ -1491,7 +1553,7 @@ impl ErrorDomain for JavascriptError {
         match code {
             ffi::WEBKIT_JAVASCRIPT_ERROR_SCRIPT_FAILED => Some(Self::Failed),
             _ => Some(Self::Failed),
-}
+        }
     }
 }
 
@@ -1528,8 +1590,7 @@ impl ToValue for JavascriptError {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitLoadEvent")]
 pub enum LoadEvent {
@@ -1541,19 +1602,23 @@ pub enum LoadEvent {
     Committed,
     #[doc(alias = "WEBKIT_LOAD_FINISHED")]
     Finished,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for LoadEvent {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "LoadEvent::{}", match *self {
-            Self::Started => "Started",
-            Self::Redirected => "Redirected",
-            Self::Committed => "Committed",
-            Self::Finished => "Finished",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "LoadEvent::{}",
+            match *self {
+                Self::Started => "Started",
+                Self::Redirected => "Redirected",
+                Self::Committed => "Committed",
+                Self::Finished => "Finished",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1568,7 +1633,7 @@ impl IntoGlib for LoadEvent {
             Self::Committed => ffi::WEBKIT_LOAD_COMMITTED,
             Self::Finished => ffi::WEBKIT_LOAD_FINISHED,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -1582,7 +1647,7 @@ impl FromGlib<ffi::WebKitLoadEvent> for LoadEvent {
             ffi::WEBKIT_LOAD_COMMITTED => Self::Committed,
             ffi::WEBKIT_LOAD_FINISHED => Self::Finished,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -1621,8 +1686,7 @@ impl ToValue for LoadEvent {
 
 #[cfg(any(feature = "v2_34", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_34")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitMediaCaptureState")]
 pub enum MediaCaptureState {
@@ -1632,7 +1696,7 @@ pub enum MediaCaptureState {
     Active,
     #[doc(alias = "WEBKIT_MEDIA_CAPTURE_STATE_MUTED")]
     Muted,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -1640,12 +1704,16 @@ pub enum MediaCaptureState {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_34")))]
 impl fmt::Display for MediaCaptureState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "MediaCaptureState::{}", match *self {
-            Self::None => "None",
-            Self::Active => "Active",
-            Self::Muted => "Muted",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "MediaCaptureState::{}",
+            match *self {
+                Self::None => "None",
+                Self::Active => "Active",
+                Self::Muted => "Muted",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1661,7 +1729,7 @@ impl IntoGlib for MediaCaptureState {
             Self::Active => ffi::WEBKIT_MEDIA_CAPTURE_STATE_ACTIVE,
             Self::Muted => ffi::WEBKIT_MEDIA_CAPTURE_STATE_MUTED,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -1676,7 +1744,7 @@ impl FromGlib<ffi::WebKitMediaCaptureState> for MediaCaptureState {
             ffi::WEBKIT_MEDIA_CAPTURE_STATE_ACTIVE => Self::Active,
             ffi::WEBKIT_MEDIA_CAPTURE_STATE_MUTED => Self::Muted,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -1721,8 +1789,7 @@ impl ToValue for MediaCaptureState {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitNavigationType")]
 pub enum NavigationType {
@@ -1738,21 +1805,25 @@ pub enum NavigationType {
     FormResubmitted,
     #[doc(alias = "WEBKIT_NAVIGATION_TYPE_OTHER")]
     Other,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for NavigationType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "NavigationType::{}", match *self {
-            Self::LinkClicked => "LinkClicked",
-            Self::FormSubmitted => "FormSubmitted",
-            Self::BackForward => "BackForward",
-            Self::Reload => "Reload",
-            Self::FormResubmitted => "FormResubmitted",
-            Self::Other => "Other",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "NavigationType::{}",
+            match *self {
+                Self::LinkClicked => "LinkClicked",
+                Self::FormSubmitted => "FormSubmitted",
+                Self::BackForward => "BackForward",
+                Self::Reload => "Reload",
+                Self::FormResubmitted => "FormResubmitted",
+                Self::Other => "Other",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1769,7 +1840,7 @@ impl IntoGlib for NavigationType {
             Self::FormResubmitted => ffi::WEBKIT_NAVIGATION_TYPE_FORM_RESUBMITTED,
             Self::Other => ffi::WEBKIT_NAVIGATION_TYPE_OTHER,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -1785,7 +1856,7 @@ impl FromGlib<ffi::WebKitNavigationType> for NavigationType {
             ffi::WEBKIT_NAVIGATION_TYPE_FORM_RESUBMITTED => Self::FormResubmitted,
             ffi::WEBKIT_NAVIGATION_TYPE_OTHER => Self::Other,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -1822,8 +1893,7 @@ impl ToValue for NavigationType {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitNetworkError")]
 pub enum NetworkError {
@@ -1837,7 +1907,7 @@ pub enum NetworkError {
     Cancelled,
     #[doc(alias = "WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST")]
     FileDoesNotExist,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -1845,22 +1915,24 @@ impl NetworkError {
     #[doc(alias = "webkit_network_error_quark")]
     pub fn quark() -> glib::Quark {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib(ffi::webkit_network_error_quark())
-        }
+        unsafe { from_glib(ffi::webkit_network_error_quark()) }
     }
 }
 
 impl fmt::Display for NetworkError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "NetworkError::{}", match *self {
-            Self::Failed => "Failed",
-            Self::Transport => "Transport",
-            Self::UnknownProtocol => "UnknownProtocol",
-            Self::Cancelled => "Cancelled",
-            Self::FileDoesNotExist => "FileDoesNotExist",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "NetworkError::{}",
+            match *self {
+                Self::Failed => "Failed",
+                Self::Transport => "Transport",
+                Self::UnknownProtocol => "UnknownProtocol",
+                Self::Cancelled => "Cancelled",
+                Self::FileDoesNotExist => "FileDoesNotExist",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1876,7 +1948,7 @@ impl IntoGlib for NetworkError {
             Self::Cancelled => ffi::WEBKIT_NETWORK_ERROR_CANCELLED,
             Self::FileDoesNotExist => ffi::WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -1891,17 +1963,18 @@ impl FromGlib<ffi::WebKitNetworkError> for NetworkError {
             ffi::WEBKIT_NETWORK_ERROR_CANCELLED => Self::Cancelled,
             ffi::WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST => Self::FileDoesNotExist,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
 impl ErrorDomain for NetworkError {
     fn domain() -> Quark {
         skip_assert_initialized!();
-        
-        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
-            glib::ffi::g_quark_from_static_string(b"WebKitNetworkError\0".as_ptr() as *const _)
-        });
+
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> =
+            once_cell::sync::Lazy::new(|| unsafe {
+                glib::ffi::g_quark_from_static_string(b"WebKitNetworkError\0".as_ptr() as *const _)
+            });
         unsafe { from_glib(*QUARK) }
     }
 
@@ -1918,7 +1991,7 @@ impl ErrorDomain for NetworkError {
             ffi::WEBKIT_NETWORK_ERROR_CANCELLED => Some(Self::Cancelled),
             ffi::WEBKIT_NETWORK_ERROR_FILE_DOES_NOT_EXIST => Some(Self::FileDoesNotExist),
             _ => Some(Self::Failed),
-}
+        }
     }
 }
 
@@ -1957,8 +2030,7 @@ impl ToValue for NetworkError {
 
 #[cfg(any(feature = "v2_16", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_16")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitNetworkProxyMode")]
 pub enum NetworkProxyMode {
@@ -1968,7 +2040,7 @@ pub enum NetworkProxyMode {
     NoProxy,
     #[doc(alias = "WEBKIT_NETWORK_PROXY_MODE_CUSTOM")]
     Custom,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -1976,12 +2048,16 @@ pub enum NetworkProxyMode {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_16")))]
 impl fmt::Display for NetworkProxyMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "NetworkProxyMode::{}", match *self {
-            Self::Default => "Default",
-            Self::NoProxy => "NoProxy",
-            Self::Custom => "Custom",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "NetworkProxyMode::{}",
+            match *self {
+                Self::Default => "Default",
+                Self::NoProxy => "NoProxy",
+                Self::Custom => "Custom",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -1997,7 +2073,7 @@ impl IntoGlib for NetworkProxyMode {
             Self::NoProxy => ffi::WEBKIT_NETWORK_PROXY_MODE_NO_PROXY,
             Self::Custom => ffi::WEBKIT_NETWORK_PROXY_MODE_CUSTOM,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2012,7 +2088,7 @@ impl FromGlib<ffi::WebKitNetworkProxyMode> for NetworkProxyMode {
             ffi::WEBKIT_NETWORK_PROXY_MODE_NO_PROXY => Self::NoProxy,
             ffi::WEBKIT_NETWORK_PROXY_MODE_CUSTOM => Self::Custom,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -2057,8 +2133,7 @@ impl ToValue for NetworkProxyMode {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitPluginError")]
 pub enum PluginError {
@@ -2074,7 +2149,7 @@ pub enum PluginError {
     ConnectionCancelled,
     #[doc(alias = "WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD")]
     WillHandleLoad,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -2082,23 +2157,25 @@ impl PluginError {
     #[doc(alias = "webkit_plugin_error_quark")]
     pub fn quark() -> glib::Quark {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib(ffi::webkit_plugin_error_quark())
-        }
+        unsafe { from_glib(ffi::webkit_plugin_error_quark()) }
     }
 }
 
 impl fmt::Display for PluginError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "PluginError::{}", match *self {
-            Self::Failed => "Failed",
-            Self::CannotFindPlugin => "CannotFindPlugin",
-            Self::CannotLoadPlugin => "CannotLoadPlugin",
-            Self::JavaUnavailable => "JavaUnavailable",
-            Self::ConnectionCancelled => "ConnectionCancelled",
-            Self::WillHandleLoad => "WillHandleLoad",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "PluginError::{}",
+            match *self {
+                Self::Failed => "Failed",
+                Self::CannotFindPlugin => "CannotFindPlugin",
+                Self::CannotLoadPlugin => "CannotLoadPlugin",
+                Self::JavaUnavailable => "JavaUnavailable",
+                Self::ConnectionCancelled => "ConnectionCancelled",
+                Self::WillHandleLoad => "WillHandleLoad",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -2115,7 +2192,7 @@ impl IntoGlib for PluginError {
             Self::ConnectionCancelled => ffi::WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED,
             Self::WillHandleLoad => ffi::WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2131,17 +2208,18 @@ impl FromGlib<ffi::WebKitPluginError> for PluginError {
             ffi::WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED => Self::ConnectionCancelled,
             ffi::WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD => Self::WillHandleLoad,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
 impl ErrorDomain for PluginError {
     fn domain() -> Quark {
         skip_assert_initialized!();
-        
-        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
-            glib::ffi::g_quark_from_static_string(b"WebKitPluginError\0".as_ptr() as *const _)
-        });
+
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> =
+            once_cell::sync::Lazy::new(|| unsafe {
+                glib::ffi::g_quark_from_static_string(b"WebKitPluginError\0".as_ptr() as *const _)
+            });
         unsafe { from_glib(*QUARK) }
     }
 
@@ -2159,7 +2237,7 @@ impl ErrorDomain for PluginError {
             ffi::WEBKIT_PLUGIN_ERROR_CONNECTION_CANCELLED => Some(Self::ConnectionCancelled),
             ffi::WEBKIT_PLUGIN_ERROR_WILL_HANDLE_LOAD => Some(Self::WillHandleLoad),
             _ => Some(Self::Failed),
-}
+        }
     }
 }
 
@@ -2196,8 +2274,7 @@ impl ToValue for PluginError {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitPolicyDecisionType")]
 pub enum PolicyDecisionType {
@@ -2207,18 +2284,22 @@ pub enum PolicyDecisionType {
     NewWindowAction,
     #[doc(alias = "WEBKIT_POLICY_DECISION_TYPE_RESPONSE")]
     Response,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for PolicyDecisionType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "PolicyDecisionType::{}", match *self {
-            Self::NavigationAction => "NavigationAction",
-            Self::NewWindowAction => "NewWindowAction",
-            Self::Response => "Response",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "PolicyDecisionType::{}",
+            match *self {
+                Self::NavigationAction => "NavigationAction",
+                Self::NewWindowAction => "NewWindowAction",
+                Self::Response => "Response",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -2232,7 +2313,7 @@ impl IntoGlib for PolicyDecisionType {
             Self::NewWindowAction => ffi::WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION,
             Self::Response => ffi::WEBKIT_POLICY_DECISION_TYPE_RESPONSE,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2245,7 +2326,7 @@ impl FromGlib<ffi::WebKitPolicyDecisionType> for PolicyDecisionType {
             ffi::WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION => Self::NewWindowAction,
             ffi::WEBKIT_POLICY_DECISION_TYPE_RESPONSE => Self::Response,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -2282,8 +2363,7 @@ impl ToValue for PolicyDecisionType {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitPolicyError")]
 pub enum PolicyError {
@@ -2297,7 +2377,7 @@ pub enum PolicyError {
     FrameLoadInterruptedByPolicyChange,
     #[doc(alias = "WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT")]
     CannotUseRestrictedPort,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -2305,22 +2385,24 @@ impl PolicyError {
     #[doc(alias = "webkit_policy_error_quark")]
     pub fn quark() -> glib::Quark {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib(ffi::webkit_policy_error_quark())
-        }
+        unsafe { from_glib(ffi::webkit_policy_error_quark()) }
     }
 }
 
 impl fmt::Display for PolicyError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "PolicyError::{}", match *self {
-            Self::Failed => "Failed",
-            Self::CannotShowMimeType => "CannotShowMimeType",
-            Self::CannotShowUri => "CannotShowUri",
-            Self::FrameLoadInterruptedByPolicyChange => "FrameLoadInterruptedByPolicyChange",
-            Self::CannotUseRestrictedPort => "CannotUseRestrictedPort",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "PolicyError::{}",
+            match *self {
+                Self::Failed => "Failed",
+                Self::CannotShowMimeType => "CannotShowMimeType",
+                Self::CannotShowUri => "CannotShowUri",
+                Self::FrameLoadInterruptedByPolicyChange => "FrameLoadInterruptedByPolicyChange",
+                Self::CannotUseRestrictedPort => "CannotUseRestrictedPort",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -2333,10 +2415,12 @@ impl IntoGlib for PolicyError {
             Self::Failed => ffi::WEBKIT_POLICY_ERROR_FAILED,
             Self::CannotShowMimeType => ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_MIME_TYPE,
             Self::CannotShowUri => ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_URI,
-            Self::FrameLoadInterruptedByPolicyChange => ffi::WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE,
+            Self::FrameLoadInterruptedByPolicyChange => {
+                ffi::WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE
+            }
             Self::CannotUseRestrictedPort => ffi::WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2348,20 +2432,23 @@ impl FromGlib<ffi::WebKitPolicyError> for PolicyError {
             ffi::WEBKIT_POLICY_ERROR_FAILED => Self::Failed,
             ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_MIME_TYPE => Self::CannotShowMimeType,
             ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_URI => Self::CannotShowUri,
-            ffi::WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE => Self::FrameLoadInterruptedByPolicyChange,
+            ffi::WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE => {
+                Self::FrameLoadInterruptedByPolicyChange
+            }
             ffi::WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT => Self::CannotUseRestrictedPort,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
 impl ErrorDomain for PolicyError {
     fn domain() -> Quark {
         skip_assert_initialized!();
-        
-        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
-            glib::ffi::g_quark_from_static_string(b"WebKitPolicyError\0".as_ptr() as *const _)
-        });
+
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> =
+            once_cell::sync::Lazy::new(|| unsafe {
+                glib::ffi::g_quark_from_static_string(b"WebKitPolicyError\0".as_ptr() as *const _)
+            });
         unsafe { from_glib(*QUARK) }
     }
 
@@ -2375,10 +2462,14 @@ impl ErrorDomain for PolicyError {
             ffi::WEBKIT_POLICY_ERROR_FAILED => Some(Self::Failed),
             ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_MIME_TYPE => Some(Self::CannotShowMimeType),
             ffi::WEBKIT_POLICY_ERROR_CANNOT_SHOW_URI => Some(Self::CannotShowUri),
-            ffi::WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE => Some(Self::FrameLoadInterruptedByPolicyChange),
-            ffi::WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT => Some(Self::CannotUseRestrictedPort),
+            ffi::WEBKIT_POLICY_ERROR_FRAME_LOAD_INTERRUPTED_BY_POLICY_CHANGE => {
+                Some(Self::FrameLoadInterruptedByPolicyChange)
+            }
+            ffi::WEBKIT_POLICY_ERROR_CANNOT_USE_RESTRICTED_PORT => {
+                Some(Self::CannotUseRestrictedPort)
+            }
             _ => Some(Self::Failed),
-}
+        }
     }
 }
 
@@ -2417,8 +2508,7 @@ impl ToValue for PolicyError {
 
 #[cfg(any(feature = "v2_4", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitProcessModel")]
 pub enum ProcessModel {
@@ -2426,7 +2516,7 @@ pub enum ProcessModel {
     SharedSecondaryProcess,
     #[doc(alias = "WEBKIT_PROCESS_MODEL_MULTIPLE_SECONDARY_PROCESSES")]
     MultipleSecondaryProcesses,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -2434,11 +2524,15 @@ pub enum ProcessModel {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_4")))]
 impl fmt::Display for ProcessModel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "ProcessModel::{}", match *self {
-            Self::SharedSecondaryProcess => "SharedSecondaryProcess",
-            Self::MultipleSecondaryProcesses => "MultipleSecondaryProcesses",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "ProcessModel::{}",
+            match *self {
+                Self::SharedSecondaryProcess => "SharedSecondaryProcess",
+                Self::MultipleSecondaryProcesses => "MultipleSecondaryProcesses",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -2451,9 +2545,11 @@ impl IntoGlib for ProcessModel {
     fn into_glib(self) -> ffi::WebKitProcessModel {
         match self {
             Self::SharedSecondaryProcess => ffi::WEBKIT_PROCESS_MODEL_SHARED_SECONDARY_PROCESS,
-            Self::MultipleSecondaryProcesses => ffi::WEBKIT_PROCESS_MODEL_MULTIPLE_SECONDARY_PROCESSES,
+            Self::MultipleSecondaryProcesses => {
+                ffi::WEBKIT_PROCESS_MODEL_MULTIPLE_SECONDARY_PROCESSES
+            }
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2465,9 +2561,11 @@ impl FromGlib<ffi::WebKitProcessModel> for ProcessModel {
         skip_assert_initialized!();
         match value {
             ffi::WEBKIT_PROCESS_MODEL_SHARED_SECONDARY_PROCESS => Self::SharedSecondaryProcess,
-            ffi::WEBKIT_PROCESS_MODEL_MULTIPLE_SECONDARY_PROCESSES => Self::MultipleSecondaryProcesses,
+            ffi::WEBKIT_PROCESS_MODEL_MULTIPLE_SECONDARY_PROCESSES => {
+                Self::MultipleSecondaryProcesses
+            }
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -2512,23 +2610,26 @@ impl ToValue for ProcessModel {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitSaveMode")]
 pub enum SaveMode {
     #[doc(alias = "WEBKIT_SAVE_MODE_MHTML")]
     Mhtml,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for SaveMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SaveMode::{}", match *self {
-            Self::Mhtml => "Mhtml",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "SaveMode::{}",
+            match *self {
+                Self::Mhtml => "Mhtml",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -2540,7 +2641,7 @@ impl IntoGlib for SaveMode {
         match self {
             Self::Mhtml => ffi::WEBKIT_SAVE_MODE_MHTML,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2551,7 +2652,7 @@ impl FromGlib<ffi::WebKitSaveMode> for SaveMode {
         match value {
             ffi::WEBKIT_SAVE_MODE_MHTML => Self::Mhtml,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -2588,8 +2689,7 @@ impl ToValue for SaveMode {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitScriptDialogType")]
 pub enum ScriptDialogType {
@@ -2601,19 +2701,23 @@ pub enum ScriptDialogType {
     Prompt,
     #[doc(alias = "WEBKIT_SCRIPT_DIALOG_BEFORE_UNLOAD_CONFIRM")]
     BeforeUnloadConfirm,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for ScriptDialogType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "ScriptDialogType::{}", match *self {
-            Self::Alert => "Alert",
-            Self::Confirm => "Confirm",
-            Self::Prompt => "Prompt",
-            Self::BeforeUnloadConfirm => "BeforeUnloadConfirm",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "ScriptDialogType::{}",
+            match *self {
+                Self::Alert => "Alert",
+                Self::Confirm => "Confirm",
+                Self::Prompt => "Prompt",
+                Self::BeforeUnloadConfirm => "BeforeUnloadConfirm",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -2628,7 +2732,7 @@ impl IntoGlib for ScriptDialogType {
             Self::Prompt => ffi::WEBKIT_SCRIPT_DIALOG_PROMPT,
             Self::BeforeUnloadConfirm => ffi::WEBKIT_SCRIPT_DIALOG_BEFORE_UNLOAD_CONFIRM,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2642,7 +2746,7 @@ impl FromGlib<ffi::WebKitScriptDialogType> for ScriptDialogType {
             ffi::WEBKIT_SCRIPT_DIALOG_PROMPT => Self::Prompt,
             ffi::WEBKIT_SCRIPT_DIALOG_BEFORE_UNLOAD_CONFIRM => Self::BeforeUnloadConfirm,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -2679,14 +2783,13 @@ impl ToValue for ScriptDialogType {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitSnapshotError")]
 pub enum SnapshotError {
     #[doc(alias = "WEBKIT_SNAPSHOT_ERROR_FAILED_TO_CREATE")]
     Create,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -2694,18 +2797,20 @@ impl SnapshotError {
     #[doc(alias = "webkit_snapshot_error_quark")]
     pub fn quark() -> glib::Quark {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib(ffi::webkit_snapshot_error_quark())
-        }
+        unsafe { from_glib(ffi::webkit_snapshot_error_quark()) }
     }
 }
 
 impl fmt::Display for SnapshotError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SnapshotError::{}", match *self {
-            Self::Create => "Create",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "SnapshotError::{}",
+            match *self {
+                Self::Create => "Create",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -2717,7 +2822,7 @@ impl IntoGlib for SnapshotError {
         match self {
             Self::Create => ffi::WEBKIT_SNAPSHOT_ERROR_FAILED_TO_CREATE,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2728,17 +2833,18 @@ impl FromGlib<ffi::WebKitSnapshotError> for SnapshotError {
         match value {
             ffi::WEBKIT_SNAPSHOT_ERROR_FAILED_TO_CREATE => Self::Create,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
 impl ErrorDomain for SnapshotError {
     fn domain() -> Quark {
         skip_assert_initialized!();
-        
-        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
-            glib::ffi::g_quark_from_static_string(b"WebKitSnapshotError\0".as_ptr() as *const _)
-        });
+
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> =
+            once_cell::sync::Lazy::new(|| unsafe {
+                glib::ffi::g_quark_from_static_string(b"WebKitSnapshotError\0".as_ptr() as *const _)
+            });
         unsafe { from_glib(*QUARK) }
     }
 
@@ -2751,7 +2857,7 @@ impl ErrorDomain for SnapshotError {
         match code {
             ffi::WEBKIT_SNAPSHOT_ERROR_FAILED_TO_CREATE => Some(Self::Create),
             value => Some(Self::__Unknown(value)),
-}
+        }
     }
 }
 
@@ -2788,8 +2894,7 @@ impl ToValue for SnapshotError {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitTLSErrorsPolicy")]
 pub enum TLSErrorsPolicy {
@@ -2797,17 +2902,21 @@ pub enum TLSErrorsPolicy {
     Ignore,
     #[doc(alias = "WEBKIT_TLS_ERRORS_POLICY_FAIL")]
     Fail,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
 impl fmt::Display for TLSErrorsPolicy {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "TLSErrorsPolicy::{}", match *self {
-            Self::Ignore => "Ignore",
-            Self::Fail => "Fail",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "TLSErrorsPolicy::{}",
+            match *self {
+                Self::Ignore => "Ignore",
+                Self::Fail => "Fail",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -2820,7 +2929,7 @@ impl IntoGlib for TLSErrorsPolicy {
             Self::Ignore => ffi::WEBKIT_TLS_ERRORS_POLICY_IGNORE,
             Self::Fail => ffi::WEBKIT_TLS_ERRORS_POLICY_FAIL,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2832,7 +2941,7 @@ impl FromGlib<ffi::WebKitTLSErrorsPolicy> for TLSErrorsPolicy {
             ffi::WEBKIT_TLS_ERRORS_POLICY_IGNORE => Self::Ignore,
             ffi::WEBKIT_TLS_ERRORS_POLICY_FAIL => Self::Fail,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -2871,8 +2980,7 @@ impl ToValue for TLSErrorsPolicy {
 
 #[cfg(any(feature = "v2_24", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitUserContentFilterError")]
 pub enum UserContentFilterError {
@@ -2880,7 +2988,7 @@ pub enum UserContentFilterError {
     InvalidSource,
     #[doc(alias = "WEBKIT_USER_CONTENT_FILTER_ERROR_NOT_FOUND")]
     NotFound,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -2890,9 +2998,7 @@ impl UserContentFilterError {
     #[doc(alias = "webkit_user_content_filter_error_quark")]
     pub fn quark() -> glib::Quark {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib(ffi::webkit_user_content_filter_error_quark())
-        }
+        unsafe { from_glib(ffi::webkit_user_content_filter_error_quark()) }
     }
 }
 
@@ -2900,11 +3006,15 @@ impl UserContentFilterError {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_24")))]
 impl fmt::Display for UserContentFilterError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "UserContentFilterError::{}", match *self {
-            Self::InvalidSource => "InvalidSource",
-            Self::NotFound => "NotFound",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "UserContentFilterError::{}",
+            match *self {
+                Self::InvalidSource => "InvalidSource",
+                Self::NotFound => "NotFound",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -2919,7 +3029,7 @@ impl IntoGlib for UserContentFilterError {
             Self::InvalidSource => ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_INVALID_SOURCE,
             Self::NotFound => ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_NOT_FOUND,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -2933,7 +3043,7 @@ impl FromGlib<ffi::WebKitUserContentFilterError> for UserContentFilterError {
             ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_INVALID_SOURCE => Self::InvalidSource,
             ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_NOT_FOUND => Self::NotFound,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -2942,10 +3052,13 @@ impl FromGlib<ffi::WebKitUserContentFilterError> for UserContentFilterError {
 impl ErrorDomain for UserContentFilterError {
     fn domain() -> Quark {
         skip_assert_initialized!();
-        
-        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
-            glib::ffi::g_quark_from_static_string(b"WebKitUserContentFilterError\0".as_ptr() as *const _)
-        });
+
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> =
+            once_cell::sync::Lazy::new(|| unsafe {
+                glib::ffi::g_quark_from_static_string(
+                    b"WebKitUserContentFilterError\0".as_ptr() as *const _
+                )
+            });
         unsafe { from_glib(*QUARK) }
     }
 
@@ -2959,7 +3072,7 @@ impl ErrorDomain for UserContentFilterError {
             ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_INVALID_SOURCE => Some(Self::InvalidSource),
             ffi::WEBKIT_USER_CONTENT_FILTER_ERROR_NOT_FOUND => Some(Self::NotFound),
             value => Some(Self::__Unknown(value)),
-}
+        }
     }
 }
 
@@ -3006,8 +3119,7 @@ impl ToValue for UserContentFilterError {
 
 #[cfg(any(feature = "v2_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitUserContentInjectedFrames")]
 pub enum UserContentInjectedFrames {
@@ -3015,7 +3127,7 @@ pub enum UserContentInjectedFrames {
     AllFrames,
     #[doc(alias = "WEBKIT_USER_CONTENT_INJECT_TOP_FRAME")]
     TopFrame,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -3023,11 +3135,15 @@ pub enum UserContentInjectedFrames {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
 impl fmt::Display for UserContentInjectedFrames {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "UserContentInjectedFrames::{}", match *self {
-            Self::AllFrames => "AllFrames",
-            Self::TopFrame => "TopFrame",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "UserContentInjectedFrames::{}",
+            match *self {
+                Self::AllFrames => "AllFrames",
+                Self::TopFrame => "TopFrame",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -3042,7 +3158,7 @@ impl IntoGlib for UserContentInjectedFrames {
             Self::AllFrames => ffi::WEBKIT_USER_CONTENT_INJECT_ALL_FRAMES,
             Self::TopFrame => ffi::WEBKIT_USER_CONTENT_INJECT_TOP_FRAME,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -3056,7 +3172,7 @@ impl FromGlib<ffi::WebKitUserContentInjectedFrames> for UserContentInjectedFrame
             ffi::WEBKIT_USER_CONTENT_INJECT_ALL_FRAMES => Self::AllFrames,
             ffi::WEBKIT_USER_CONTENT_INJECT_TOP_FRAME => Self::TopFrame,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -3103,14 +3219,13 @@ impl ToValue for UserContentInjectedFrames {
 
 #[cfg(any(feature = "v2_28", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitUserMessageError")]
 pub enum UserMessageError {
     #[doc(alias = "WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE")]
     Message,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -3120,9 +3235,7 @@ impl UserMessageError {
     #[doc(alias = "webkit_user_message_error_quark")]
     pub fn quark() -> glib::Quark {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib(ffi::webkit_user_message_error_quark())
-        }
+        unsafe { from_glib(ffi::webkit_user_message_error_quark()) }
     }
 }
 
@@ -3130,10 +3243,14 @@ impl UserMessageError {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_28")))]
 impl fmt::Display for UserMessageError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "UserMessageError::{}", match *self {
-            Self::Message => "Message",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "UserMessageError::{}",
+            match *self {
+                Self::Message => "Message",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -3147,7 +3264,7 @@ impl IntoGlib for UserMessageError {
         match self {
             Self::Message => ffi::WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -3160,7 +3277,7 @@ impl FromGlib<ffi::WebKitUserMessageError> for UserMessageError {
         match value {
             ffi::WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE => Self::Message,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -3169,10 +3286,13 @@ impl FromGlib<ffi::WebKitUserMessageError> for UserMessageError {
 impl ErrorDomain for UserMessageError {
     fn domain() -> Quark {
         skip_assert_initialized!();
-        
-        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> = once_cell::sync::Lazy::new(|| unsafe {
-            glib::ffi::g_quark_from_static_string(b"WebKitUserMessageError\0".as_ptr() as *const _)
-        });
+
+        static QUARK: once_cell::sync::Lazy<glib::ffi::GQuark> =
+            once_cell::sync::Lazy::new(|| unsafe {
+                glib::ffi::g_quark_from_static_string(
+                    b"WebKitUserMessageError\0".as_ptr() as *const _
+                )
+            });
         unsafe { from_glib(*QUARK) }
     }
 
@@ -3185,7 +3305,7 @@ impl ErrorDomain for UserMessageError {
         match code {
             ffi::WEBKIT_USER_MESSAGE_UNHANDLED_MESSAGE => Some(Self::Message),
             value => Some(Self::__Unknown(value)),
-}
+        }
     }
 }
 
@@ -3232,8 +3352,7 @@ impl ToValue for UserMessageError {
 
 #[cfg(any(feature = "v2_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitUserScriptInjectionTime")]
 pub enum UserScriptInjectionTime {
@@ -3241,7 +3360,7 @@ pub enum UserScriptInjectionTime {
     Start,
     #[doc(alias = "WEBKIT_USER_SCRIPT_INJECT_AT_DOCUMENT_END")]
     End,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -3249,11 +3368,15 @@ pub enum UserScriptInjectionTime {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
 impl fmt::Display for UserScriptInjectionTime {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "UserScriptInjectionTime::{}", match *self {
-            Self::Start => "Start",
-            Self::End => "End",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "UserScriptInjectionTime::{}",
+            match *self {
+                Self::Start => "Start",
+                Self::End => "End",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -3268,7 +3391,7 @@ impl IntoGlib for UserScriptInjectionTime {
             Self::Start => ffi::WEBKIT_USER_SCRIPT_INJECT_AT_DOCUMENT_START,
             Self::End => ffi::WEBKIT_USER_SCRIPT_INJECT_AT_DOCUMENT_END,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -3282,7 +3405,7 @@ impl FromGlib<ffi::WebKitUserScriptInjectionTime> for UserScriptInjectionTime {
             ffi::WEBKIT_USER_SCRIPT_INJECT_AT_DOCUMENT_START => Self::Start,
             ffi::WEBKIT_USER_SCRIPT_INJECT_AT_DOCUMENT_END => Self::End,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -3329,8 +3452,7 @@ impl ToValue for UserScriptInjectionTime {
 
 #[cfg(any(feature = "v2_6", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitUserStyleLevel")]
 pub enum UserStyleLevel {
@@ -3338,7 +3460,7 @@ pub enum UserStyleLevel {
     User,
     #[doc(alias = "WEBKIT_USER_STYLE_LEVEL_AUTHOR")]
     Author,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -3346,11 +3468,15 @@ pub enum UserStyleLevel {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_6")))]
 impl fmt::Display for UserStyleLevel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "UserStyleLevel::{}", match *self {
-            Self::User => "User",
-            Self::Author => "Author",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "UserStyleLevel::{}",
+            match *self {
+                Self::User => "User",
+                Self::Author => "Author",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -3365,7 +3491,7 @@ impl IntoGlib for UserStyleLevel {
             Self::User => ffi::WEBKIT_USER_STYLE_LEVEL_USER,
             Self::Author => ffi::WEBKIT_USER_STYLE_LEVEL_AUTHOR,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -3379,7 +3505,7 @@ impl FromGlib<ffi::WebKitUserStyleLevel> for UserStyleLevel {
             ffi::WEBKIT_USER_STYLE_LEVEL_USER => Self::User,
             ffi::WEBKIT_USER_STYLE_LEVEL_AUTHOR => Self::Author,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -3426,8 +3552,7 @@ impl ToValue for UserStyleLevel {
 
 #[cfg(any(feature = "v2_20", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_20")))]
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 #[doc(alias = "WebKitWebProcessTerminationReason")]
 pub enum WebProcessTerminationReason {
@@ -3437,7 +3562,7 @@ pub enum WebProcessTerminationReason {
     ExceededMemoryLimit,
     #[doc(alias = "WEBKIT_WEB_PROCESS_TERMINATED_BY_API")]
     TerminatedByApi,
-#[doc(hidden)]
+    #[doc(hidden)]
     __Unknown(i32),
 }
 
@@ -3445,12 +3570,16 @@ pub enum WebProcessTerminationReason {
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_20")))]
 impl fmt::Display for WebProcessTerminationReason {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "WebProcessTerminationReason::{}", match *self {
-            Self::Crashed => "Crashed",
-            Self::ExceededMemoryLimit => "ExceededMemoryLimit",
-            Self::TerminatedByApi => "TerminatedByApi",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "WebProcessTerminationReason::{}",
+            match *self {
+                Self::Crashed => "Crashed",
+                Self::ExceededMemoryLimit => "ExceededMemoryLimit",
+                Self::TerminatedByApi => "TerminatedByApi",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -3466,7 +3595,7 @@ impl IntoGlib for WebProcessTerminationReason {
             Self::ExceededMemoryLimit => ffi::WEBKIT_WEB_PROCESS_EXCEEDED_MEMORY_LIMIT,
             Self::TerminatedByApi => ffi::WEBKIT_WEB_PROCESS_TERMINATED_BY_API,
             Self::__Unknown(value) => value,
-}
+        }
     }
 }
 
@@ -3481,7 +3610,7 @@ impl FromGlib<ffi::WebKitWebProcessTerminationReason> for WebProcessTerminationR
             ffi::WEBKIT_WEB_PROCESS_EXCEEDED_MEMORY_LIMIT => Self::ExceededMemoryLimit,
             ffi::WEBKIT_WEB_PROCESS_TERMINATED_BY_API => Self::TerminatedByApi,
             value => Self::__Unknown(value),
-}
+        }
     }
 }
 
@@ -3525,4 +3654,3 @@ impl ToValue for WebProcessTerminationReason {
         Self::static_type()
     }
 }
-

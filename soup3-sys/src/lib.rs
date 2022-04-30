@@ -4,14 +4,19 @@
 // DO NOT EDIT
 
 #![allow(non_camel_case_types, non_upper_case_globals, non_snake_case)]
-#![allow(clippy::approx_constant, clippy::type_complexity, clippy::unreadable_literal, clippy::upper_case_acronyms)]
+#![allow(
+    clippy::approx_constant,
+    clippy::type_complexity,
+    clippy::unreadable_literal,
+    clippy::upper_case_acronyms
+)]
 #![cfg_attr(feature = "dox", feature(doc_cfg))]
 
-
 #[allow(unused_imports)]
-use libc::{c_int, c_char, c_uchar, c_float, c_uint, c_double,
-    c_short, c_ushort, c_long, c_ulong,
-    c_void, size_t, ssize_t, intptr_t, uintptr_t, FILE};
+use libc::{
+    c_char, c_double, c_float, c_int, c_long, c_short, c_uchar, c_uint, c_ulong, c_ushort, c_void,
+    intptr_t, size_t, ssize_t, uintptr_t, FILE,
+};
 
 #[allow(unused_imports)]
 use glib::{gboolean, gconstpointer, gpointer, GType};
@@ -200,8 +205,10 @@ pub const SOUP_COOKIE_MAX_AGE_ONE_DAY: c_int = 0;
 pub const SOUP_COOKIE_MAX_AGE_ONE_HOUR: c_int = 3600;
 pub const SOUP_COOKIE_MAX_AGE_ONE_WEEK: c_int = 0;
 pub const SOUP_COOKIE_MAX_AGE_ONE_YEAR: c_int = 0;
-pub const SOUP_FORM_MIME_TYPE_MULTIPART: *const c_char = b"multipart/form-data\0" as *const u8 as *const c_char;
-pub const SOUP_FORM_MIME_TYPE_URLENCODED: *const c_char = b"application/x-www-form-urlencoded\0" as *const u8 as *const c_char;
+pub const SOUP_FORM_MIME_TYPE_MULTIPART: *const c_char =
+    b"multipart/form-data\0" as *const u8 as *const c_char;
+pub const SOUP_FORM_MIME_TYPE_URLENCODED: *const c_char =
+    b"application/x-www-form-urlencoded\0" as *const u8 as *const c_char;
 pub const SOUP_HSTS_POLICY_MAX_AGE_PAST: c_int = 0;
 pub const SOUP_HTTP_URI_FLAGS: c_int = 482;
 pub const SOUP_MAJOR_VERSION: c_int = 3;
@@ -233,15 +240,58 @@ pub const SOUP_SERVER_LISTEN_IPV4_ONLY: SoupServerListenOptions = 2;
 pub const SOUP_SERVER_LISTEN_IPV6_ONLY: SoupServerListenOptions = 4;
 
 // Callbacks
-pub type SoupAuthDomainBasicAuthCallback = Option<unsafe extern "C" fn(*mut SoupAuthDomainBasic, *mut SoupServerMessage, *const c_char, *const c_char, gpointer) -> gboolean>;
-pub type SoupAuthDomainDigestAuthCallback = Option<unsafe extern "C" fn(*mut SoupAuthDomainDigest, *mut SoupServerMessage, *const c_char, gpointer) -> *mut c_char>;
-pub type SoupAuthDomainFilter = Option<unsafe extern "C" fn(*mut SoupAuthDomain, *mut SoupServerMessage, gpointer) -> gboolean>;
-pub type SoupAuthDomainGenericAuthCallback = Option<unsafe extern "C" fn(*mut SoupAuthDomain, *mut SoupServerMessage, *const c_char, gpointer) -> gboolean>;
-pub type SoupLoggerFilter = Option<unsafe extern "C" fn(*mut SoupLogger, *mut SoupMessage, gpointer) -> SoupLoggerLogLevel>;
-pub type SoupLoggerPrinter = Option<unsafe extern "C" fn(*mut SoupLogger, SoupLoggerLogLevel, c_char, *const c_char, gpointer)>;
-pub type SoupMessageHeadersForeachFunc = Option<unsafe extern "C" fn(*const c_char, *const c_char, gpointer)>;
-pub type SoupServerCallback = Option<unsafe extern "C" fn(*mut SoupServer, *mut SoupServerMessage, *const c_char, *mut glib::GHashTable, gpointer)>;
-pub type SoupServerWebsocketCallback = Option<unsafe extern "C" fn(*mut SoupServer, *mut SoupServerMessage, *const c_char, *mut SoupWebsocketConnection, gpointer)>;
+pub type SoupAuthDomainBasicAuthCallback = Option<
+    unsafe extern "C" fn(
+        *mut SoupAuthDomainBasic,
+        *mut SoupServerMessage,
+        *const c_char,
+        *const c_char,
+        gpointer,
+    ) -> gboolean,
+>;
+pub type SoupAuthDomainDigestAuthCallback = Option<
+    unsafe extern "C" fn(
+        *mut SoupAuthDomainDigest,
+        *mut SoupServerMessage,
+        *const c_char,
+        gpointer,
+    ) -> *mut c_char,
+>;
+pub type SoupAuthDomainFilter =
+    Option<unsafe extern "C" fn(*mut SoupAuthDomain, *mut SoupServerMessage, gpointer) -> gboolean>;
+pub type SoupAuthDomainGenericAuthCallback = Option<
+    unsafe extern "C" fn(
+        *mut SoupAuthDomain,
+        *mut SoupServerMessage,
+        *const c_char,
+        gpointer,
+    ) -> gboolean,
+>;
+pub type SoupLoggerFilter =
+    Option<unsafe extern "C" fn(*mut SoupLogger, *mut SoupMessage, gpointer) -> SoupLoggerLogLevel>;
+pub type SoupLoggerPrinter = Option<
+    unsafe extern "C" fn(*mut SoupLogger, SoupLoggerLogLevel, c_char, *const c_char, gpointer),
+>;
+pub type SoupMessageHeadersForeachFunc =
+    Option<unsafe extern "C" fn(*const c_char, *const c_char, gpointer)>;
+pub type SoupServerCallback = Option<
+    unsafe extern "C" fn(
+        *mut SoupServer,
+        *mut SoupServerMessage,
+        *const c_char,
+        *mut glib::GHashTable,
+        gpointer,
+    ),
+>;
+pub type SoupServerWebsocketCallback = Option<
+    unsafe extern "C" fn(
+        *mut SoupServer,
+        *mut SoupServerMessage,
+        *const c_char,
+        *mut SoupWebsocketConnection,
+        gpointer,
+    ),
+>;
 
 // Records
 #[derive(Copy, Clone)]
@@ -250,11 +300,15 @@ pub struct SoupAuthClass {
     pub parent_class: gobject::GObjectClass,
     pub scheme_name: *const c_char,
     pub strength: c_uint,
-    pub update: Option<unsafe extern "C" fn(*mut SoupAuth, *mut SoupMessage, *mut glib::GHashTable) -> gboolean>,
-    pub get_protection_space: Option<unsafe extern "C" fn(*mut SoupAuth, *mut glib::GUri) -> *mut glib::GSList>,
+    pub update: Option<
+        unsafe extern "C" fn(*mut SoupAuth, *mut SoupMessage, *mut glib::GHashTable) -> gboolean,
+    >,
+    pub get_protection_space:
+        Option<unsafe extern "C" fn(*mut SoupAuth, *mut glib::GUri) -> *mut glib::GSList>,
     pub authenticate: Option<unsafe extern "C" fn(*mut SoupAuth, *const c_char, *const c_char)>,
     pub is_authenticated: Option<unsafe extern "C" fn(*mut SoupAuth) -> gboolean>,
-    pub get_authorization: Option<unsafe extern "C" fn(*mut SoupAuth, *mut SoupMessage) -> *mut c_char>,
+    pub get_authorization:
+        Option<unsafe extern "C" fn(*mut SoupAuth, *mut SoupMessage) -> *mut c_char>,
     pub is_ready: Option<unsafe extern "C" fn(*mut SoupAuth, *mut SoupMessage) -> gboolean>,
     pub can_authenticate: Option<unsafe extern "C" fn(*mut SoupAuth) -> gboolean>,
     pub padding: [gpointer; 6],
@@ -263,18 +317,18 @@ pub struct SoupAuthClass {
 impl ::std::fmt::Debug for SoupAuthClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("scheme_name", &self.scheme_name)
-         .field("strength", &self.strength)
-         .field("update", &self.update)
-         .field("get_protection_space", &self.get_protection_space)
-         .field("authenticate", &self.authenticate)
-         .field("is_authenticated", &self.is_authenticated)
-         .field("get_authorization", &self.get_authorization)
-         .field("is_ready", &self.is_ready)
-         .field("can_authenticate", &self.can_authenticate)
-         .field("padding", &self.padding)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("scheme_name", &self.scheme_name)
+            .field("strength", &self.strength)
+            .field("update", &self.update)
+            .field("get_protection_space", &self.get_protection_space)
+            .field("authenticate", &self.authenticate)
+            .field("is_authenticated", &self.is_authenticated)
+            .field("get_authorization", &self.get_authorization)
+            .field("is_ready", &self.is_ready)
+            .field("can_authenticate", &self.can_authenticate)
+            .field("padding", &self.padding)
+            .finish()
     }
 }
 
@@ -287,8 +341,8 @@ pub struct SoupAuthDomainBasicClass {
 impl ::std::fmt::Debug for SoupAuthDomainBasicClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthDomainBasicClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -296,21 +350,35 @@ impl ::std::fmt::Debug for SoupAuthDomainBasicClass {
 #[repr(C)]
 pub struct SoupAuthDomainClass {
     pub parent_class: gobject::GObjectClass,
-    pub accepts: Option<unsafe extern "C" fn(*mut SoupAuthDomain, *mut SoupServerMessage, *const c_char) -> *mut c_char>,
-    pub challenge: Option<unsafe extern "C" fn(*mut SoupAuthDomain, *mut SoupServerMessage) -> *mut c_char>,
-    pub check_password: Option<unsafe extern "C" fn(*mut SoupAuthDomain, *mut SoupServerMessage, *const c_char, *const c_char) -> gboolean>,
+    pub accepts: Option<
+        unsafe extern "C" fn(
+            *mut SoupAuthDomain,
+            *mut SoupServerMessage,
+            *const c_char,
+        ) -> *mut c_char,
+    >,
+    pub challenge:
+        Option<unsafe extern "C" fn(*mut SoupAuthDomain, *mut SoupServerMessage) -> *mut c_char>,
+    pub check_password: Option<
+        unsafe extern "C" fn(
+            *mut SoupAuthDomain,
+            *mut SoupServerMessage,
+            *const c_char,
+            *const c_char,
+        ) -> gboolean,
+    >,
     pub padding: [gpointer; 6],
 }
 
 impl ::std::fmt::Debug for SoupAuthDomainClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthDomainClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("accepts", &self.accepts)
-         .field("challenge", &self.challenge)
-         .field("check_password", &self.check_password)
-         .field("padding", &self.padding)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("accepts", &self.accepts)
+            .field("challenge", &self.challenge)
+            .field("check_password", &self.check_password)
+            .field("padding", &self.padding)
+            .finish()
     }
 }
 
@@ -323,8 +391,8 @@ pub struct SoupAuthDomainDigestClass {
 impl ::std::fmt::Debug for SoupAuthDomainDigestClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthDomainDigestClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -337,8 +405,8 @@ pub struct SoupAuthManagerClass {
 impl ::std::fmt::Debug for SoupAuthManagerClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthManagerClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -346,17 +414,18 @@ impl ::std::fmt::Debug for SoupAuthManagerClass {
 #[repr(C)]
 pub struct SoupCacheClass {
     pub parent_class: gobject::GObjectClass,
-    pub get_cacheability: Option<unsafe extern "C" fn(*mut SoupCache, *mut SoupMessage) -> SoupCacheability>,
+    pub get_cacheability:
+        Option<unsafe extern "C" fn(*mut SoupCache, *mut SoupMessage) -> SoupCacheability>,
     pub padding: [gpointer; 4],
 }
 
 impl ::std::fmt::Debug for SoupCacheClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupCacheClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("get_cacheability", &self.get_cacheability)
-         .field("padding", &self.padding)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("get_cacheability", &self.get_cacheability)
+            .field("padding", &self.padding)
+            .finish()
     }
 }
 
@@ -369,8 +438,8 @@ pub struct SoupContentDecoderClass {
 impl ::std::fmt::Debug for SoupContentDecoderClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupContentDecoderClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -383,8 +452,8 @@ pub struct SoupContentSnifferClass {
 impl ::std::fmt::Debug for SoupContentSnifferClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupContentSnifferClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -396,8 +465,7 @@ pub struct SoupCookie {
 
 impl ::std::fmt::Debug for SoupCookie {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("SoupCookie @ {:p}", self))
-         .finish()
+        f.debug_struct(&format!("SoupCookie @ {:p}", self)).finish()
     }
 }
 
@@ -414,12 +482,12 @@ pub struct SoupCookieJarClass {
 impl ::std::fmt::Debug for SoupCookieJarClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupCookieJarClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("save", &self.save)
-         .field("is_persistent", &self.is_persistent)
-         .field("changed", &self.changed)
-         .field("padding", &self.padding)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("save", &self.save)
+            .field("is_persistent", &self.is_persistent)
+            .field("changed", &self.changed)
+            .field("padding", &self.padding)
+            .finish()
     }
 }
 
@@ -432,8 +500,8 @@ pub struct SoupCookieJarDBClass {
 impl ::std::fmt::Debug for SoupCookieJarDBClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupCookieJarDBClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -446,8 +514,8 @@ pub struct SoupCookieJarTextClass {
 impl ::std::fmt::Debug for SoupCookieJarTextClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupCookieJarTextClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -456,19 +524,22 @@ impl ::std::fmt::Debug for SoupCookieJarTextClass {
 pub struct SoupHSTSEnforcerClass {
     pub parent_class: gobject::GObjectClass,
     pub is_persistent: Option<unsafe extern "C" fn(*mut SoupHSTSEnforcer) -> gboolean>,
-    pub has_valid_policy: Option<unsafe extern "C" fn(*mut SoupHSTSEnforcer, *const c_char) -> gboolean>,
-    pub changed: Option<unsafe extern "C" fn(*mut SoupHSTSEnforcer, *mut SoupHSTSPolicy, *mut SoupHSTSPolicy)>,
+    pub has_valid_policy:
+        Option<unsafe extern "C" fn(*mut SoupHSTSEnforcer, *const c_char) -> gboolean>,
+    pub changed: Option<
+        unsafe extern "C" fn(*mut SoupHSTSEnforcer, *mut SoupHSTSPolicy, *mut SoupHSTSPolicy),
+    >,
     pub padding: [gpointer; 4],
 }
 
 impl ::std::fmt::Debug for SoupHSTSEnforcerClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupHSTSEnforcerClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("is_persistent", &self.is_persistent)
-         .field("has_valid_policy", &self.has_valid_policy)
-         .field("changed", &self.changed)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("is_persistent", &self.is_persistent)
+            .field("has_valid_policy", &self.has_valid_policy)
+            .field("changed", &self.changed)
+            .finish()
     }
 }
 
@@ -481,8 +552,8 @@ pub struct SoupHSTSEnforcerDBClass {
 impl ::std::fmt::Debug for SoupHSTSEnforcerDBClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupHSTSEnforcerDBClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -495,7 +566,7 @@ pub struct SoupHSTSPolicy {
 impl ::std::fmt::Debug for SoupHSTSPolicy {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupHSTSPolicy @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -508,8 +579,8 @@ pub struct SoupLoggerClass {
 impl ::std::fmt::Debug for SoupLoggerClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupLoggerClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -523,9 +594,9 @@ pub struct SoupMessageBody {
 impl ::std::fmt::Debug for SoupMessageBody {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupMessageBody @ {:p}", self))
-         .field("data", &self.data)
-         .field("length", &self.length)
-         .finish()
+            .field("data", &self.data)
+            .field("length", &self.length)
+            .finish()
     }
 }
 
@@ -538,8 +609,8 @@ pub struct SoupMessageClass {
 impl ::std::fmt::Debug for SoupMessageClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupMessageClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -552,7 +623,7 @@ pub struct SoupMessageHeaders {
 impl ::std::fmt::Debug for SoupMessageHeaders {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupMessageHeaders @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -565,7 +636,7 @@ pub struct SoupMessageHeadersIter {
 impl ::std::fmt::Debug for SoupMessageHeadersIter {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupMessageHeadersIter @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -578,7 +649,7 @@ pub struct SoupMessageMetrics {
 impl ::std::fmt::Debug for SoupMessageMetrics {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupMessageMetrics @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -591,7 +662,7 @@ pub struct SoupMultipart {
 impl ::std::fmt::Debug for SoupMultipart {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupMultipart @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -604,8 +675,8 @@ pub struct SoupMultipartInputStreamClass {
 impl ::std::fmt::Debug for SoupMultipartInputStreamClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupMultipartInputStreamClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -619,9 +690,9 @@ pub struct SoupRange {
 impl ::std::fmt::Debug for SoupRange {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupRange @ {:p}", self))
-         .field("start", &self.start)
-         .field("end", &self.end)
-         .finish()
+            .field("start", &self.start)
+            .field("end", &self.end)
+            .finish()
     }
 }
 
@@ -639,13 +710,13 @@ pub struct SoupServerClass {
 impl ::std::fmt::Debug for SoupServerClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupServerClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("request_started", &self.request_started)
-         .field("request_read", &self.request_read)
-         .field("request_finished", &self.request_finished)
-         .field("request_aborted", &self.request_aborted)
-         .field("padding", &self.padding)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("request_started", &self.request_started)
+            .field("request_read", &self.request_read)
+            .field("request_finished", &self.request_finished)
+            .field("request_aborted", &self.request_aborted)
+            .field("padding", &self.padding)
+            .finish()
     }
 }
 
@@ -658,8 +729,8 @@ pub struct SoupServerMessageClass {
 impl ::std::fmt::Debug for SoupServerMessageClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupServerMessageClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -682,18 +753,18 @@ pub struct SoupSessionClass {
 impl ::std::fmt::Debug for SoupSessionClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupSessionClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("request_queued", &self.request_queued)
-         .field("request_unqueued", &self.request_unqueued)
-         .field("_soup_reserved1", &self._soup_reserved1)
-         .field("_soup_reserved2", &self._soup_reserved2)
-         .field("_soup_reserved3", &self._soup_reserved3)
-         .field("_soup_reserved4", &self._soup_reserved4)
-         .field("_soup_reserved5", &self._soup_reserved5)
-         .field("_soup_reserved6", &self._soup_reserved6)
-         .field("_soup_reserved7", &self._soup_reserved7)
-         .field("_soup_reserved8", &self._soup_reserved8)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("request_queued", &self.request_queued)
+            .field("request_unqueued", &self.request_unqueued)
+            .field("_soup_reserved1", &self._soup_reserved1)
+            .field("_soup_reserved2", &self._soup_reserved2)
+            .field("_soup_reserved3", &self._soup_reserved3)
+            .field("_soup_reserved4", &self._soup_reserved4)
+            .field("_soup_reserved5", &self._soup_reserved5)
+            .field("_soup_reserved6", &self._soup_reserved6)
+            .field("_soup_reserved7", &self._soup_reserved7)
+            .field("_soup_reserved8", &self._soup_reserved8)
+            .finish()
     }
 }
 
@@ -714,8 +785,8 @@ pub struct SoupWebsocketConnectionClass {
 impl ::std::fmt::Debug for SoupWebsocketConnectionClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupWebsocketConnectionClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -724,25 +795,48 @@ impl ::std::fmt::Debug for SoupWebsocketConnectionClass {
 pub struct SoupWebsocketExtensionClass {
     pub parent_class: gobject::GObjectClass,
     pub name: *const c_char,
-    pub configure: Option<unsafe extern "C" fn(*mut SoupWebsocketExtension, SoupWebsocketConnectionType, *mut glib::GHashTable, *mut *mut glib::GError) -> gboolean>,
-    pub get_request_params: Option<unsafe extern "C" fn(*mut SoupWebsocketExtension) -> *mut c_char>,
-    pub get_response_params: Option<unsafe extern "C" fn(*mut SoupWebsocketExtension) -> *mut c_char>,
-    pub process_outgoing_message: Option<unsafe extern "C" fn(*mut SoupWebsocketExtension, *mut u8, *mut glib::GBytes, *mut *mut glib::GError) -> *mut glib::GBytes>,
-    pub process_incoming_message: Option<unsafe extern "C" fn(*mut SoupWebsocketExtension, *mut u8, *mut glib::GBytes, *mut *mut glib::GError) -> *mut glib::GBytes>,
+    pub configure: Option<
+        unsafe extern "C" fn(
+            *mut SoupWebsocketExtension,
+            SoupWebsocketConnectionType,
+            *mut glib::GHashTable,
+            *mut *mut glib::GError,
+        ) -> gboolean,
+    >,
+    pub get_request_params:
+        Option<unsafe extern "C" fn(*mut SoupWebsocketExtension) -> *mut c_char>,
+    pub get_response_params:
+        Option<unsafe extern "C" fn(*mut SoupWebsocketExtension) -> *mut c_char>,
+    pub process_outgoing_message: Option<
+        unsafe extern "C" fn(
+            *mut SoupWebsocketExtension,
+            *mut u8,
+            *mut glib::GBytes,
+            *mut *mut glib::GError,
+        ) -> *mut glib::GBytes,
+    >,
+    pub process_incoming_message: Option<
+        unsafe extern "C" fn(
+            *mut SoupWebsocketExtension,
+            *mut u8,
+            *mut glib::GBytes,
+            *mut *mut glib::GError,
+        ) -> *mut glib::GBytes,
+    >,
     pub padding: [gpointer; 6],
 }
 
 impl ::std::fmt::Debug for SoupWebsocketExtensionClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupWebsocketExtensionClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .field("name", &self.name)
-         .field("configure", &self.configure)
-         .field("get_request_params", &self.get_request_params)
-         .field("get_response_params", &self.get_response_params)
-         .field("process_outgoing_message", &self.process_outgoing_message)
-         .field("process_incoming_message", &self.process_incoming_message)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .field("name", &self.name)
+            .field("configure", &self.configure)
+            .field("get_request_params", &self.get_request_params)
+            .field("get_response_params", &self.get_response_params)
+            .field("process_outgoing_message", &self.process_outgoing_message)
+            .field("process_incoming_message", &self.process_incoming_message)
+            .finish()
     }
 }
 
@@ -755,8 +849,8 @@ pub struct SoupWebsocketExtensionDeflateClass {
 impl ::std::fmt::Debug for SoupWebsocketExtensionDeflateClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupWebsocketExtensionDeflateClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -769,8 +863,8 @@ pub struct SoupWebsocketExtensionManagerClass {
 impl ::std::fmt::Debug for SoupWebsocketExtensionManagerClass {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupWebsocketExtensionManagerClass @ {:p}", self))
-         .field("parent_class", &self.parent_class)
-         .finish()
+            .field("parent_class", &self.parent_class)
+            .finish()
     }
 }
 
@@ -784,8 +878,8 @@ pub struct SoupAuth {
 impl ::std::fmt::Debug for SoupAuth {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuth @ {:p}", self))
-         .field("parent_instance", &self.parent_instance)
-         .finish()
+            .field("parent_instance", &self.parent_instance)
+            .finish()
     }
 }
 
@@ -798,7 +892,7 @@ pub struct SoupAuthBasic {
 impl ::std::fmt::Debug for SoupAuthBasic {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthBasic @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -811,7 +905,7 @@ pub struct SoupAuthDigest {
 impl ::std::fmt::Debug for SoupAuthDigest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthDigest @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -824,8 +918,8 @@ pub struct SoupAuthDomain {
 impl ::std::fmt::Debug for SoupAuthDomain {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthDomain @ {:p}", self))
-         .field("parent_instance", &self.parent_instance)
-         .finish()
+            .field("parent_instance", &self.parent_instance)
+            .finish()
     }
 }
 
@@ -838,7 +932,7 @@ pub struct SoupAuthDomainBasic {
 impl ::std::fmt::Debug for SoupAuthDomainBasic {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthDomainBasic @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -851,7 +945,7 @@ pub struct SoupAuthDomainDigest {
 impl ::std::fmt::Debug for SoupAuthDomainDigest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthDomainDigest @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -864,7 +958,7 @@ pub struct SoupAuthManager {
 impl ::std::fmt::Debug for SoupAuthManager {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthManager @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -877,7 +971,7 @@ pub struct SoupAuthNTLM {
 impl ::std::fmt::Debug for SoupAuthNTLM {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthNTLM @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -890,7 +984,7 @@ pub struct SoupAuthNegotiate {
 impl ::std::fmt::Debug for SoupAuthNegotiate {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupAuthNegotiate @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -903,8 +997,8 @@ pub struct SoupCache {
 impl ::std::fmt::Debug for SoupCache {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupCache @ {:p}", self))
-         .field("parent_instance", &self.parent_instance)
-         .finish()
+            .field("parent_instance", &self.parent_instance)
+            .finish()
     }
 }
 
@@ -917,7 +1011,7 @@ pub struct SoupContentDecoder {
 impl ::std::fmt::Debug for SoupContentDecoder {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupContentDecoder @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -930,7 +1024,7 @@ pub struct SoupContentSniffer {
 impl ::std::fmt::Debug for SoupContentSniffer {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupContentSniffer @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -943,8 +1037,8 @@ pub struct SoupCookieJar {
 impl ::std::fmt::Debug for SoupCookieJar {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupCookieJar @ {:p}", self))
-         .field("parent_instance", &self.parent_instance)
-         .finish()
+            .field("parent_instance", &self.parent_instance)
+            .finish()
     }
 }
 
@@ -957,7 +1051,7 @@ pub struct SoupCookieJarDB {
 impl ::std::fmt::Debug for SoupCookieJarDB {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupCookieJarDB @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -970,7 +1064,7 @@ pub struct SoupCookieJarText {
 impl ::std::fmt::Debug for SoupCookieJarText {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupCookieJarText @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -983,8 +1077,8 @@ pub struct SoupHSTSEnforcer {
 impl ::std::fmt::Debug for SoupHSTSEnforcer {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupHSTSEnforcer @ {:p}", self))
-         .field("parent_instance", &self.parent_instance)
-         .finish()
+            .field("parent_instance", &self.parent_instance)
+            .finish()
     }
 }
 
@@ -997,7 +1091,7 @@ pub struct SoupHSTSEnforcerDB {
 impl ::std::fmt::Debug for SoupHSTSEnforcerDB {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupHSTSEnforcerDB @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -1009,8 +1103,7 @@ pub struct SoupLogger {
 
 impl ::std::fmt::Debug for SoupLogger {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        f.debug_struct(&format!("SoupLogger @ {:p}", self))
-         .finish()
+        f.debug_struct(&format!("SoupLogger @ {:p}", self)).finish()
     }
 }
 
@@ -1023,7 +1116,7 @@ pub struct SoupMessage {
 impl ::std::fmt::Debug for SoupMessage {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupMessage @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -1036,7 +1129,7 @@ pub struct SoupMultipartInputStream {
 impl ::std::fmt::Debug for SoupMultipartInputStream {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupMultipartInputStream @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -1049,8 +1142,8 @@ pub struct SoupServer {
 impl ::std::fmt::Debug for SoupServer {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupServer @ {:p}", self))
-         .field("parent_instance", &self.parent_instance)
-         .finish()
+            .field("parent_instance", &self.parent_instance)
+            .finish()
     }
 }
 
@@ -1063,7 +1156,7 @@ pub struct SoupServerMessage {
 impl ::std::fmt::Debug for SoupServerMessage {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupServerMessage @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -1076,8 +1169,8 @@ pub struct SoupSession {
 impl ::std::fmt::Debug for SoupSession {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupSession @ {:p}", self))
-         .field("parent_instance", &self.parent_instance)
-         .finish()
+            .field("parent_instance", &self.parent_instance)
+            .finish()
     }
 }
 
@@ -1090,7 +1183,7 @@ pub struct SoupWebsocketConnection {
 impl ::std::fmt::Debug for SoupWebsocketConnection {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupWebsocketConnection @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -1103,8 +1196,8 @@ pub struct SoupWebsocketExtension {
 impl ::std::fmt::Debug for SoupWebsocketExtension {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupWebsocketExtension @ {:p}", self))
-         .field("parent_instance", &self.parent_instance)
-         .finish()
+            .field("parent_instance", &self.parent_instance)
+            .finish()
     }
 }
 
@@ -1117,7 +1210,7 @@ pub struct SoupWebsocketExtensionDeflate {
 impl ::std::fmt::Debug for SoupWebsocketExtensionDeflate {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupWebsocketExtensionDeflate @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -1130,7 +1223,7 @@ pub struct SoupWebsocketExtensionManager {
 impl ::std::fmt::Debug for SoupWebsocketExtensionManager {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         f.debug_struct(&format!("SoupWebsocketExtensionManager @ {:p}", self))
-         .finish()
+            .finish()
     }
 }
 
@@ -1146,7 +1239,6 @@ impl ::std::fmt::Debug for SoupSessionFeature {
         write!(f, "SoupSessionFeature @ {:p}", self)
     }
 }
-
 
 #[link(name = "soup-3.0")]
 extern "C" {
@@ -1279,7 +1371,13 @@ extern "C" {
     // SoupCookie
     //=========================================================================
     pub fn soup_cookie_get_type() -> GType;
-    pub fn soup_cookie_new(name: *const c_char, value: *const c_char, domain: *const c_char, path: *const c_char, max_age: c_int) -> *mut SoupCookie;
+    pub fn soup_cookie_new(
+        name: *const c_char,
+        value: *const c_char,
+        domain: *const c_char,
+        path: *const c_char,
+        max_age: c_int,
+    ) -> *mut SoupCookie;
     pub fn soup_cookie_applies_to_uri(cookie: *mut SoupCookie, uri: *mut glib::GUri) -> gboolean;
     pub fn soup_cookie_copy(cookie: *mut SoupCookie) -> *mut SoupCookie;
     pub fn soup_cookie_domain_matches(cookie: *mut SoupCookie, host: *const c_char) -> gboolean;
@@ -1310,12 +1408,27 @@ extern "C" {
     // SoupHSTSPolicy
     //=========================================================================
     pub fn soup_hsts_policy_get_type() -> GType;
-    pub fn soup_hsts_policy_new(domain: *const c_char, max_age: c_ulong, include_subdomains: gboolean) -> *mut SoupHSTSPolicy;
+    pub fn soup_hsts_policy_new(
+        domain: *const c_char,
+        max_age: c_ulong,
+        include_subdomains: gboolean,
+    ) -> *mut SoupHSTSPolicy;
     pub fn soup_hsts_policy_new_from_response(msg: *mut SoupMessage) -> *mut SoupHSTSPolicy;
-    pub fn soup_hsts_policy_new_full(domain: *const c_char, max_age: c_ulong, expires: *mut glib::GDateTime, include_subdomains: gboolean) -> *mut SoupHSTSPolicy;
-    pub fn soup_hsts_policy_new_session_policy(domain: *const c_char, include_subdomains: gboolean) -> *mut SoupHSTSPolicy;
+    pub fn soup_hsts_policy_new_full(
+        domain: *const c_char,
+        max_age: c_ulong,
+        expires: *mut glib::GDateTime,
+        include_subdomains: gboolean,
+    ) -> *mut SoupHSTSPolicy;
+    pub fn soup_hsts_policy_new_session_policy(
+        domain: *const c_char,
+        include_subdomains: gboolean,
+    ) -> *mut SoupHSTSPolicy;
     pub fn soup_hsts_policy_copy(policy: *mut SoupHSTSPolicy) -> *mut SoupHSTSPolicy;
-    pub fn soup_hsts_policy_equal(policy1: *mut SoupHSTSPolicy, policy2: *mut SoupHSTSPolicy) -> gboolean;
+    pub fn soup_hsts_policy_equal(
+        policy1: *mut SoupHSTSPolicy,
+        policy2: *mut SoupHSTSPolicy,
+    ) -> gboolean;
     pub fn soup_hsts_policy_free(policy: *mut SoupHSTSPolicy);
     pub fn soup_hsts_policy_get_domain(policy: *mut SoupHSTSPolicy) -> *const c_char;
     pub fn soup_hsts_policy_get_expires(policy: *mut SoupHSTSPolicy) -> *mut glib::GDateTime;
@@ -1329,13 +1442,21 @@ extern "C" {
     //=========================================================================
     pub fn soup_message_body_get_type() -> GType;
     pub fn soup_message_body_new() -> *mut SoupMessageBody;
-    pub fn soup_message_body_append(body: *mut SoupMessageBody, use_: SoupMemoryUse, data: gconstpointer, length: size_t);
+    pub fn soup_message_body_append(
+        body: *mut SoupMessageBody,
+        use_: SoupMemoryUse,
+        data: gconstpointer,
+        length: size_t,
+    );
     pub fn soup_message_body_append_bytes(body: *mut SoupMessageBody, buffer: *mut glib::GBytes);
     pub fn soup_message_body_append_take(body: *mut SoupMessageBody, data: *mut u8, length: size_t);
     pub fn soup_message_body_complete(body: *mut SoupMessageBody);
     pub fn soup_message_body_flatten(body: *mut SoupMessageBody) -> *mut glib::GBytes;
     pub fn soup_message_body_get_accumulate(body: *mut SoupMessageBody) -> gboolean;
-    pub fn soup_message_body_get_chunk(body: *mut SoupMessageBody, offset: i64) -> *mut glib::GBytes;
+    pub fn soup_message_body_get_chunk(
+        body: *mut SoupMessageBody,
+        offset: i64,
+    ) -> *mut glib::GBytes;
     pub fn soup_message_body_got_chunk(body: *mut SoupMessageBody, chunk: *mut glib::GBytes);
     pub fn soup_message_body_ref(body: *mut SoupMessageBody) -> *mut SoupMessageBody;
     pub fn soup_message_body_set_accumulate(body: *mut SoupMessageBody, accumulate: gboolean);
@@ -1348,41 +1469,116 @@ extern "C" {
     //=========================================================================
     pub fn soup_message_headers_get_type() -> GType;
     pub fn soup_message_headers_new(type_: SoupMessageHeadersType) -> *mut SoupMessageHeaders;
-    pub fn soup_message_headers_append(hdrs: *mut SoupMessageHeaders, name: *const c_char, value: *const c_char);
+    pub fn soup_message_headers_append(
+        hdrs: *mut SoupMessageHeaders,
+        name: *const c_char,
+        value: *const c_char,
+    );
     pub fn soup_message_headers_clean_connection_headers(hdrs: *mut SoupMessageHeaders);
     pub fn soup_message_headers_clear(hdrs: *mut SoupMessageHeaders);
-    pub fn soup_message_headers_foreach(hdrs: *mut SoupMessageHeaders, func: SoupMessageHeadersForeachFunc, user_data: gpointer);
+    pub fn soup_message_headers_foreach(
+        hdrs: *mut SoupMessageHeaders,
+        func: SoupMessageHeadersForeachFunc,
+        user_data: gpointer,
+    );
     pub fn soup_message_headers_free_ranges(hdrs: *mut SoupMessageHeaders, ranges: *mut SoupRange);
-    pub fn soup_message_headers_get_content_disposition(hdrs: *mut SoupMessageHeaders, disposition: *mut *mut c_char, params: *mut *mut glib::GHashTable) -> gboolean;
+    pub fn soup_message_headers_get_content_disposition(
+        hdrs: *mut SoupMessageHeaders,
+        disposition: *mut *mut c_char,
+        params: *mut *mut glib::GHashTable,
+    ) -> gboolean;
     pub fn soup_message_headers_get_content_length(hdrs: *mut SoupMessageHeaders) -> i64;
-    pub fn soup_message_headers_get_content_range(hdrs: *mut SoupMessageHeaders, start: *mut i64, end: *mut i64, total_length: *mut i64) -> gboolean;
-    pub fn soup_message_headers_get_content_type(hdrs: *mut SoupMessageHeaders, params: *mut *mut glib::GHashTable) -> *const c_char;
+    pub fn soup_message_headers_get_content_range(
+        hdrs: *mut SoupMessageHeaders,
+        start: *mut i64,
+        end: *mut i64,
+        total_length: *mut i64,
+    ) -> gboolean;
+    pub fn soup_message_headers_get_content_type(
+        hdrs: *mut SoupMessageHeaders,
+        params: *mut *mut glib::GHashTable,
+    ) -> *const c_char;
     pub fn soup_message_headers_get_encoding(hdrs: *mut SoupMessageHeaders) -> SoupEncoding;
     pub fn soup_message_headers_get_expectations(hdrs: *mut SoupMessageHeaders) -> SoupExpectation;
-    pub fn soup_message_headers_get_headers_type(hdrs: *mut SoupMessageHeaders) -> SoupMessageHeadersType;
-    pub fn soup_message_headers_get_list(hdrs: *mut SoupMessageHeaders, name: *const c_char) -> *const c_char;
-    pub fn soup_message_headers_get_one(hdrs: *mut SoupMessageHeaders, name: *const c_char) -> *const c_char;
-    pub fn soup_message_headers_get_ranges(hdrs: *mut SoupMessageHeaders, total_length: i64, ranges: *mut *mut SoupRange, length: *mut c_int) -> gboolean;
-    pub fn soup_message_headers_header_contains(hdrs: *mut SoupMessageHeaders, name: *const c_char, token: *const c_char) -> gboolean;
-    pub fn soup_message_headers_header_equals(hdrs: *mut SoupMessageHeaders, name: *const c_char, value: *const c_char) -> gboolean;
+    pub fn soup_message_headers_get_headers_type(
+        hdrs: *mut SoupMessageHeaders,
+    ) -> SoupMessageHeadersType;
+    pub fn soup_message_headers_get_list(
+        hdrs: *mut SoupMessageHeaders,
+        name: *const c_char,
+    ) -> *const c_char;
+    pub fn soup_message_headers_get_one(
+        hdrs: *mut SoupMessageHeaders,
+        name: *const c_char,
+    ) -> *const c_char;
+    pub fn soup_message_headers_get_ranges(
+        hdrs: *mut SoupMessageHeaders,
+        total_length: i64,
+        ranges: *mut *mut SoupRange,
+        length: *mut c_int,
+    ) -> gboolean;
+    pub fn soup_message_headers_header_contains(
+        hdrs: *mut SoupMessageHeaders,
+        name: *const c_char,
+        token: *const c_char,
+    ) -> gboolean;
+    pub fn soup_message_headers_header_equals(
+        hdrs: *mut SoupMessageHeaders,
+        name: *const c_char,
+        value: *const c_char,
+    ) -> gboolean;
     pub fn soup_message_headers_ref(hdrs: *mut SoupMessageHeaders) -> *mut SoupMessageHeaders;
     pub fn soup_message_headers_remove(hdrs: *mut SoupMessageHeaders, name: *const c_char);
-    pub fn soup_message_headers_replace(hdrs: *mut SoupMessageHeaders, name: *const c_char, value: *const c_char);
-    pub fn soup_message_headers_set_content_disposition(hdrs: *mut SoupMessageHeaders, disposition: *const c_char, params: *mut glib::GHashTable);
-    pub fn soup_message_headers_set_content_length(hdrs: *mut SoupMessageHeaders, content_length: i64);
-    pub fn soup_message_headers_set_content_range(hdrs: *mut SoupMessageHeaders, start: i64, end: i64, total_length: i64);
-    pub fn soup_message_headers_set_content_type(hdrs: *mut SoupMessageHeaders, content_type: *const c_char, params: *mut glib::GHashTable);
+    pub fn soup_message_headers_replace(
+        hdrs: *mut SoupMessageHeaders,
+        name: *const c_char,
+        value: *const c_char,
+    );
+    pub fn soup_message_headers_set_content_disposition(
+        hdrs: *mut SoupMessageHeaders,
+        disposition: *const c_char,
+        params: *mut glib::GHashTable,
+    );
+    pub fn soup_message_headers_set_content_length(
+        hdrs: *mut SoupMessageHeaders,
+        content_length: i64,
+    );
+    pub fn soup_message_headers_set_content_range(
+        hdrs: *mut SoupMessageHeaders,
+        start: i64,
+        end: i64,
+        total_length: i64,
+    );
+    pub fn soup_message_headers_set_content_type(
+        hdrs: *mut SoupMessageHeaders,
+        content_type: *const c_char,
+        params: *mut glib::GHashTable,
+    );
     pub fn soup_message_headers_set_encoding(hdrs: *mut SoupMessageHeaders, encoding: SoupEncoding);
-    pub fn soup_message_headers_set_expectations(hdrs: *mut SoupMessageHeaders, expectations: SoupExpectation);
+    pub fn soup_message_headers_set_expectations(
+        hdrs: *mut SoupMessageHeaders,
+        expectations: SoupExpectation,
+    );
     pub fn soup_message_headers_set_range(hdrs: *mut SoupMessageHeaders, start: i64, end: i64);
-    pub fn soup_message_headers_set_ranges(hdrs: *mut SoupMessageHeaders, ranges: *mut SoupRange, length: c_int);
+    pub fn soup_message_headers_set_ranges(
+        hdrs: *mut SoupMessageHeaders,
+        ranges: *mut SoupRange,
+        length: c_int,
+    );
     pub fn soup_message_headers_unref(hdrs: *mut SoupMessageHeaders);
 
     //=========================================================================
     // SoupMessageHeadersIter
     //=========================================================================
-    pub fn soup_message_headers_iter_next(iter: *mut SoupMessageHeadersIter, name: *mut *const c_char, value: *mut *const c_char) -> gboolean;
-    pub fn soup_message_headers_iter_init(iter: *mut SoupMessageHeadersIter, hdrs: *mut SoupMessageHeaders);
+    pub fn soup_message_headers_iter_next(
+        iter: *mut SoupMessageHeadersIter,
+        name: *mut *const c_char,
+        value: *mut *const c_char,
+    ) -> gboolean;
+    pub fn soup_message_headers_iter_init(
+        iter: *mut SoupMessageHeadersIter,
+        hdrs: *mut SoupMessageHeaders,
+    );
 
     //=========================================================================
     // SoupMessageMetrics
@@ -1395,14 +1591,22 @@ extern "C" {
     pub fn soup_message_metrics_get_dns_end(metrics: *mut SoupMessageMetrics) -> u64;
     pub fn soup_message_metrics_get_dns_start(metrics: *mut SoupMessageMetrics) -> u64;
     pub fn soup_message_metrics_get_fetch_start(metrics: *mut SoupMessageMetrics) -> u64;
-    pub fn soup_message_metrics_get_request_body_bytes_sent(metrics: *mut SoupMessageMetrics) -> u64;
+    pub fn soup_message_metrics_get_request_body_bytes_sent(
+        metrics: *mut SoupMessageMetrics,
+    ) -> u64;
     pub fn soup_message_metrics_get_request_body_size(metrics: *mut SoupMessageMetrics) -> u64;
-    pub fn soup_message_metrics_get_request_header_bytes_sent(metrics: *mut SoupMessageMetrics) -> u64;
+    pub fn soup_message_metrics_get_request_header_bytes_sent(
+        metrics: *mut SoupMessageMetrics,
+    ) -> u64;
     pub fn soup_message_metrics_get_request_start(metrics: *mut SoupMessageMetrics) -> u64;
-    pub fn soup_message_metrics_get_response_body_bytes_received(metrics: *mut SoupMessageMetrics) -> u64;
+    pub fn soup_message_metrics_get_response_body_bytes_received(
+        metrics: *mut SoupMessageMetrics,
+    ) -> u64;
     pub fn soup_message_metrics_get_response_body_size(metrics: *mut SoupMessageMetrics) -> u64;
     pub fn soup_message_metrics_get_response_end(metrics: *mut SoupMessageMetrics) -> u64;
-    pub fn soup_message_metrics_get_response_header_bytes_received(metrics: *mut SoupMessageMetrics) -> u64;
+    pub fn soup_message_metrics_get_response_header_bytes_received(
+        metrics: *mut SoupMessageMetrics,
+    ) -> u64;
     pub fn soup_message_metrics_get_response_start(metrics: *mut SoupMessageMetrics) -> u64;
     pub fn soup_message_metrics_get_tls_start(metrics: *mut SoupMessageMetrics) -> u64;
 
@@ -1411,35 +1615,76 @@ extern "C" {
     //=========================================================================
     pub fn soup_multipart_get_type() -> GType;
     pub fn soup_multipart_new(mime_type: *const c_char) -> *mut SoupMultipart;
-    pub fn soup_multipart_new_from_message(headers: *mut SoupMessageHeaders, body: *mut glib::GBytes) -> *mut SoupMultipart;
-    pub fn soup_multipart_append_form_file(multipart: *mut SoupMultipart, control_name: *const c_char, filename: *const c_char, content_type: *const c_char, body: *mut glib::GBytes);
-    pub fn soup_multipart_append_form_string(multipart: *mut SoupMultipart, control_name: *const c_char, data: *const c_char);
-    pub fn soup_multipart_append_part(multipart: *mut SoupMultipart, headers: *mut SoupMessageHeaders, body: *mut glib::GBytes);
+    pub fn soup_multipart_new_from_message(
+        headers: *mut SoupMessageHeaders,
+        body: *mut glib::GBytes,
+    ) -> *mut SoupMultipart;
+    pub fn soup_multipart_append_form_file(
+        multipart: *mut SoupMultipart,
+        control_name: *const c_char,
+        filename: *const c_char,
+        content_type: *const c_char,
+        body: *mut glib::GBytes,
+    );
+    pub fn soup_multipart_append_form_string(
+        multipart: *mut SoupMultipart,
+        control_name: *const c_char,
+        data: *const c_char,
+    );
+    pub fn soup_multipart_append_part(
+        multipart: *mut SoupMultipart,
+        headers: *mut SoupMessageHeaders,
+        body: *mut glib::GBytes,
+    );
     pub fn soup_multipart_free(multipart: *mut SoupMultipart);
     pub fn soup_multipart_get_length(multipart: *mut SoupMultipart) -> c_int;
-    pub fn soup_multipart_get_part(multipart: *mut SoupMultipart, part: c_int, headers: *mut *mut SoupMessageHeaders, body: *mut *mut glib::GBytes) -> gboolean;
-    pub fn soup_multipart_to_message(multipart: *mut SoupMultipart, dest_headers: *mut SoupMessageHeaders, dest_body: *mut *mut glib::GBytes);
+    pub fn soup_multipart_get_part(
+        multipart: *mut SoupMultipart,
+        part: c_int,
+        headers: *mut *mut SoupMessageHeaders,
+        body: *mut *mut glib::GBytes,
+    ) -> gboolean;
+    pub fn soup_multipart_to_message(
+        multipart: *mut SoupMultipart,
+        dest_headers: *mut SoupMessageHeaders,
+        dest_body: *mut *mut glib::GBytes,
+    );
 
     //=========================================================================
     // SoupAuth
     //=========================================================================
     pub fn soup_auth_get_type() -> GType;
-    pub fn soup_auth_new(type_: GType, msg: *mut SoupMessage, auth_header: *const c_char) -> *mut SoupAuth;
-    pub fn soup_auth_authenticate(auth: *mut SoupAuth, username: *const c_char, password: *const c_char);
+    pub fn soup_auth_new(
+        type_: GType,
+        msg: *mut SoupMessage,
+        auth_header: *const c_char,
+    ) -> *mut SoupAuth;
+    pub fn soup_auth_authenticate(
+        auth: *mut SoupAuth,
+        username: *const c_char,
+        password: *const c_char,
+    );
     pub fn soup_auth_can_authenticate(auth: *mut SoupAuth) -> gboolean;
     pub fn soup_auth_cancel(auth: *mut SoupAuth);
     pub fn soup_auth_free_protection_space(auth: *mut SoupAuth, space: *mut glib::GSList);
     pub fn soup_auth_get_authority(auth: *mut SoupAuth) -> *const c_char;
     pub fn soup_auth_get_authorization(auth: *mut SoupAuth, msg: *mut SoupMessage) -> *mut c_char;
     pub fn soup_auth_get_info(auth: *mut SoupAuth) -> *mut c_char;
-    pub fn soup_auth_get_protection_space(auth: *mut SoupAuth, source_uri: *mut glib::GUri) -> *mut glib::GSList;
+    pub fn soup_auth_get_protection_space(
+        auth: *mut SoupAuth,
+        source_uri: *mut glib::GUri,
+    ) -> *mut glib::GSList;
     pub fn soup_auth_get_realm(auth: *mut SoupAuth) -> *const c_char;
     pub fn soup_auth_get_scheme_name(auth: *mut SoupAuth) -> *const c_char;
     pub fn soup_auth_is_authenticated(auth: *mut SoupAuth) -> gboolean;
     pub fn soup_auth_is_cancelled(auth: *mut SoupAuth) -> gboolean;
     pub fn soup_auth_is_for_proxy(auth: *mut SoupAuth) -> gboolean;
     pub fn soup_auth_is_ready(auth: *mut SoupAuth, msg: *mut SoupMessage) -> gboolean;
-    pub fn soup_auth_update(auth: *mut SoupAuth, msg: *mut SoupMessage, auth_header: *const c_char) -> gboolean;
+    pub fn soup_auth_update(
+        auth: *mut SoupAuth,
+        msg: *mut SoupMessage,
+        auth_header: *const c_char,
+    ) -> gboolean;
 
     //=========================================================================
     // SoupAuthBasic
@@ -1455,38 +1700,81 @@ extern "C" {
     // SoupAuthDomain
     //=========================================================================
     pub fn soup_auth_domain_get_type() -> GType;
-    pub fn soup_auth_domain_accepts(domain: *mut SoupAuthDomain, msg: *mut SoupServerMessage) -> *mut c_char;
+    pub fn soup_auth_domain_accepts(
+        domain: *mut SoupAuthDomain,
+        msg: *mut SoupServerMessage,
+    ) -> *mut c_char;
     pub fn soup_auth_domain_add_path(domain: *mut SoupAuthDomain, path: *const c_char);
     pub fn soup_auth_domain_challenge(domain: *mut SoupAuthDomain, msg: *mut SoupServerMessage);
-    pub fn soup_auth_domain_check_password(domain: *mut SoupAuthDomain, msg: *mut SoupServerMessage, username: *const c_char, password: *const c_char) -> gboolean;
-    pub fn soup_auth_domain_covers(domain: *mut SoupAuthDomain, msg: *mut SoupServerMessage) -> gboolean;
+    pub fn soup_auth_domain_check_password(
+        domain: *mut SoupAuthDomain,
+        msg: *mut SoupServerMessage,
+        username: *const c_char,
+        password: *const c_char,
+    ) -> gboolean;
+    pub fn soup_auth_domain_covers(
+        domain: *mut SoupAuthDomain,
+        msg: *mut SoupServerMessage,
+    ) -> gboolean;
     pub fn soup_auth_domain_get_realm(domain: *mut SoupAuthDomain) -> *const c_char;
     pub fn soup_auth_domain_remove_path(domain: *mut SoupAuthDomain, path: *const c_char);
-    pub fn soup_auth_domain_set_filter(domain: *mut SoupAuthDomain, filter: SoupAuthDomainFilter, filter_data: gpointer, dnotify: glib::GDestroyNotify);
-    pub fn soup_auth_domain_set_generic_auth_callback(domain: *mut SoupAuthDomain, auth_callback: SoupAuthDomainGenericAuthCallback, auth_data: gpointer, dnotify: glib::GDestroyNotify);
-    pub fn soup_auth_domain_try_generic_auth_callback(domain: *mut SoupAuthDomain, msg: *mut SoupServerMessage, username: *const c_char) -> gboolean;
+    pub fn soup_auth_domain_set_filter(
+        domain: *mut SoupAuthDomain,
+        filter: SoupAuthDomainFilter,
+        filter_data: gpointer,
+        dnotify: glib::GDestroyNotify,
+    );
+    pub fn soup_auth_domain_set_generic_auth_callback(
+        domain: *mut SoupAuthDomain,
+        auth_callback: SoupAuthDomainGenericAuthCallback,
+        auth_data: gpointer,
+        dnotify: glib::GDestroyNotify,
+    );
+    pub fn soup_auth_domain_try_generic_auth_callback(
+        domain: *mut SoupAuthDomain,
+        msg: *mut SoupServerMessage,
+        username: *const c_char,
+    ) -> gboolean;
 
     //=========================================================================
     // SoupAuthDomainBasic
     //=========================================================================
     pub fn soup_auth_domain_basic_get_type() -> GType;
     pub fn soup_auth_domain_basic_new(optname1: *const c_char, ...) -> *mut SoupAuthDomain;
-    pub fn soup_auth_domain_basic_set_auth_callback(domain: *mut SoupAuthDomainBasic, callback: SoupAuthDomainBasicAuthCallback, user_data: gpointer, dnotify: glib::GDestroyNotify);
+    pub fn soup_auth_domain_basic_set_auth_callback(
+        domain: *mut SoupAuthDomainBasic,
+        callback: SoupAuthDomainBasicAuthCallback,
+        user_data: gpointer,
+        dnotify: glib::GDestroyNotify,
+    );
 
     //=========================================================================
     // SoupAuthDomainDigest
     //=========================================================================
     pub fn soup_auth_domain_digest_get_type() -> GType;
     pub fn soup_auth_domain_digest_new(optname1: *const c_char, ...) -> *mut SoupAuthDomain;
-    pub fn soup_auth_domain_digest_encode_password(username: *const c_char, realm: *const c_char, password: *const c_char) -> *mut c_char;
-    pub fn soup_auth_domain_digest_set_auth_callback(domain: *mut SoupAuthDomainDigest, callback: SoupAuthDomainDigestAuthCallback, user_data: gpointer, dnotify: glib::GDestroyNotify);
+    pub fn soup_auth_domain_digest_encode_password(
+        username: *const c_char,
+        realm: *const c_char,
+        password: *const c_char,
+    ) -> *mut c_char;
+    pub fn soup_auth_domain_digest_set_auth_callback(
+        domain: *mut SoupAuthDomainDigest,
+        callback: SoupAuthDomainDigestAuthCallback,
+        user_data: gpointer,
+        dnotify: glib::GDestroyNotify,
+    );
 
     //=========================================================================
     // SoupAuthManager
     //=========================================================================
     pub fn soup_auth_manager_get_type() -> GType;
     pub fn soup_auth_manager_clear_cached_credentials(manager: *mut SoupAuthManager);
-    pub fn soup_auth_manager_use_auth(manager: *mut SoupAuthManager, uri: *mut glib::GUri, auth: *mut SoupAuth);
+    pub fn soup_auth_manager_use_auth(
+        manager: *mut SoupAuthManager,
+        uri: *mut glib::GUri,
+        auth: *mut SoupAuth,
+    );
 
     //=========================================================================
     // SoupAuthNTLM
@@ -1521,7 +1809,12 @@ extern "C" {
     //=========================================================================
     pub fn soup_content_sniffer_get_type() -> GType;
     pub fn soup_content_sniffer_new() -> *mut SoupContentSniffer;
-    pub fn soup_content_sniffer_sniff(sniffer: *mut SoupContentSniffer, msg: *mut SoupMessage, buffer: *mut glib::GBytes, params: *mut *mut glib::GHashTable) -> *mut c_char;
+    pub fn soup_content_sniffer_sniff(
+        sniffer: *mut SoupContentSniffer,
+        msg: *mut SoupMessage,
+        buffer: *mut glib::GBytes,
+        params: *mut *mut glib::GHashTable,
+    ) -> *mut c_char;
 
     //=========================================================================
     // SoupCookieJar
@@ -1529,42 +1822,101 @@ extern "C" {
     pub fn soup_cookie_jar_get_type() -> GType;
     pub fn soup_cookie_jar_new() -> *mut SoupCookieJar;
     pub fn soup_cookie_jar_add_cookie(jar: *mut SoupCookieJar, cookie: *mut SoupCookie);
-    pub fn soup_cookie_jar_add_cookie_full(jar: *mut SoupCookieJar, cookie: *mut SoupCookie, uri: *mut glib::GUri, first_party: *mut glib::GUri);
-    pub fn soup_cookie_jar_add_cookie_with_first_party(jar: *mut SoupCookieJar, first_party: *mut glib::GUri, cookie: *mut SoupCookie);
+    pub fn soup_cookie_jar_add_cookie_full(
+        jar: *mut SoupCookieJar,
+        cookie: *mut SoupCookie,
+        uri: *mut glib::GUri,
+        first_party: *mut glib::GUri,
+    );
+    pub fn soup_cookie_jar_add_cookie_with_first_party(
+        jar: *mut SoupCookieJar,
+        first_party: *mut glib::GUri,
+        cookie: *mut SoupCookie,
+    );
     pub fn soup_cookie_jar_all_cookies(jar: *mut SoupCookieJar) -> *mut glib::GSList;
     pub fn soup_cookie_jar_delete_cookie(jar: *mut SoupCookieJar, cookie: *mut SoupCookie);
     pub fn soup_cookie_jar_get_accept_policy(jar: *mut SoupCookieJar) -> SoupCookieJarAcceptPolicy;
-    pub fn soup_cookie_jar_get_cookie_list(jar: *mut SoupCookieJar, uri: *mut glib::GUri, for_http: gboolean) -> *mut glib::GSList;
-    pub fn soup_cookie_jar_get_cookie_list_with_same_site_info(jar: *mut SoupCookieJar, uri: *mut glib::GUri, top_level: *mut glib::GUri, site_for_cookies: *mut glib::GUri, for_http: gboolean, is_safe_method: gboolean, is_top_level_navigation: gboolean) -> *mut glib::GSList;
-    pub fn soup_cookie_jar_get_cookies(jar: *mut SoupCookieJar, uri: *mut glib::GUri, for_http: gboolean) -> *mut c_char;
+    pub fn soup_cookie_jar_get_cookie_list(
+        jar: *mut SoupCookieJar,
+        uri: *mut glib::GUri,
+        for_http: gboolean,
+    ) -> *mut glib::GSList;
+    pub fn soup_cookie_jar_get_cookie_list_with_same_site_info(
+        jar: *mut SoupCookieJar,
+        uri: *mut glib::GUri,
+        top_level: *mut glib::GUri,
+        site_for_cookies: *mut glib::GUri,
+        for_http: gboolean,
+        is_safe_method: gboolean,
+        is_top_level_navigation: gboolean,
+    ) -> *mut glib::GSList;
+    pub fn soup_cookie_jar_get_cookies(
+        jar: *mut SoupCookieJar,
+        uri: *mut glib::GUri,
+        for_http: gboolean,
+    ) -> *mut c_char;
     pub fn soup_cookie_jar_is_persistent(jar: *mut SoupCookieJar) -> gboolean;
-    pub fn soup_cookie_jar_set_accept_policy(jar: *mut SoupCookieJar, policy: SoupCookieJarAcceptPolicy);
-    pub fn soup_cookie_jar_set_cookie(jar: *mut SoupCookieJar, uri: *mut glib::GUri, cookie: *const c_char);
-    pub fn soup_cookie_jar_set_cookie_with_first_party(jar: *mut SoupCookieJar, uri: *mut glib::GUri, first_party: *mut glib::GUri, cookie: *const c_char);
+    pub fn soup_cookie_jar_set_accept_policy(
+        jar: *mut SoupCookieJar,
+        policy: SoupCookieJarAcceptPolicy,
+    );
+    pub fn soup_cookie_jar_set_cookie(
+        jar: *mut SoupCookieJar,
+        uri: *mut glib::GUri,
+        cookie: *const c_char,
+    );
+    pub fn soup_cookie_jar_set_cookie_with_first_party(
+        jar: *mut SoupCookieJar,
+        uri: *mut glib::GUri,
+        first_party: *mut glib::GUri,
+        cookie: *const c_char,
+    );
 
     //=========================================================================
     // SoupCookieJarDB
     //=========================================================================
     pub fn soup_cookie_jar_db_get_type() -> GType;
-    pub fn soup_cookie_jar_db_new(filename: *const c_char, read_only: gboolean) -> *mut SoupCookieJar;
+    pub fn soup_cookie_jar_db_new(
+        filename: *const c_char,
+        read_only: gboolean,
+    ) -> *mut SoupCookieJar;
 
     //=========================================================================
     // SoupCookieJarText
     //=========================================================================
     pub fn soup_cookie_jar_text_get_type() -> GType;
-    pub fn soup_cookie_jar_text_new(filename: *const c_char, read_only: gboolean) -> *mut SoupCookieJar;
+    pub fn soup_cookie_jar_text_new(
+        filename: *const c_char,
+        read_only: gboolean,
+    ) -> *mut SoupCookieJar;
 
     //=========================================================================
     // SoupHSTSEnforcer
     //=========================================================================
     pub fn soup_hsts_enforcer_get_type() -> GType;
     pub fn soup_hsts_enforcer_new() -> *mut SoupHSTSEnforcer;
-    pub fn soup_hsts_enforcer_get_domains(hsts_enforcer: *mut SoupHSTSEnforcer, session_policies: gboolean) -> *mut glib::GList;
-    pub fn soup_hsts_enforcer_get_policies(hsts_enforcer: *mut SoupHSTSEnforcer, session_policies: gboolean) -> *mut glib::GList;
-    pub fn soup_hsts_enforcer_has_valid_policy(hsts_enforcer: *mut SoupHSTSEnforcer, domain: *const c_char) -> gboolean;
+    pub fn soup_hsts_enforcer_get_domains(
+        hsts_enforcer: *mut SoupHSTSEnforcer,
+        session_policies: gboolean,
+    ) -> *mut glib::GList;
+    pub fn soup_hsts_enforcer_get_policies(
+        hsts_enforcer: *mut SoupHSTSEnforcer,
+        session_policies: gboolean,
+    ) -> *mut glib::GList;
+    pub fn soup_hsts_enforcer_has_valid_policy(
+        hsts_enforcer: *mut SoupHSTSEnforcer,
+        domain: *const c_char,
+    ) -> gboolean;
     pub fn soup_hsts_enforcer_is_persistent(hsts_enforcer: *mut SoupHSTSEnforcer) -> gboolean;
-    pub fn soup_hsts_enforcer_set_policy(hsts_enforcer: *mut SoupHSTSEnforcer, policy: *mut SoupHSTSPolicy);
-    pub fn soup_hsts_enforcer_set_session_policy(hsts_enforcer: *mut SoupHSTSEnforcer, domain: *const c_char, include_subdomains: gboolean);
+    pub fn soup_hsts_enforcer_set_policy(
+        hsts_enforcer: *mut SoupHSTSEnforcer,
+        policy: *mut SoupHSTSPolicy,
+    );
+    pub fn soup_hsts_enforcer_set_session_policy(
+        hsts_enforcer: *mut SoupHSTSEnforcer,
+        domain: *const c_char,
+        include_subdomains: gboolean,
+    );
 
     //=========================================================================
     // SoupHSTSEnforcerDB
@@ -1579,22 +1931,59 @@ extern "C" {
     pub fn soup_logger_new(level: SoupLoggerLogLevel) -> *mut SoupLogger;
     pub fn soup_logger_get_max_body_size(logger: *mut SoupLogger) -> c_int;
     pub fn soup_logger_set_max_body_size(logger: *mut SoupLogger, max_body_size: c_int);
-    pub fn soup_logger_set_printer(logger: *mut SoupLogger, printer: SoupLoggerPrinter, printer_data: gpointer, destroy: glib::GDestroyNotify);
-    pub fn soup_logger_set_request_filter(logger: *mut SoupLogger, request_filter: SoupLoggerFilter, filter_data: gpointer, destroy: glib::GDestroyNotify);
-    pub fn soup_logger_set_response_filter(logger: *mut SoupLogger, response_filter: SoupLoggerFilter, filter_data: gpointer, destroy: glib::GDestroyNotify);
+    pub fn soup_logger_set_printer(
+        logger: *mut SoupLogger,
+        printer: SoupLoggerPrinter,
+        printer_data: gpointer,
+        destroy: glib::GDestroyNotify,
+    );
+    pub fn soup_logger_set_request_filter(
+        logger: *mut SoupLogger,
+        request_filter: SoupLoggerFilter,
+        filter_data: gpointer,
+        destroy: glib::GDestroyNotify,
+    );
+    pub fn soup_logger_set_response_filter(
+        logger: *mut SoupLogger,
+        response_filter: SoupLoggerFilter,
+        filter_data: gpointer,
+        destroy: glib::GDestroyNotify,
+    );
 
     //=========================================================================
     // SoupMessage
     //=========================================================================
     pub fn soup_message_get_type() -> GType;
     pub fn soup_message_new(method: *const c_char, uri_string: *const c_char) -> *mut SoupMessage;
-    pub fn soup_message_new_from_encoded_form(method: *const c_char, uri_string: *const c_char, encoded_form: *mut c_char) -> *mut SoupMessage;
-    pub fn soup_message_new_from_multipart(uri_string: *const c_char, multipart: *mut SoupMultipart) -> *mut SoupMessage;
-    pub fn soup_message_new_from_uri(method: *const c_char, uri: *mut glib::GUri) -> *mut SoupMessage;
+    pub fn soup_message_new_from_encoded_form(
+        method: *const c_char,
+        uri_string: *const c_char,
+        encoded_form: *mut c_char,
+    ) -> *mut SoupMessage;
+    pub fn soup_message_new_from_multipart(
+        uri_string: *const c_char,
+        multipart: *mut SoupMultipart,
+    ) -> *mut SoupMessage;
+    pub fn soup_message_new_from_uri(
+        method: *const c_char,
+        uri: *mut glib::GUri,
+    ) -> *mut SoupMessage;
     pub fn soup_message_new_options_ping(base_uri: *mut glib::GUri) -> *mut SoupMessage;
     pub fn soup_message_add_flags(msg: *mut SoupMessage, flags: SoupMessageFlags);
-    pub fn soup_message_add_header_handler(msg: *mut SoupMessage, signal: *const c_char, header: *const c_char, callback: gobject::GCallback, user_data: gpointer) -> c_uint;
-    pub fn soup_message_add_status_code_handler(msg: *mut SoupMessage, signal: *const c_char, status_code: c_uint, callback: gobject::GCallback, user_data: gpointer) -> c_uint;
+    pub fn soup_message_add_header_handler(
+        msg: *mut SoupMessage,
+        signal: *const c_char,
+        header: *const c_char,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+    ) -> c_uint;
+    pub fn soup_message_add_status_code_handler(
+        msg: *mut SoupMessage,
+        signal: *const c_char,
+        status_code: c_uint,
+        callback: gobject::GCallback,
+        user_data: gpointer,
+    ) -> c_uint;
     pub fn soup_message_disable_feature(msg: *mut SoupMessage, feature_type: GType);
     pub fn soup_message_get_connection_id(msg: *mut SoupMessage) -> u64;
     pub fn soup_message_get_first_party(msg: *mut SoupMessage) -> *mut glib::GUri;
@@ -1612,24 +2001,48 @@ extern "C" {
     pub fn soup_message_get_site_for_cookies(msg: *mut SoupMessage) -> *mut glib::GUri;
     pub fn soup_message_get_status(msg: *mut SoupMessage) -> SoupStatus;
     pub fn soup_message_get_tls_ciphersuite_name(msg: *mut SoupMessage) -> *const c_char;
-    pub fn soup_message_get_tls_peer_certificate(msg: *mut SoupMessage) -> *mut gio::GTlsCertificate;
-    pub fn soup_message_get_tls_peer_certificate_errors(msg: *mut SoupMessage) -> gio::GTlsCertificateFlags;
-    pub fn soup_message_get_tls_protocol_version(msg: *mut SoupMessage) -> gio::GTlsProtocolVersion;
+    pub fn soup_message_get_tls_peer_certificate(
+        msg: *mut SoupMessage,
+    ) -> *mut gio::GTlsCertificate;
+    pub fn soup_message_get_tls_peer_certificate_errors(
+        msg: *mut SoupMessage,
+    ) -> gio::GTlsCertificateFlags;
+    pub fn soup_message_get_tls_protocol_version(msg: *mut SoupMessage)
+        -> gio::GTlsProtocolVersion;
     pub fn soup_message_get_uri(msg: *mut SoupMessage) -> *mut glib::GUri;
-    pub fn soup_message_is_feature_disabled(msg: *mut SoupMessage, feature_type: GType) -> gboolean;
+    pub fn soup_message_is_feature_disabled(msg: *mut SoupMessage, feature_type: GType)
+        -> gboolean;
     pub fn soup_message_is_keepalive(msg: *mut SoupMessage) -> gboolean;
     pub fn soup_message_query_flags(msg: *mut SoupMessage, flags: SoupMessageFlags) -> gboolean;
     pub fn soup_message_remove_flags(msg: *mut SoupMessage, flags: SoupMessageFlags);
     pub fn soup_message_set_first_party(msg: *mut SoupMessage, first_party: *mut glib::GUri);
     pub fn soup_message_set_flags(msg: *mut SoupMessage, flags: SoupMessageFlags);
     pub fn soup_message_set_is_options_ping(msg: *mut SoupMessage, is_options_ping: gboolean);
-    pub fn soup_message_set_is_top_level_navigation(msg: *mut SoupMessage, is_top_level_navigation: gboolean);
+    pub fn soup_message_set_is_top_level_navigation(
+        msg: *mut SoupMessage,
+        is_top_level_navigation: gboolean,
+    );
     pub fn soup_message_set_method(msg: *mut SoupMessage, method: *const c_char);
     pub fn soup_message_set_priority(msg: *mut SoupMessage, priority: SoupMessagePriority);
-    pub fn soup_message_set_request_body(msg: *mut SoupMessage, content_type: *const c_char, stream: *mut gio::GInputStream, content_length: ssize_t);
-    pub fn soup_message_set_request_body_from_bytes(msg: *mut SoupMessage, content_type: *const c_char, bytes: *mut glib::GBytes);
-    pub fn soup_message_set_site_for_cookies(msg: *mut SoupMessage, site_for_cookies: *mut glib::GUri);
-    pub fn soup_message_set_tls_client_certificate(msg: *mut SoupMessage, certificate: *mut gio::GTlsCertificate);
+    pub fn soup_message_set_request_body(
+        msg: *mut SoupMessage,
+        content_type: *const c_char,
+        stream: *mut gio::GInputStream,
+        content_length: ssize_t,
+    );
+    pub fn soup_message_set_request_body_from_bytes(
+        msg: *mut SoupMessage,
+        content_type: *const c_char,
+        bytes: *mut glib::GBytes,
+    );
+    pub fn soup_message_set_site_for_cookies(
+        msg: *mut SoupMessage,
+        site_for_cookies: *mut glib::GUri,
+    );
+    pub fn soup_message_set_tls_client_certificate(
+        msg: *mut SoupMessage,
+        certificate: *mut gio::GTlsCertificate,
+    );
     pub fn soup_message_set_uri(msg: *mut SoupMessage, uri: *mut glib::GUri);
     pub fn soup_message_tls_client_certificate_password_request_complete(msg: *mut SoupMessage);
 
@@ -1637,23 +2050,68 @@ extern "C" {
     // SoupMultipartInputStream
     //=========================================================================
     pub fn soup_multipart_input_stream_get_type() -> GType;
-    pub fn soup_multipart_input_stream_new(msg: *mut SoupMessage, base_stream: *mut gio::GInputStream) -> *mut SoupMultipartInputStream;
-    pub fn soup_multipart_input_stream_get_headers(multipart: *mut SoupMultipartInputStream) -> *mut SoupMessageHeaders;
-    pub fn soup_multipart_input_stream_next_part(multipart: *mut SoupMultipartInputStream, cancellable: *mut gio::GCancellable, error: *mut *mut glib::GError) -> *mut gio::GInputStream;
-    pub fn soup_multipart_input_stream_next_part_async(multipart: *mut SoupMultipartInputStream, io_priority: c_int, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, data: gpointer);
-    pub fn soup_multipart_input_stream_next_part_finish(multipart: *mut SoupMultipartInputStream, result: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> *mut gio::GInputStream;
+    pub fn soup_multipart_input_stream_new(
+        msg: *mut SoupMessage,
+        base_stream: *mut gio::GInputStream,
+    ) -> *mut SoupMultipartInputStream;
+    pub fn soup_multipart_input_stream_get_headers(
+        multipart: *mut SoupMultipartInputStream,
+    ) -> *mut SoupMessageHeaders;
+    pub fn soup_multipart_input_stream_next_part(
+        multipart: *mut SoupMultipartInputStream,
+        cancellable: *mut gio::GCancellable,
+        error: *mut *mut glib::GError,
+    ) -> *mut gio::GInputStream;
+    pub fn soup_multipart_input_stream_next_part_async(
+        multipart: *mut SoupMultipartInputStream,
+        io_priority: c_int,
+        cancellable: *mut gio::GCancellable,
+        callback: gio::GAsyncReadyCallback,
+        data: gpointer,
+    );
+    pub fn soup_multipart_input_stream_next_part_finish(
+        multipart: *mut SoupMultipartInputStream,
+        result: *mut gio::GAsyncResult,
+        error: *mut *mut glib::GError,
+    ) -> *mut gio::GInputStream;
 
     //=========================================================================
     // SoupServer
     //=========================================================================
     pub fn soup_server_get_type() -> GType;
     pub fn soup_server_new(optname1: *const c_char, ...) -> *mut SoupServer;
-    pub fn soup_server_accept_iostream(server: *mut SoupServer, stream: *mut gio::GIOStream, local_addr: *mut gio::GSocketAddress, remote_addr: *mut gio::GSocketAddress, error: *mut *mut glib::GError) -> gboolean;
+    pub fn soup_server_accept_iostream(
+        server: *mut SoupServer,
+        stream: *mut gio::GIOStream,
+        local_addr: *mut gio::GSocketAddress,
+        remote_addr: *mut gio::GSocketAddress,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
     pub fn soup_server_add_auth_domain(server: *mut SoupServer, auth_domain: *mut SoupAuthDomain);
-    pub fn soup_server_add_early_handler(server: *mut SoupServer, path: *const c_char, callback: SoupServerCallback, user_data: gpointer, destroy: glib::GDestroyNotify);
-    pub fn soup_server_add_handler(server: *mut SoupServer, path: *const c_char, callback: SoupServerCallback, user_data: gpointer, destroy: glib::GDestroyNotify);
+    pub fn soup_server_add_early_handler(
+        server: *mut SoupServer,
+        path: *const c_char,
+        callback: SoupServerCallback,
+        user_data: gpointer,
+        destroy: glib::GDestroyNotify,
+    );
+    pub fn soup_server_add_handler(
+        server: *mut SoupServer,
+        path: *const c_char,
+        callback: SoupServerCallback,
+        user_data: gpointer,
+        destroy: glib::GDestroyNotify,
+    );
     pub fn soup_server_add_websocket_extension(server: *mut SoupServer, extension_type: GType);
-    pub fn soup_server_add_websocket_handler(server: *mut SoupServer, path: *const c_char, origin: *const c_char, protocols: *mut *mut c_char, callback: SoupServerWebsocketCallback, user_data: gpointer, destroy: glib::GDestroyNotify);
+    pub fn soup_server_add_websocket_handler(
+        server: *mut SoupServer,
+        path: *const c_char,
+        origin: *const c_char,
+        protocols: *mut *mut c_char,
+        callback: SoupServerWebsocketCallback,
+        user_data: gpointer,
+        destroy: glib::GDestroyNotify,
+    );
     pub fn soup_server_disconnect(server: *mut SoupServer);
     pub fn soup_server_get_listeners(server: *mut SoupServer) -> *mut glib::GSList;
     pub fn soup_server_get_tls_auth_mode(server: *mut SoupServer) -> gio::GTlsAuthenticationMode;
@@ -1661,17 +2119,49 @@ extern "C" {
     pub fn soup_server_get_tls_database(server: *mut SoupServer) -> *mut gio::GTlsDatabase;
     pub fn soup_server_get_uris(server: *mut SoupServer) -> *mut glib::GSList;
     pub fn soup_server_is_https(server: *mut SoupServer) -> gboolean;
-    pub fn soup_server_listen(server: *mut SoupServer, address: *mut gio::GSocketAddress, options: SoupServerListenOptions, error: *mut *mut glib::GError) -> gboolean;
-    pub fn soup_server_listen_all(server: *mut SoupServer, port: c_uint, options: SoupServerListenOptions, error: *mut *mut glib::GError) -> gboolean;
-    pub fn soup_server_listen_local(server: *mut SoupServer, port: c_uint, options: SoupServerListenOptions, error: *mut *mut glib::GError) -> gboolean;
-    pub fn soup_server_listen_socket(server: *mut SoupServer, socket: *mut gio::GSocket, options: SoupServerListenOptions, error: *mut *mut glib::GError) -> gboolean;
+    pub fn soup_server_listen(
+        server: *mut SoupServer,
+        address: *mut gio::GSocketAddress,
+        options: SoupServerListenOptions,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
+    pub fn soup_server_listen_all(
+        server: *mut SoupServer,
+        port: c_uint,
+        options: SoupServerListenOptions,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
+    pub fn soup_server_listen_local(
+        server: *mut SoupServer,
+        port: c_uint,
+        options: SoupServerListenOptions,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
+    pub fn soup_server_listen_socket(
+        server: *mut SoupServer,
+        socket: *mut gio::GSocket,
+        options: SoupServerListenOptions,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
     pub fn soup_server_pause_message(server: *mut SoupServer, msg: *mut SoupServerMessage);
-    pub fn soup_server_remove_auth_domain(server: *mut SoupServer, auth_domain: *mut SoupAuthDomain);
+    pub fn soup_server_remove_auth_domain(
+        server: *mut SoupServer,
+        auth_domain: *mut SoupAuthDomain,
+    );
     pub fn soup_server_remove_handler(server: *mut SoupServer, path: *const c_char);
     pub fn soup_server_remove_websocket_extension(server: *mut SoupServer, extension_type: GType);
-    pub fn soup_server_set_tls_auth_mode(server: *mut SoupServer, mode: gio::GTlsAuthenticationMode);
-    pub fn soup_server_set_tls_certificate(server: *mut SoupServer, certificate: *mut gio::GTlsCertificate);
-    pub fn soup_server_set_tls_database(server: *mut SoupServer, tls_database: *mut gio::GTlsDatabase);
+    pub fn soup_server_set_tls_auth_mode(
+        server: *mut SoupServer,
+        mode: gio::GTlsAuthenticationMode,
+    );
+    pub fn soup_server_set_tls_certificate(
+        server: *mut SoupServer,
+        certificate: *mut gio::GTlsCertificate,
+    );
+    pub fn soup_server_set_tls_database(
+        server: *mut SoupServer,
+        tls_database: *mut gio::GTlsDatabase,
+    );
     pub fn soup_server_unpause_message(server: *mut SoupServer, msg: *mut SoupServerMessage);
 
     //=========================================================================
@@ -1679,24 +2169,54 @@ extern "C" {
     //=========================================================================
     pub fn soup_server_message_get_type() -> GType;
     pub fn soup_server_message_get_http_version(msg: *mut SoupServerMessage) -> SoupHTTPVersion;
-    pub fn soup_server_message_get_local_address(msg: *mut SoupServerMessage) -> *mut gio::GSocketAddress;
+    pub fn soup_server_message_get_local_address(
+        msg: *mut SoupServerMessage,
+    ) -> *mut gio::GSocketAddress;
     pub fn soup_server_message_get_method(msg: *mut SoupServerMessage) -> *const c_char;
     pub fn soup_server_message_get_reason_phrase(msg: *mut SoupServerMessage) -> *const c_char;
-    pub fn soup_server_message_get_remote_address(msg: *mut SoupServerMessage) -> *mut gio::GSocketAddress;
+    pub fn soup_server_message_get_remote_address(
+        msg: *mut SoupServerMessage,
+    ) -> *mut gio::GSocketAddress;
     pub fn soup_server_message_get_remote_host(msg: *mut SoupServerMessage) -> *const c_char;
-    pub fn soup_server_message_get_request_body(msg: *mut SoupServerMessage) -> *mut SoupMessageBody;
-    pub fn soup_server_message_get_request_headers(msg: *mut SoupServerMessage) -> *mut SoupMessageHeaders;
-    pub fn soup_server_message_get_response_body(msg: *mut SoupServerMessage) -> *mut SoupMessageBody;
-    pub fn soup_server_message_get_response_headers(msg: *mut SoupServerMessage) -> *mut SoupMessageHeaders;
+    pub fn soup_server_message_get_request_body(
+        msg: *mut SoupServerMessage,
+    ) -> *mut SoupMessageBody;
+    pub fn soup_server_message_get_request_headers(
+        msg: *mut SoupServerMessage,
+    ) -> *mut SoupMessageHeaders;
+    pub fn soup_server_message_get_response_body(
+        msg: *mut SoupServerMessage,
+    ) -> *mut SoupMessageBody;
+    pub fn soup_server_message_get_response_headers(
+        msg: *mut SoupServerMessage,
+    ) -> *mut SoupMessageHeaders;
     pub fn soup_server_message_get_socket(msg: *mut SoupServerMessage) -> *mut gio::GSocket;
     pub fn soup_server_message_get_status(msg: *mut SoupServerMessage) -> c_uint;
     pub fn soup_server_message_get_uri(msg: *mut SoupServerMessage) -> *mut glib::GUri;
     pub fn soup_server_message_is_options_ping(msg: *mut SoupServerMessage) -> gboolean;
-    pub fn soup_server_message_set_http_version(msg: *mut SoupServerMessage, version: SoupHTTPVersion);
-    pub fn soup_server_message_set_redirect(msg: *mut SoupServerMessage, status_code: c_uint, redirect_uri: *const c_char);
-    pub fn soup_server_message_set_response(msg: *mut SoupServerMessage, content_type: *const c_char, resp_use: SoupMemoryUse, resp_body: *const u8, resp_length: size_t);
-    pub fn soup_server_message_set_status(msg: *mut SoupServerMessage, status_code: c_uint, reason_phrase: *const c_char);
-    pub fn soup_server_message_steal_connection(msg: *mut SoupServerMessage) -> *mut gio::GIOStream;
+    pub fn soup_server_message_set_http_version(
+        msg: *mut SoupServerMessage,
+        version: SoupHTTPVersion,
+    );
+    pub fn soup_server_message_set_redirect(
+        msg: *mut SoupServerMessage,
+        status_code: c_uint,
+        redirect_uri: *const c_char,
+    );
+    pub fn soup_server_message_set_response(
+        msg: *mut SoupServerMessage,
+        content_type: *const c_char,
+        resp_use: SoupMemoryUse,
+        resp_body: *const u8,
+        resp_length: size_t,
+    );
+    pub fn soup_server_message_set_status(
+        msg: *mut SoupServerMessage,
+        status_code: c_uint,
+        reason_phrase: *const c_char,
+    );
+    pub fn soup_server_message_steal_connection(msg: *mut SoupServerMessage)
+        -> *mut gio::GIOStream;
 
     //=========================================================================
     // SoupSession
@@ -1709,73 +2229,228 @@ extern "C" {
     pub fn soup_session_add_feature_by_type(session: *mut SoupSession, feature_type: GType);
     pub fn soup_session_get_accept_language(session: *mut SoupSession) -> *const c_char;
     pub fn soup_session_get_accept_language_auto(session: *mut SoupSession) -> gboolean;
-    pub fn soup_session_get_async_result_message(session: *mut SoupSession, result: *mut gio::GAsyncResult) -> *mut SoupMessage;
-    pub fn soup_session_get_feature(session: *mut SoupSession, feature_type: GType) -> *mut SoupSessionFeature;
-    pub fn soup_session_get_feature_for_message(session: *mut SoupSession, feature_type: GType, msg: *mut SoupMessage) -> *mut SoupSessionFeature;
+    pub fn soup_session_get_async_result_message(
+        session: *mut SoupSession,
+        result: *mut gio::GAsyncResult,
+    ) -> *mut SoupMessage;
+    pub fn soup_session_get_feature(
+        session: *mut SoupSession,
+        feature_type: GType,
+    ) -> *mut SoupSessionFeature;
+    pub fn soup_session_get_feature_for_message(
+        session: *mut SoupSession,
+        feature_type: GType,
+        msg: *mut SoupMessage,
+    ) -> *mut SoupSessionFeature;
     pub fn soup_session_get_idle_timeout(session: *mut SoupSession) -> c_uint;
-    pub fn soup_session_get_local_address(session: *mut SoupSession) -> *mut gio::GInetSocketAddress;
+    pub fn soup_session_get_local_address(
+        session: *mut SoupSession,
+    ) -> *mut gio::GInetSocketAddress;
     pub fn soup_session_get_max_conns(session: *mut SoupSession) -> c_uint;
     pub fn soup_session_get_max_conns_per_host(session: *mut SoupSession) -> c_uint;
     pub fn soup_session_get_proxy_resolver(session: *mut SoupSession) -> *mut gio::GProxyResolver;
-    pub fn soup_session_get_remote_connectable(session: *mut SoupSession) -> *mut gio::GSocketConnectable;
+    pub fn soup_session_get_remote_connectable(
+        session: *mut SoupSession,
+    ) -> *mut gio::GSocketConnectable;
     pub fn soup_session_get_timeout(session: *mut SoupSession) -> c_uint;
     pub fn soup_session_get_tls_database(session: *mut SoupSession) -> *mut gio::GTlsDatabase;
-    pub fn soup_session_get_tls_interaction(session: *mut SoupSession) -> *mut gio::GTlsInteraction;
+    pub fn soup_session_get_tls_interaction(session: *mut SoupSession)
+        -> *mut gio::GTlsInteraction;
     pub fn soup_session_get_user_agent(session: *mut SoupSession) -> *const c_char;
     pub fn soup_session_has_feature(session: *mut SoupSession, feature_type: GType) -> gboolean;
-    pub fn soup_session_preconnect_async(session: *mut SoupSession, msg: *mut SoupMessage, io_priority: c_int, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer);
-    pub fn soup_session_preconnect_finish(session: *mut SoupSession, result: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> gboolean;
+    pub fn soup_session_preconnect_async(
+        session: *mut SoupSession,
+        msg: *mut SoupMessage,
+        io_priority: c_int,
+        cancellable: *mut gio::GCancellable,
+        callback: gio::GAsyncReadyCallback,
+        user_data: gpointer,
+    );
+    pub fn soup_session_preconnect_finish(
+        session: *mut SoupSession,
+        result: *mut gio::GAsyncResult,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
     pub fn soup_session_remove_feature(session: *mut SoupSession, feature: *mut SoupSessionFeature);
     pub fn soup_session_remove_feature_by_type(session: *mut SoupSession, feature_type: GType);
-    pub fn soup_session_send(session: *mut SoupSession, msg: *mut SoupMessage, cancellable: *mut gio::GCancellable, error: *mut *mut glib::GError) -> *mut gio::GInputStream;
-    pub fn soup_session_send_and_read(session: *mut SoupSession, msg: *mut SoupMessage, cancellable: *mut gio::GCancellable, error: *mut *mut glib::GError) -> *mut glib::GBytes;
-    pub fn soup_session_send_and_read_async(session: *mut SoupSession, msg: *mut SoupMessage, io_priority: c_int, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer);
-    pub fn soup_session_send_and_read_finish(session: *mut SoupSession, result: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> *mut glib::GBytes;
-    pub fn soup_session_send_async(session: *mut SoupSession, msg: *mut SoupMessage, io_priority: c_int, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer);
-    pub fn soup_session_send_finish(session: *mut SoupSession, result: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> *mut gio::GInputStream;
-    pub fn soup_session_set_accept_language(session: *mut SoupSession, accept_language: *const c_char);
-    pub fn soup_session_set_accept_language_auto(session: *mut SoupSession, accept_language_auto: gboolean);
+    pub fn soup_session_send(
+        session: *mut SoupSession,
+        msg: *mut SoupMessage,
+        cancellable: *mut gio::GCancellable,
+        error: *mut *mut glib::GError,
+    ) -> *mut gio::GInputStream;
+    pub fn soup_session_send_and_read(
+        session: *mut SoupSession,
+        msg: *mut SoupMessage,
+        cancellable: *mut gio::GCancellable,
+        error: *mut *mut glib::GError,
+    ) -> *mut glib::GBytes;
+    pub fn soup_session_send_and_read_async(
+        session: *mut SoupSession,
+        msg: *mut SoupMessage,
+        io_priority: c_int,
+        cancellable: *mut gio::GCancellable,
+        callback: gio::GAsyncReadyCallback,
+        user_data: gpointer,
+    );
+    pub fn soup_session_send_and_read_finish(
+        session: *mut SoupSession,
+        result: *mut gio::GAsyncResult,
+        error: *mut *mut glib::GError,
+    ) -> *mut glib::GBytes;
+    pub fn soup_session_send_async(
+        session: *mut SoupSession,
+        msg: *mut SoupMessage,
+        io_priority: c_int,
+        cancellable: *mut gio::GCancellable,
+        callback: gio::GAsyncReadyCallback,
+        user_data: gpointer,
+    );
+    pub fn soup_session_send_finish(
+        session: *mut SoupSession,
+        result: *mut gio::GAsyncResult,
+        error: *mut *mut glib::GError,
+    ) -> *mut gio::GInputStream;
+    pub fn soup_session_set_accept_language(
+        session: *mut SoupSession,
+        accept_language: *const c_char,
+    );
+    pub fn soup_session_set_accept_language_auto(
+        session: *mut SoupSession,
+        accept_language_auto: gboolean,
+    );
     pub fn soup_session_set_idle_timeout(session: *mut SoupSession, timeout: c_uint);
-    pub fn soup_session_set_proxy_resolver(session: *mut SoupSession, proxy_resolver: *mut gio::GProxyResolver);
+    pub fn soup_session_set_proxy_resolver(
+        session: *mut SoupSession,
+        proxy_resolver: *mut gio::GProxyResolver,
+    );
     pub fn soup_session_set_timeout(session: *mut SoupSession, timeout: c_uint);
-    pub fn soup_session_set_tls_database(session: *mut SoupSession, tls_database: *mut gio::GTlsDatabase);
-    pub fn soup_session_set_tls_interaction(session: *mut SoupSession, tls_interaction: *mut gio::GTlsInteraction);
+    pub fn soup_session_set_tls_database(
+        session: *mut SoupSession,
+        tls_database: *mut gio::GTlsDatabase,
+    );
+    pub fn soup_session_set_tls_interaction(
+        session: *mut SoupSession,
+        tls_interaction: *mut gio::GTlsInteraction,
+    );
     pub fn soup_session_set_user_agent(session: *mut SoupSession, user_agent: *const c_char);
-    pub fn soup_session_websocket_connect_async(session: *mut SoupSession, msg: *mut SoupMessage, origin: *const c_char, protocols: *mut *mut c_char, io_priority: c_int, cancellable: *mut gio::GCancellable, callback: gio::GAsyncReadyCallback, user_data: gpointer);
-    pub fn soup_session_websocket_connect_finish(session: *mut SoupSession, result: *mut gio::GAsyncResult, error: *mut *mut glib::GError) -> *mut SoupWebsocketConnection;
+    pub fn soup_session_websocket_connect_async(
+        session: *mut SoupSession,
+        msg: *mut SoupMessage,
+        origin: *const c_char,
+        protocols: *mut *mut c_char,
+        io_priority: c_int,
+        cancellable: *mut gio::GCancellable,
+        callback: gio::GAsyncReadyCallback,
+        user_data: gpointer,
+    );
+    pub fn soup_session_websocket_connect_finish(
+        session: *mut SoupSession,
+        result: *mut gio::GAsyncResult,
+        error: *mut *mut glib::GError,
+    ) -> *mut SoupWebsocketConnection;
 
     //=========================================================================
     // SoupWebsocketConnection
     //=========================================================================
     pub fn soup_websocket_connection_get_type() -> GType;
-    pub fn soup_websocket_connection_new(stream: *mut gio::GIOStream, uri: *mut glib::GUri, type_: SoupWebsocketConnectionType, origin: *const c_char, protocol: *const c_char, extensions: *mut glib::GList) -> *mut SoupWebsocketConnection;
-    pub fn soup_websocket_connection_close(self_: *mut SoupWebsocketConnection, code: c_ushort, data: *const c_char);
-    pub fn soup_websocket_connection_get_close_code(self_: *mut SoupWebsocketConnection) -> c_ushort;
-    pub fn soup_websocket_connection_get_close_data(self_: *mut SoupWebsocketConnection) -> *const c_char;
-    pub fn soup_websocket_connection_get_connection_type(self_: *mut SoupWebsocketConnection) -> SoupWebsocketConnectionType;
-    pub fn soup_websocket_connection_get_extensions(self_: *mut SoupWebsocketConnection) -> *mut glib::GList;
-    pub fn soup_websocket_connection_get_io_stream(self_: *mut SoupWebsocketConnection) -> *mut gio::GIOStream;
-    pub fn soup_websocket_connection_get_keepalive_interval(self_: *mut SoupWebsocketConnection) -> c_uint;
-    pub fn soup_websocket_connection_get_max_incoming_payload_size(self_: *mut SoupWebsocketConnection) -> u64;
-    pub fn soup_websocket_connection_get_origin(self_: *mut SoupWebsocketConnection) -> *const c_char;
-    pub fn soup_websocket_connection_get_protocol(self_: *mut SoupWebsocketConnection) -> *const c_char;
-    pub fn soup_websocket_connection_get_state(self_: *mut SoupWebsocketConnection) -> SoupWebsocketState;
-    pub fn soup_websocket_connection_get_uri(self_: *mut SoupWebsocketConnection) -> *mut glib::GUri;
-    pub fn soup_websocket_connection_send_binary(self_: *mut SoupWebsocketConnection, data: gconstpointer, length: size_t);
-    pub fn soup_websocket_connection_send_message(self_: *mut SoupWebsocketConnection, type_: SoupWebsocketDataType, message: *mut glib::GBytes);
-    pub fn soup_websocket_connection_send_text(self_: *mut SoupWebsocketConnection, text: *const c_char);
-    pub fn soup_websocket_connection_set_keepalive_interval(self_: *mut SoupWebsocketConnection, interval: c_uint);
-    pub fn soup_websocket_connection_set_max_incoming_payload_size(self_: *mut SoupWebsocketConnection, max_incoming_payload_size: u64);
+    pub fn soup_websocket_connection_new(
+        stream: *mut gio::GIOStream,
+        uri: *mut glib::GUri,
+        type_: SoupWebsocketConnectionType,
+        origin: *const c_char,
+        protocol: *const c_char,
+        extensions: *mut glib::GList,
+    ) -> *mut SoupWebsocketConnection;
+    pub fn soup_websocket_connection_close(
+        self_: *mut SoupWebsocketConnection,
+        code: c_ushort,
+        data: *const c_char,
+    );
+    pub fn soup_websocket_connection_get_close_code(
+        self_: *mut SoupWebsocketConnection,
+    ) -> c_ushort;
+    pub fn soup_websocket_connection_get_close_data(
+        self_: *mut SoupWebsocketConnection,
+    ) -> *const c_char;
+    pub fn soup_websocket_connection_get_connection_type(
+        self_: *mut SoupWebsocketConnection,
+    ) -> SoupWebsocketConnectionType;
+    pub fn soup_websocket_connection_get_extensions(
+        self_: *mut SoupWebsocketConnection,
+    ) -> *mut glib::GList;
+    pub fn soup_websocket_connection_get_io_stream(
+        self_: *mut SoupWebsocketConnection,
+    ) -> *mut gio::GIOStream;
+    pub fn soup_websocket_connection_get_keepalive_interval(
+        self_: *mut SoupWebsocketConnection,
+    ) -> c_uint;
+    pub fn soup_websocket_connection_get_max_incoming_payload_size(
+        self_: *mut SoupWebsocketConnection,
+    ) -> u64;
+    pub fn soup_websocket_connection_get_origin(
+        self_: *mut SoupWebsocketConnection,
+    ) -> *const c_char;
+    pub fn soup_websocket_connection_get_protocol(
+        self_: *mut SoupWebsocketConnection,
+    ) -> *const c_char;
+    pub fn soup_websocket_connection_get_state(
+        self_: *mut SoupWebsocketConnection,
+    ) -> SoupWebsocketState;
+    pub fn soup_websocket_connection_get_uri(
+        self_: *mut SoupWebsocketConnection,
+    ) -> *mut glib::GUri;
+    pub fn soup_websocket_connection_send_binary(
+        self_: *mut SoupWebsocketConnection,
+        data: gconstpointer,
+        length: size_t,
+    );
+    pub fn soup_websocket_connection_send_message(
+        self_: *mut SoupWebsocketConnection,
+        type_: SoupWebsocketDataType,
+        message: *mut glib::GBytes,
+    );
+    pub fn soup_websocket_connection_send_text(
+        self_: *mut SoupWebsocketConnection,
+        text: *const c_char,
+    );
+    pub fn soup_websocket_connection_set_keepalive_interval(
+        self_: *mut SoupWebsocketConnection,
+        interval: c_uint,
+    );
+    pub fn soup_websocket_connection_set_max_incoming_payload_size(
+        self_: *mut SoupWebsocketConnection,
+        max_incoming_payload_size: u64,
+    );
 
     //=========================================================================
     // SoupWebsocketExtension
     //=========================================================================
     pub fn soup_websocket_extension_get_type() -> GType;
-    pub fn soup_websocket_extension_configure(extension: *mut SoupWebsocketExtension, connection_type: SoupWebsocketConnectionType, params: *mut glib::GHashTable, error: *mut *mut glib::GError) -> gboolean;
-    pub fn soup_websocket_extension_get_request_params(extension: *mut SoupWebsocketExtension) -> *mut c_char;
-    pub fn soup_websocket_extension_get_response_params(extension: *mut SoupWebsocketExtension) -> *mut c_char;
-    pub fn soup_websocket_extension_process_incoming_message(extension: *mut SoupWebsocketExtension, header: *mut u8, payload: *mut glib::GBytes, error: *mut *mut glib::GError) -> *mut glib::GBytes;
-    pub fn soup_websocket_extension_process_outgoing_message(extension: *mut SoupWebsocketExtension, header: *mut u8, payload: *mut glib::GBytes, error: *mut *mut glib::GError) -> *mut glib::GBytes;
+    pub fn soup_websocket_extension_configure(
+        extension: *mut SoupWebsocketExtension,
+        connection_type: SoupWebsocketConnectionType,
+        params: *mut glib::GHashTable,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
+    pub fn soup_websocket_extension_get_request_params(
+        extension: *mut SoupWebsocketExtension,
+    ) -> *mut c_char;
+    pub fn soup_websocket_extension_get_response_params(
+        extension: *mut SoupWebsocketExtension,
+    ) -> *mut c_char;
+    pub fn soup_websocket_extension_process_incoming_message(
+        extension: *mut SoupWebsocketExtension,
+        header: *mut u8,
+        payload: *mut glib::GBytes,
+        error: *mut *mut glib::GError,
+    ) -> *mut glib::GBytes;
+    pub fn soup_websocket_extension_process_outgoing_message(
+        extension: *mut SoupWebsocketExtension,
+        header: *mut u8,
+        payload: *mut glib::GBytes,
+        error: *mut *mut glib::GError,
+    ) -> *mut glib::GBytes;
 
     //=========================================================================
     // SoupWebsocketExtensionDeflate
@@ -1803,9 +2478,18 @@ extern "C" {
     pub fn soup_cookies_to_request(cookies: *mut glib::GSList, msg: *mut SoupMessage);
     pub fn soup_cookies_to_response(cookies: *mut glib::GSList, msg: *mut SoupMessage);
     pub fn soup_date_time_new_from_http_string(date_string: *const c_char) -> *mut glib::GDateTime;
-    pub fn soup_date_time_to_string(date: *mut glib::GDateTime, format: SoupDateFormat) -> *mut c_char;
+    pub fn soup_date_time_to_string(
+        date: *mut glib::GDateTime,
+        format: SoupDateFormat,
+    ) -> *mut c_char;
     pub fn soup_form_decode(encoded_form: *const c_char) -> *mut glib::GHashTable;
-    pub fn soup_form_decode_multipart(multipart: *mut SoupMultipart, file_control_name: *const c_char, filename: *mut *mut c_char, content_type: *mut *mut c_char, file: *mut *mut glib::GBytes) -> *mut glib::GHashTable;
+    pub fn soup_form_decode_multipart(
+        multipart: *mut SoupMultipart,
+        file_control_name: *const c_char,
+        filename: *mut *mut c_char,
+        content_type: *mut *mut c_char,
+        file: *mut *mut glib::GBytes,
+    ) -> *mut glib::GHashTable;
     pub fn soup_form_encode(first_field: *const c_char, ...) -> *mut c_char;
     pub fn soup_form_encode_datalist(form_data_set: *mut *mut glib::GData) -> *mut c_char;
     pub fn soup_form_encode_hash(form_data_set: *mut glib::GHashTable) -> *mut c_char;
@@ -1816,26 +2500,93 @@ extern "C" {
     pub fn soup_header_contains(header: *const c_char, token: *const c_char) -> gboolean;
     pub fn soup_header_free_list(list: *mut glib::GSList);
     pub fn soup_header_free_param_list(param_list: *mut glib::GHashTable);
-    pub fn soup_header_g_string_append_param(string: *mut glib::GString, name: *const c_char, value: *const c_char);
-    pub fn soup_header_g_string_append_param_quoted(string: *mut glib::GString, name: *const c_char, value: *const c_char);
+    pub fn soup_header_g_string_append_param(
+        string: *mut glib::GString,
+        name: *const c_char,
+        value: *const c_char,
+    );
+    pub fn soup_header_g_string_append_param_quoted(
+        string: *mut glib::GString,
+        name: *const c_char,
+        value: *const c_char,
+    );
     pub fn soup_header_parse_list(header: *const c_char) -> *mut glib::GSList;
     pub fn soup_header_parse_param_list(header: *const c_char) -> *mut glib::GHashTable;
     pub fn soup_header_parse_param_list_strict(header: *const c_char) -> *mut glib::GHashTable;
-    pub fn soup_header_parse_quality_list(header: *const c_char, unacceptable: *mut *mut glib::GSList) -> *mut glib::GSList;
+    pub fn soup_header_parse_quality_list(
+        header: *const c_char,
+        unacceptable: *mut *mut glib::GSList,
+    ) -> *mut glib::GSList;
     pub fn soup_header_parse_semi_param_list(header: *const c_char) -> *mut glib::GHashTable;
-    pub fn soup_header_parse_semi_param_list_strict(header: *const c_char) -> *mut glib::GHashTable;
-    pub fn soup_headers_parse(str: *const c_char, len: c_int, dest: *mut SoupMessageHeaders) -> gboolean;
-    pub fn soup_headers_parse_request(str: *const c_char, len: c_int, req_headers: *mut SoupMessageHeaders, req_method: *mut *mut c_char, req_path: *mut *mut c_char, ver: *mut SoupHTTPVersion) -> c_uint;
-    pub fn soup_headers_parse_response(str: *const c_char, len: c_int, headers: *mut SoupMessageHeaders, ver: *mut SoupHTTPVersion, status_code: *mut c_uint, reason_phrase: *mut *mut c_char) -> gboolean;
-    pub fn soup_headers_parse_status_line(status_line: *const c_char, ver: *mut SoupHTTPVersion, status_code: *mut c_uint, reason_phrase: *mut *mut c_char) -> gboolean;
+    pub fn soup_header_parse_semi_param_list_strict(header: *const c_char)
+        -> *mut glib::GHashTable;
+    pub fn soup_headers_parse(
+        str: *const c_char,
+        len: c_int,
+        dest: *mut SoupMessageHeaders,
+    ) -> gboolean;
+    pub fn soup_headers_parse_request(
+        str: *const c_char,
+        len: c_int,
+        req_headers: *mut SoupMessageHeaders,
+        req_method: *mut *mut c_char,
+        req_path: *mut *mut c_char,
+        ver: *mut SoupHTTPVersion,
+    ) -> c_uint;
+    pub fn soup_headers_parse_response(
+        str: *const c_char,
+        len: c_int,
+        headers: *mut SoupMessageHeaders,
+        ver: *mut SoupHTTPVersion,
+        status_code: *mut c_uint,
+        reason_phrase: *mut *mut c_char,
+    ) -> gboolean;
+    pub fn soup_headers_parse_status_line(
+        status_line: *const c_char,
+        ver: *mut SoupHTTPVersion,
+        status_code: *mut c_uint,
+        reason_phrase: *mut *mut c_char,
+    ) -> gboolean;
     pub fn soup_tld_domain_is_public_suffix(domain: *const c_char) -> gboolean;
-    pub fn soup_tld_get_base_domain(hostname: *const c_char, error: *mut *mut glib::GError) -> *const c_char;
-    pub fn soup_uri_copy(uri: *mut glib::GUri, first_component: SoupURIComponent, ...) -> *mut glib::GUri;
-    pub fn soup_uri_decode_data_uri(uri: *const c_char, content_type: *mut *mut c_char) -> *mut glib::GBytes;
+    pub fn soup_tld_get_base_domain(
+        hostname: *const c_char,
+        error: *mut *mut glib::GError,
+    ) -> *const c_char;
+    pub fn soup_uri_copy(
+        uri: *mut glib::GUri,
+        first_component: SoupURIComponent,
+        ...
+    ) -> *mut glib::GUri;
+    pub fn soup_uri_decode_data_uri(
+        uri: *const c_char,
+        content_type: *mut *mut c_char,
+    ) -> *mut glib::GBytes;
     pub fn soup_uri_equal(uri1: *mut glib::GUri, uri2: *mut glib::GUri) -> gboolean;
-    pub fn soup_websocket_client_prepare_handshake(msg: *mut SoupMessage, origin: *const c_char, protocols: *mut *mut c_char, supported_extensions: *mut glib::GPtrArray);
-    pub fn soup_websocket_client_verify_handshake(msg: *mut SoupMessage, supported_extensions: *mut glib::GPtrArray, accepted_extensions: *mut *mut glib::GList, error: *mut *mut glib::GError) -> gboolean;
-    pub fn soup_websocket_server_check_handshake(msg: *mut SoupServerMessage, origin: *const c_char, protocols: *mut *mut c_char, supported_extensions: *mut glib::GPtrArray, error: *mut *mut glib::GError) -> gboolean;
-    pub fn soup_websocket_server_process_handshake(msg: *mut SoupServerMessage, expected_origin: *const c_char, protocols: *mut *mut c_char, supported_extensions: *mut glib::GPtrArray, accepted_extensions: *mut *mut glib::GList) -> gboolean;
+    pub fn soup_websocket_client_prepare_handshake(
+        msg: *mut SoupMessage,
+        origin: *const c_char,
+        protocols: *mut *mut c_char,
+        supported_extensions: *mut glib::GPtrArray,
+    );
+    pub fn soup_websocket_client_verify_handshake(
+        msg: *mut SoupMessage,
+        supported_extensions: *mut glib::GPtrArray,
+        accepted_extensions: *mut *mut glib::GList,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
+    pub fn soup_websocket_server_check_handshake(
+        msg: *mut SoupServerMessage,
+        origin: *const c_char,
+        protocols: *mut *mut c_char,
+        supported_extensions: *mut glib::GPtrArray,
+        error: *mut *mut glib::GError,
+    ) -> gboolean;
+    pub fn soup_websocket_server_process_handshake(
+        msg: *mut SoupServerMessage,
+        expected_origin: *const c_char,
+        protocols: *mut *mut c_char,
+        supported_extensions: *mut glib::GPtrArray,
+        accepted_extensions: *mut *mut glib::GList,
+    ) -> gboolean;
 
 }

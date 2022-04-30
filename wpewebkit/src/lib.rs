@@ -14,8 +14,9 @@ pub use wpe_java_script_core;
 mod rt;
 
 pub mod color;
-pub mod web_view_backend;
 pub mod prelude;
+pub mod web_view;
+pub mod web_view_backend;
 
 pub use prelude::*;
 

@@ -25,24 +25,22 @@ glib::wrapper! {
 }
 
 impl FindController {
-        pub const NONE: Option<&'static FindController> = None;
-    
+    pub const NONE: Option<&'static FindController> = None;
 
-            // rustdoc-stripper-ignore-next
-            /// Creates a new builder-pattern struct instance to construct [`FindController`] objects.
-            ///
-            /// This method returns an instance of [`FindControllerBuilder`](crate::builders::FindControllerBuilder) which can be used to create [`FindController`] objects.
-            pub fn builder() -> FindControllerBuilder {
-                FindControllerBuilder::default()
-            }
-        
+    // rustdoc-stripper-ignore-next
+    /// Creates a new builder-pattern struct instance to construct [`FindController`] objects.
+    ///
+    /// This method returns an instance of [`FindControllerBuilder`](crate::builders::FindControllerBuilder) which can be used to create [`FindController`] objects.
+    pub fn builder() -> FindControllerBuilder {
+        FindControllerBuilder::default()
+    }
 }
 
 #[derive(Clone, Default)]
 // rustdoc-stripper-ignore-next
-        /// A [builder-pattern] type to construct [`FindController`] objects.
-        ///
-        /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+/// A [builder-pattern] type to construct [`FindController`] objects.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 #[must_use = "The builder must be built to be used"]
 pub struct FindControllerBuilder {
     web_view: Option<WebView>,
@@ -55,18 +53,16 @@ impl FindControllerBuilder {
         Self::default()
     }
 
-
     // rustdoc-stripper-ignore-next
     /// Build the [`FindController`].
     #[must_use = "Building the object from the builder is usually expensive and is not expected to have side effects"]
     pub fn build(self) -> FindController {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
-if let Some(ref web_view) = self.web_view {
-                properties.push(("web-view", web_view));
-            }
+        if let Some(ref web_view) = self.web_view {
+            properties.push(("web-view", web_view));
+        }
         glib::Object::new::<FindController>(&properties)
-                .expect("Failed to create an instance of FindController")
-
+            .expect("Failed to create an instance of FindController")
     }
 
     pub fn web_view(mut self, web_view: &impl IsA<WebView>) -> Self {
@@ -131,37 +127,47 @@ pub trait FindControllerExt: 'static {
 impl<O: IsA<FindController>> FindControllerExt for O {
     fn count_matches(&self, search_text: &str, find_options: u32, max_match_count: u32) {
         unsafe {
-            ffi::webkit_find_controller_count_matches(self.as_ref().to_glib_none().0, search_text.to_glib_none().0, find_options, max_match_count);
+            ffi::webkit_find_controller_count_matches(
+                self.as_ref().to_glib_none().0,
+                search_text.to_glib_none().0,
+                find_options,
+                max_match_count,
+            );
         }
     }
 
     fn max_match_count(&self) -> u32 {
-        unsafe {
-            ffi::webkit_find_controller_get_max_match_count(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::webkit_find_controller_get_max_match_count(self.as_ref().to_glib_none().0) }
     }
 
     fn options(&self) -> u32 {
-        unsafe {
-            ffi::webkit_find_controller_get_options(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::webkit_find_controller_get_options(self.as_ref().to_glib_none().0) }
     }
 
     fn search_text(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_find_controller_get_search_text(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_find_controller_get_search_text(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn web_view(&self) -> Option<WebView> {
         unsafe {
-            from_glib_none(ffi::webkit_find_controller_get_web_view(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_find_controller_get_web_view(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn search(&self, search_text: &str, find_options: u32, max_match_count: u32) {
         unsafe {
-            ffi::webkit_find_controller_search(self.as_ref().to_glib_none().0, search_text.to_glib_none().0, find_options, max_match_count);
+            ffi::webkit_find_controller_search(
+                self.as_ref().to_glib_none().0,
+                search_text.to_glib_none().0,
+                find_options,
+                max_match_count,
+            );
         }
     }
 
@@ -188,74 +194,154 @@ impl<O: IsA<FindController>> FindControllerExt for O {
     }
 
     fn connect_counted_matches<F: Fn(&Self, u32) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn counted_matches_trampoline<P: IsA<FindController>, F: Fn(&P, u32) + 'static>(this: *mut ffi::WebKitFindController, match_count: libc::c_uint, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn counted_matches_trampoline<
+            P: IsA<FindController>,
+            F: Fn(&P, u32) + 'static,
+        >(
+            this: *mut ffi::WebKitFindController,
+            match_count: libc::c_uint,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
-            f(FindController::from_glib_borrow(this).unsafe_cast_ref(), match_count)
+            f(
+                FindController::from_glib_borrow(this).unsafe_cast_ref(),
+                match_count,
+            )
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"counted-matches\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(counted_matches_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"counted-matches\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    counted_matches_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_failed_to_find_text<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn failed_to_find_text_trampoline<P: IsA<FindController>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitFindController, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn failed_to_find_text_trampoline<
+            P: IsA<FindController>,
+            F: Fn(&P) + 'static,
+        >(
+            this: *mut ffi::WebKitFindController,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
             f(FindController::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"failed-to-find-text\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(failed_to_find_text_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"failed-to-find-text\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    failed_to_find_text_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_found_text<F: Fn(&Self, u32) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn found_text_trampoline<P: IsA<FindController>, F: Fn(&P, u32) + 'static>(this: *mut ffi::WebKitFindController, match_count: libc::c_uint, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn found_text_trampoline<
+            P: IsA<FindController>,
+            F: Fn(&P, u32) + 'static,
+        >(
+            this: *mut ffi::WebKitFindController,
+            match_count: libc::c_uint,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
-            f(FindController::from_glib_borrow(this).unsafe_cast_ref(), match_count)
+            f(
+                FindController::from_glib_borrow(this).unsafe_cast_ref(),
+                match_count,
+            )
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"found-text\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(found_text_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"found-text\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    found_text_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_max_match_count_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_max_match_count_trampoline<P: IsA<FindController>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitFindController, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn notify_max_match_count_trampoline<
+            P: IsA<FindController>,
+            F: Fn(&P) + 'static,
+        >(
+            this: *mut ffi::WebKitFindController,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
             f(FindController::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::max-match-count\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_max_match_count_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::max-match-count\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_max_match_count_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_options_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_options_trampoline<P: IsA<FindController>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitFindController, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn notify_options_trampoline<
+            P: IsA<FindController>,
+            F: Fn(&P) + 'static,
+        >(
+            this: *mut ffi::WebKitFindController,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
             f(FindController::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::options\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_options_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::options\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_options_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_text_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_text_trampoline<P: IsA<FindController>, F: Fn(&P) + 'static>(this: *mut ffi::WebKitFindController, _param_spec: glib::ffi::gpointer, f: glib::ffi::gpointer) {
+        unsafe extern "C" fn notify_text_trampoline<P: IsA<FindController>, F: Fn(&P) + 'static>(
+            this: *mut ffi::WebKitFindController,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
             let f: &F = &*(f as *const F);
             f(FindController::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::text\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_text_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::text\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_text_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

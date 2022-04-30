@@ -20,8 +20,7 @@ glib::wrapper! {
 }
 
 impl PolicyDecision {
-        pub const NONE: Option<&'static PolicyDecision> = None;
-    
+    pub const NONE: Option<&'static PolicyDecision> = None;
 }
 
 pub trait PolicyDecisionExt: 'static {
@@ -64,7 +63,10 @@ impl<O: IsA<PolicyDecision>> PolicyDecisionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
     fn use_with_policies(&self, policies: &impl IsA<WebsitePolicies>) {
         unsafe {
-            ffi::webkit_policy_decision_use_with_policies(self.as_ref().to_glib_none().0, policies.as_ref().to_glib_none().0);
+            ffi::webkit_policy_decision_use_with_policies(
+                self.as_ref().to_glib_none().0,
+                policies.as_ref().to_glib_none().0,
+            );
         }
     }
 }

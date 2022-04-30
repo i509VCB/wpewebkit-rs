@@ -27,53 +27,49 @@ glib::wrapper! {
 }
 
 impl Context {
-        pub const NONE: Option<&'static Context> = None;
-    
+    pub const NONE: Option<&'static Context> = None;
 
     #[doc(alias = "jsc_context_new")]
     pub fn new() -> Context {
-        unsafe {
-            from_glib_full(ffi::jsc_context_new())
-        }
+        unsafe { from_glib_full(ffi::jsc_context_new()) }
     }
 
     #[doc(alias = "jsc_context_new_with_virtual_machine")]
     #[doc(alias = "new_with_virtual_machine")]
     pub fn with_virtual_machine(vm: &impl IsA<VirtualMachine>) -> Context {
         unsafe {
-            from_glib_full(ffi::jsc_context_new_with_virtual_machine(vm.as_ref().to_glib_none().0))
+            from_glib_full(ffi::jsc_context_new_with_virtual_machine(
+                vm.as_ref().to_glib_none().0,
+            ))
         }
     }
 
-            // rustdoc-stripper-ignore-next
-            /// Creates a new builder-pattern struct instance to construct [`Context`] objects.
-            ///
-            /// This method returns an instance of [`ContextBuilder`](crate::builders::ContextBuilder) which can be used to create [`Context`] objects.
-            pub fn builder() -> ContextBuilder {
-                ContextBuilder::default()
-            }
-        
+    // rustdoc-stripper-ignore-next
+    /// Creates a new builder-pattern struct instance to construct [`Context`] objects.
+    ///
+    /// This method returns an instance of [`ContextBuilder`](crate::builders::ContextBuilder) which can be used to create [`Context`] objects.
+    pub fn builder() -> ContextBuilder {
+        ContextBuilder::default()
+    }
 
     #[doc(alias = "jsc_context_get_current")]
     #[doc(alias = "get_current")]
     pub fn current() -> Option<Context> {
-        unsafe {
-            from_glib_none(ffi::jsc_context_get_current())
-        }
+        unsafe { from_glib_none(ffi::jsc_context_get_current()) }
     }
 }
 
 impl Default for Context {
-                     fn default() -> Self {
-                         Self::new()
-                     }
-                 }
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 #[derive(Clone, Default)]
 // rustdoc-stripper-ignore-next
-        /// A [builder-pattern] type to construct [`Context`] objects.
-        ///
-        /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+/// A [builder-pattern] type to construct [`Context`] objects.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 #[must_use = "The builder must be built to be used"]
 pub struct ContextBuilder {
     virtual_machine: Option<VirtualMachine>,
@@ -86,18 +82,15 @@ impl ContextBuilder {
         Self::default()
     }
 
-
     // rustdoc-stripper-ignore-next
     /// Build the [`Context`].
     #[must_use = "Building the object from the builder is usually expensive and is not expected to have side effects"]
     pub fn build(self) -> Context {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
-if let Some(ref virtual_machine) = self.virtual_machine {
-                properties.push(("virtual-machine", virtual_machine));
-            }
-        glib::Object::new::<Context>(&properties)
-                .expect("Failed to create an instance of Context")
-
+        if let Some(ref virtual_machine) = self.virtual_machine {
+            properties.push(("virtual-machine", virtual_machine));
+        }
+        glib::Object::new::<Context>(&properties).expect("Failed to create an instance of Context")
     }
 
     pub fn virtual_machine(mut self, virtual_machine: &impl IsA<VirtualMachine>) -> Self {
@@ -108,7 +101,13 @@ if let Some(ref virtual_machine) = self.virtual_machine {
 
 pub trait ContextExt: 'static {
     #[doc(alias = "jsc_context_check_syntax")]
-    fn check_syntax(&self, code: &str, mode: CheckSyntaxMode, uri: &str, line_number: u32) -> (CheckSyntaxResult, Exception);
+    fn check_syntax(
+        &self,
+        code: &str,
+        mode: CheckSyntaxMode,
+        uri: &str,
+        line_number: u32,
+    ) -> (CheckSyntaxResult, Exception);
 
     #[doc(alias = "jsc_context_clear_exception")]
     fn clear_exception(&self);
@@ -167,11 +166,25 @@ pub trait ContextExt: 'static {
 }
 
 impl<O: IsA<Context>> ContextExt for O {
-    fn check_syntax(&self, code: &str, mode: CheckSyntaxMode, uri: &str, line_number: u32) -> (CheckSyntaxResult, Exception) {
+    fn check_syntax(
+        &self,
+        code: &str,
+        mode: CheckSyntaxMode,
+        uri: &str,
+        line_number: u32,
+    ) -> (CheckSyntaxResult, Exception) {
         let length = code.len() as isize;
         unsafe {
             let mut exception = ptr::null_mut();
-            let ret = from_glib(ffi::jsc_context_check_syntax(self.as_ref().to_glib_none().0, code.to_glib_none().0, length, mode.into_glib(), uri.to_glib_none().0, line_number, &mut exception));
+            let ret = from_glib(ffi::jsc_context_check_syntax(
+                self.as_ref().to_glib_none().0,
+                code.to_glib_none().0,
+                length,
+                mode.into_glib(),
+                uri.to_glib_none().0,
+                line_number,
+                &mut exception,
+            ));
             (ret, from_glib_full(exception))
         }
     }
@@ -185,7 +198,11 @@ impl<O: IsA<Context>> ContextExt for O {
     fn evaluate(&self, code: &str) -> Option<Value> {
         let length = code.len() as isize;
         unsafe {
-            from_glib_full(ffi::jsc_context_evaluate(self.as_ref().to_glib_none().0, code.to_glib_none().0, length))
+            from_glib_full(ffi::jsc_context_evaluate(
+                self.as_ref().to_glib_none().0,
+                code.to_glib_none().0,
+                length,
+            ))
         }
     }
 
@@ -196,31 +213,46 @@ impl<O: IsA<Context>> ContextExt for O {
     fn evaluate_with_source_uri(&self, code: &str, uri: &str, line_number: u32) -> Option<Value> {
         let length = code.len() as isize;
         unsafe {
-            from_glib_full(ffi::jsc_context_evaluate_with_source_uri(self.as_ref().to_glib_none().0, code.to_glib_none().0, length, uri.to_glib_none().0, line_number))
+            from_glib_full(ffi::jsc_context_evaluate_with_source_uri(
+                self.as_ref().to_glib_none().0,
+                code.to_glib_none().0,
+                length,
+                uri.to_glib_none().0,
+                line_number,
+            ))
         }
     }
 
     fn exception(&self) -> Option<Exception> {
         unsafe {
-            from_glib_none(ffi::jsc_context_get_exception(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::jsc_context_get_exception(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn global_object(&self) -> Option<Value> {
         unsafe {
-            from_glib_full(ffi::jsc_context_get_global_object(self.as_ref().to_glib_none().0))
+            from_glib_full(ffi::jsc_context_get_global_object(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn value(&self, name: &str) -> Option<Value> {
         unsafe {
-            from_glib_full(ffi::jsc_context_get_value(self.as_ref().to_glib_none().0, name.to_glib_none().0))
+            from_glib_full(ffi::jsc_context_get_value(
+                self.as_ref().to_glib_none().0,
+                name.to_glib_none().0,
+            ))
         }
     }
 
     fn virtual_machine(&self) -> Option<VirtualMachine> {
         unsafe {
-            from_glib_none(ffi::jsc_context_get_virtual_machine(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::jsc_context_get_virtual_machine(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -232,20 +264,31 @@ impl<O: IsA<Context>> ContextExt for O {
 
     fn push_exception_handler<P: Fn(&Context, &Exception) + 'static>(&self, handler: P) {
         let handler_data: Box_<P> = Box_::new(handler);
-        unsafe extern "C" fn handler_func<P: Fn(&Context, &Exception) + 'static>(context: *mut ffi::JSCContext, exception: *mut ffi::JSCException, user_data: glib::ffi::gpointer) {
+        unsafe extern "C" fn handler_func<P: Fn(&Context, &Exception) + 'static>(
+            context: *mut ffi::JSCContext,
+            exception: *mut ffi::JSCException,
+            user_data: glib::ffi::gpointer,
+        ) {
             let context = from_glib_borrow(context);
             let exception = from_glib_borrow(exception);
             let callback: &P = &*(user_data as *mut _);
             (*callback)(&context, &exception);
         }
         let handler = Some(handler_func::<P> as _);
-        unsafe extern "C" fn destroy_notify_func<P: Fn(&Context, &Exception) + 'static>(data: glib::ffi::gpointer) {
+        unsafe extern "C" fn destroy_notify_func<P: Fn(&Context, &Exception) + 'static>(
+            data: glib::ffi::gpointer,
+        ) {
             let _callback: Box_<P> = Box_::from_raw(data as *mut _);
         }
         let destroy_call3 = Some(destroy_notify_func::<P> as _);
         let super_callback0: Box_<P> = handler_data;
         unsafe {
-            ffi::jsc_context_push_exception_handler(self.as_ref().to_glib_none().0, handler, Box_::into_raw(super_callback0) as *mut _, destroy_call3);
+            ffi::jsc_context_push_exception_handler(
+                self.as_ref().to_glib_none().0,
+                handler,
+                Box_::into_raw(super_callback0) as *mut _,
+                destroy_call3,
+            );
         }
     }
 
@@ -255,19 +298,29 @@ impl<O: IsA<Context>> ContextExt for O {
 
     fn set_value(&self, name: &str, value: &impl IsA<Value>) {
         unsafe {
-            ffi::jsc_context_set_value(self.as_ref().to_glib_none().0, name.to_glib_none().0, value.as_ref().to_glib_none().0);
+            ffi::jsc_context_set_value(
+                self.as_ref().to_glib_none().0,
+                name.to_glib_none().0,
+                value.as_ref().to_glib_none().0,
+            );
         }
     }
 
     fn throw(&self, error_message: &str) {
         unsafe {
-            ffi::jsc_context_throw(self.as_ref().to_glib_none().0, error_message.to_glib_none().0);
+            ffi::jsc_context_throw(
+                self.as_ref().to_glib_none().0,
+                error_message.to_glib_none().0,
+            );
         }
     }
 
     fn throw_exception(&self, exception: &impl IsA<Exception>) {
         unsafe {
-            ffi::jsc_context_throw_exception(self.as_ref().to_glib_none().0, exception.as_ref().to_glib_none().0);
+            ffi::jsc_context_throw_exception(
+                self.as_ref().to_glib_none().0,
+                exception.as_ref().to_glib_none().0,
+            );
         }
     }
 
@@ -277,7 +330,11 @@ impl<O: IsA<Context>> ContextExt for O {
 
     fn throw_with_name(&self, error_name: &str, error_message: &str) {
         unsafe {
-            ffi::jsc_context_throw_with_name(self.as_ref().to_glib_none().0, error_name.to_glib_none().0, error_message.to_glib_none().0);
+            ffi::jsc_context_throw_with_name(
+                self.as_ref().to_glib_none().0,
+                error_name.to_glib_none().0,
+                error_message.to_glib_none().0,
+            );
         }
     }
 

@@ -1,7 +1,7 @@
-use std::{str::FromStr, fmt};
+use std::{fmt, str::FromStr};
 
-use glib::translate::*;
 use crate::Color;
+use glib::translate::*;
 
 impl Color {
     pub fn new(red: f64, green: f64, blue: f64, alpha: f64) -> Color {
@@ -51,19 +51,19 @@ impl Color {
     /// Creates a new [`Color`] using the string representation.
     ///
     /// This function only allows use of [standard html color names] or a hex value.
-    /// 
+    ///
     /// ```
     /// use wpewebkit::Color;
     ///
     /// let indigo = Color::parse("Indigo").unwrap();
     /// let indigo_hex = Color::parse("#4B0082").unwrap();
-    /// 
+    ///
     /// assert_eq!(indigo.red(), indigo_hex.red());
     /// assert_eq!(indigo.green(), indigo_hex.green());
     /// assert_eq!(indigo.blue(), indigo_hex.blue());
     /// assert_eq!(indigo.alpha(), indigo_hex.alpha());
     /// ```
-    /// 
+    ///
     /// [standard html color names]: https://htmlcolorcodes.com/color-names
     #[doc(alias = "webkit_color_parse")]
     pub fn parse(color_str: &str) -> Result<Color, glib::BoolError> {

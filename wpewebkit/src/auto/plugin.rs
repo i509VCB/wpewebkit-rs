@@ -18,8 +18,7 @@ glib::wrapper! {
 }
 
 impl Plugin {
-        pub const NONE: Option<&'static Plugin> = None;
-    
+    pub const NONE: Option<&'static Plugin> = None;
 }
 
 pub trait PluginExt: 'static {
@@ -47,26 +46,26 @@ pub trait PluginExt: 'static {
 impl<O: IsA<Plugin>> PluginExt for O {
     fn description(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_plugin_get_description(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_plugin_get_description(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn mime_info_list(&self) -> Vec<MimeInfo> {
         unsafe {
-            FromGlibPtrContainer::from_glib_none(ffi::webkit_plugin_get_mime_info_list(self.as_ref().to_glib_none().0))
+            FromGlibPtrContainer::from_glib_none(ffi::webkit_plugin_get_mime_info_list(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn name(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::webkit_plugin_get_name(self.as_ref().to_glib_none().0))
-        }
+        unsafe { from_glib_none(ffi::webkit_plugin_get_name(self.as_ref().to_glib_none().0)) }
     }
 
     fn path(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::webkit_plugin_get_path(self.as_ref().to_glib_none().0))
-        }
+        unsafe { from_glib_none(ffi::webkit_plugin_get_path(self.as_ref().to_glib_none().0)) }
     }
 }
 

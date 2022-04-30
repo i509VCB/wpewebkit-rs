@@ -20,24 +20,22 @@ glib::wrapper! {
 }
 
 impl HitTestResult {
-        pub const NONE: Option<&'static HitTestResult> = None;
-    
+    pub const NONE: Option<&'static HitTestResult> = None;
 
-            // rustdoc-stripper-ignore-next
-            /// Creates a new builder-pattern struct instance to construct [`HitTestResult`] objects.
-            ///
-            /// This method returns an instance of [`HitTestResultBuilder`](crate::builders::HitTestResultBuilder) which can be used to create [`HitTestResult`] objects.
-            pub fn builder() -> HitTestResultBuilder {
-                HitTestResultBuilder::default()
-            }
-        
+    // rustdoc-stripper-ignore-next
+    /// Creates a new builder-pattern struct instance to construct [`HitTestResult`] objects.
+    ///
+    /// This method returns an instance of [`HitTestResultBuilder`](crate::builders::HitTestResultBuilder) which can be used to create [`HitTestResult`] objects.
+    pub fn builder() -> HitTestResultBuilder {
+        HitTestResultBuilder::default()
+    }
 }
 
 #[derive(Clone, Default)]
 // rustdoc-stripper-ignore-next
-        /// A [builder-pattern] type to construct [`HitTestResult`] objects.
-        ///
-        /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
+/// A [builder-pattern] type to construct [`HitTestResult`] objects.
+///
+/// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
 #[must_use = "The builder must be built to be used"]
 pub struct HitTestResultBuilder {
     context: Option<u32>,
@@ -55,33 +53,31 @@ impl HitTestResultBuilder {
         Self::default()
     }
 
-
     // rustdoc-stripper-ignore-next
     /// Build the [`HitTestResult`].
     #[must_use = "Building the object from the builder is usually expensive and is not expected to have side effects"]
     pub fn build(self) -> HitTestResult {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
-if let Some(ref context) = self.context {
-                properties.push(("context", context));
-            }
-if let Some(ref image_uri) = self.image_uri {
-                properties.push(("image-uri", image_uri));
-            }
-if let Some(ref link_label) = self.link_label {
-                properties.push(("link-label", link_label));
-            }
-if let Some(ref link_title) = self.link_title {
-                properties.push(("link-title", link_title));
-            }
-if let Some(ref link_uri) = self.link_uri {
-                properties.push(("link-uri", link_uri));
-            }
-if let Some(ref media_uri) = self.media_uri {
-                properties.push(("media-uri", media_uri));
-            }
+        if let Some(ref context) = self.context {
+            properties.push(("context", context));
+        }
+        if let Some(ref image_uri) = self.image_uri {
+            properties.push(("image-uri", image_uri));
+        }
+        if let Some(ref link_label) = self.link_label {
+            properties.push(("link-label", link_label));
+        }
+        if let Some(ref link_title) = self.link_title {
+            properties.push(("link-title", link_title));
+        }
+        if let Some(ref link_uri) = self.link_uri {
+            properties.push(("link-uri", link_uri));
+        }
+        if let Some(ref media_uri) = self.media_uri {
+            properties.push(("media-uri", media_uri));
+        }
         glib::Object::new::<HitTestResult>(&properties)
-                .expect("Failed to create an instance of HitTestResult")
-
+            .expect("Failed to create an instance of HitTestResult")
     }
 
     pub fn context(mut self, context: u32) -> Self {
@@ -164,31 +160,41 @@ pub trait HitTestResultExt: 'static {
 impl<O: IsA<HitTestResult>> HitTestResultExt for O {
     fn context_is_editable(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_hit_test_result_context_is_editable(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_hit_test_result_context_is_editable(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn context_is_image(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_hit_test_result_context_is_image(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_hit_test_result_context_is_image(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn context_is_link(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_hit_test_result_context_is_link(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_hit_test_result_context_is_link(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn context_is_media(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_hit_test_result_context_is_media(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_hit_test_result_context_is_media(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn context_is_scrollbar(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_hit_test_result_context_is_scrollbar(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_hit_test_result_context_is_scrollbar(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -196,43 +202,53 @@ impl<O: IsA<HitTestResult>> HitTestResultExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_8")))]
     fn context_is_selection(&self) -> bool {
         unsafe {
-            from_glib(ffi::webkit_hit_test_result_context_is_selection(self.as_ref().to_glib_none().0))
+            from_glib(ffi::webkit_hit_test_result_context_is_selection(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn context(&self) -> u32 {
-        unsafe {
-            ffi::webkit_hit_test_result_get_context(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::webkit_hit_test_result_get_context(self.as_ref().to_glib_none().0) }
     }
 
     fn image_uri(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_hit_test_result_get_image_uri(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_hit_test_result_get_image_uri(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn link_label(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_hit_test_result_get_link_label(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_hit_test_result_get_link_label(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn link_title(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_hit_test_result_get_link_title(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_hit_test_result_get_link_title(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn link_uri(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_hit_test_result_get_link_uri(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_hit_test_result_get_link_uri(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn media_uri(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(ffi::webkit_hit_test_result_get_media_uri(self.as_ref().to_glib_none().0))
+            from_glib_none(ffi::webkit_hit_test_result_get_media_uri(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 }
