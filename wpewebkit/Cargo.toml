@@ -31,6 +31,10 @@ version = "0.15.10"
 [dependencies.gobject-sys]
 version = "0.15.10"
 
+[dependencies.wpe_java_script_core]
+package = "wpejavascriptcore"
+path = "../wpejavascriptcore"
+
 [package.metadata.docs.rs]
 features = ["dox"]
 

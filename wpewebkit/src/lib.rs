@@ -7,6 +7,8 @@ pub use ffi;
 pub use gio;
 pub use glib;
 pub use glib::object as gobject;
+// TODO: Reexport as javascriptcore
+pub use wpe_java_script_core;
 
 #[macro_use]
 mod rt;

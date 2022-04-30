@@ -136,6 +136,7 @@ manual = [
     "GLib.TimeSpan",
     "GLib.Variant",
     "GObject.InitiallyUnowned",
+    "WPEJavaScriptCore.Value",
 
     # FIXME: gir panic
     "WPEWebKit.UserContentFilterStore", 
