@@ -17,6 +17,7 @@ girs_directories = [
     "../gir-files/",
     "../",
 ]
+use_gi_docgen = true
 
 generate = [
     # Enums
@@ -108,8 +109,6 @@ generate = [
 
     # Interfaces
     "WPEWebKit.PermissionRequest",
-
-    # TODO: Freestanding functions from ffi
 ]
 
 manual = [
@@ -127,6 +126,13 @@ manual = [
     "GLib.Variant",
     "GObject.InitiallyUnowned",
 ]
+
+[[object]]
+name = "WPEWebKit.*"
+status = "generate"
+    [[object.function]]
+    pattern = "get_(major|minor|micro)_version"
+    assertion = "skip"
 
 [[object]]
 name = "WPEWebKit.Color"

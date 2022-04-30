@@ -313,6 +313,25 @@ pub use self::flags::InputHints;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v2_16")))]
 pub use self::flags::WebsiteDataTypes;
 
+pub mod functions;
+
+mod constants;
+pub use self::constants::EDITING_COMMAND_COPY;
+#[cfg(any(feature = "v2_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
+pub use self::constants::EDITING_COMMAND_CREATE_LINK;
+pub use self::constants::EDITING_COMMAND_CUT;
+#[cfg(any(feature = "v2_10", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_10")))]
+pub use self::constants::EDITING_COMMAND_INSERT_IMAGE;
+pub use self::constants::EDITING_COMMAND_PASTE;
+#[cfg(any(feature = "v2_30", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v2_30")))]
+pub use self::constants::EDITING_COMMAND_PASTE_AS_PLAIN_TEXT;
+pub use self::constants::EDITING_COMMAND_REDO;
+pub use self::constants::EDITING_COMMAND_SELECT_ALL;
+pub use self::constants::EDITING_COMMAND_UNDO;
+
 #[doc(hidden)]
 pub mod traits {
     pub use super::back_forward_list::BackForwardListExt;

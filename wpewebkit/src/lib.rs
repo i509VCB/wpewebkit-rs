@@ -20,3 +20,5 @@ pub use prelude::*;
 #[macro_use]
 mod auto;
 pub use auto::*;
+
+pub use auto::functions::*;
