@@ -1,11 +1,9 @@
 use wpe::ViewBackend;
 use wpe_java_script_core::traits::ValueExt;
-use wpewebkit::{Settings, WebView, WebViewBackend, WebViewBackendManual, WebViewExt};
+use wpewebkit::{Settings, WebView, WebViewBackend, WebViewExt};
 
 fn main() {
-    let mut main_loop = glib::MainLoop::new(None, true);
-
-    // TODO: Rebuild WebKit and test with RUSTFLAGS='-L /home/i509vcb/test/WebKit/lib' cargo run --example=view
+    let main_loop = glib::MainLoop::new(None, true);
     let view_backend = WebViewBackend::new(NoopBackend);
 
     let settings = Settings::builder().enable_javascript(true).build();
@@ -28,7 +26,6 @@ fn main() {
         println!("{}", v.as_str());
     }
 
-    // FIXME: Why is running JS causing a segfault?
     println!("run js");
     webview.run_javascript(
         "42",

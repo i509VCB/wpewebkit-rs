@@ -8,19 +8,14 @@ use wpe::{vtable, ViewBackend};
 
 use crate::WebViewBackend;
 
-pub trait WebViewBackendManual: 'static {
-    // TODO: Constructor with higher level parameters
-    fn new<T: ViewBackend>(backend: T) -> Self;
-}
-
-impl WebViewBackendManual for WebViewBackend {
-    fn new<T: ViewBackend>(backend: T) -> Self {
+impl WebViewBackend {
+    pub fn new<T: ViewBackend>(backend: T) -> Self {
         unsafe extern "C" fn destroy_interface(ptr: glib_sys::gpointer) {
             println!("{:p}", ptr);
             let _ = Box::from_raw(ptr);
         }
 
-        // This is a horrifying hack to make things even attempt to work.
+        // This is a horrifying hack to make things even attempt to work, proper bindings probably needed.
         extern "C" {
             fn wpe_fdo_initialize_shm() -> bool;
         }
