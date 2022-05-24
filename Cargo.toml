@@ -3,6 +3,7 @@ members = [
     "soup3-sys",
     "wpe",
     "wpe-sys",
+    # "wpe-backend-fdo-sys",
     "wpejavascriptcore",
     "wpejavascriptcore-sys",
     "wpewebkit",

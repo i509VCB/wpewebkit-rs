@@ -6,6 +6,9 @@ fn main() {
     println!("cargo:rerun-if-changed=wrapper.h");
     println!("cargo:rerun-if-changed=wrapper_egl.h");
 
+    // Temporary hack
+    println!("cargo:rustc-link-lib=WPEBackend-fdo-1.0");
+
     let bindings = Builder::default()
         .header("wrapper.h")
         // Only allow wpe types, functions and items

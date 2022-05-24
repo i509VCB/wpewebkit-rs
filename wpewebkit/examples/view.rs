@@ -1,13 +1,14 @@
 use wpe::ViewBackend;
 use wpe_java_script_core::traits::ValueExt;
-use wpewebkit::{WebView, WebViewBackend, WebViewBackendManual, WebViewExt, Settings};
+use wpewebkit::{Settings, WebView, WebViewBackend, WebViewBackendManual, WebViewExt};
 
 fn main() {
+    let mut main_loop = glib::MainLoop::new(None, true);
+
+    // TODO: Rebuild WebKit and test with RUSTFLAGS='-L /home/i509vcb/test/WebKit/lib' cargo run --example=view
     let view_backend = WebViewBackend::new(NoopBackend);
 
-    let settings = Settings::builder()
-        .enable_javascript(true)
-        .build();
+    let settings = Settings::builder().enable_javascript(true).build();
 
     let webview = WebView::builder()
         .is_ephemeral(true)
@@ -29,28 +30,28 @@ fn main() {
 
     // FIXME: Why is running JS causing a segfault?
     println!("run js");
-    webview.run_javascript("42", None::<&gio::Cancellable>, move |result| match result {
-        Ok(result) => {
-            if let Some(value) = result.js_value() {
-                println!("is_boolean: {}", value.is_boolean());
-                println!("is_number: {}", value.is_number());
-                println!("{:?}", value.to_int32());
-                println!("{:?}", value.to_boolean());
-            } else {
-                eprintln!("None value?");
+    webview.run_javascript(
+        "42",
+        None::<&gio::Cancellable>,
+        move |result| match result {
+            Ok(result) => {
+                if let Some(value) = result.js_value() {
+                    println!("is_boolean: {}", value.is_boolean());
+                    println!("is_number: {}", value.is_number());
+                    println!("{:?}", value.to_int32());
+                    println!("{:?}", value.to_boolean());
+                } else {
+                    eprintln!("None value?");
+                }
             }
 
-            println!("Barrier wait");
-        }
-
-        Err(error) => {
-            println!("{}", error);
-            println!("Barrier wait");
+            Err(error) => {
+                println!("{}", error);
+            }
         },
-    });
+    );
 
-    std::thread::sleep_ms(1000);
-    println!("Foo");
+    main_loop.run();
 }
 
 struct NoopBackend;

@@ -18,17 +18,17 @@ pub fn backend_interface_with_type<T: ViewBackend>() -> wpe_sys::wpe_view_backen
 }
 
 unsafe extern "C" fn create<T: ViewBackend>(
-    _user_data: *mut c_void,
-    _backend: *mut wpe_sys::wpe_view_backend,
+    user_data: *mut c_void,
+    backend: *mut wpe_sys::wpe_view_backend,
 ) -> *mut c_void {
-    println!("backend create");
+    println!("backend create {:?}, {:?}", user_data, backend);
     // User data is already initialized
     ptr::null_mut()
 }
 
-unsafe extern "C" fn initialize<T: ViewBackend>(_user_data: *mut c_void) {
+unsafe extern "C" fn initialize<T: ViewBackend>(user_data: *mut c_void) {
     // User data is already initialized
-    println!("backend init");
+    println!("backend init {:?}", user_data);
 }
 
 unsafe extern "C" fn destroy<T: ViewBackend>(user_data: *mut c_void) {
